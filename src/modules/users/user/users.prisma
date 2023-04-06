@@ -1,0 +1,77 @@
+model User {
+   id        Int      @id @default(autoincrement())
+   createdAt DateTime @default(now())
+   email     String   @unique
+   firstName String?
+   lastName  String?
+   password  String
+   status    String?
+   film_industry String?
+   role      Role     @default(USER)
+}
+
+enum Role {
+   USER
+   ADMIN
+   PENMEN
+}
+
+enum Status{
+   ACTIVE
+   INACTIVE
+}
+
+enum FilmIndustry{
+   KA 
+   TA
+   TE
+   MA
+}
+
+model PersonalInformation {
+  id                                      Int      @id @default(autoincrement())
+  firstName                               String?
+  lastName                                String?
+  uploadYourPassportPicture               String?
+  whatOtherNamesYouAreCalledInTheIndustry String?
+  dob                                     DateTime?
+  address                                 String?
+  emailId                                 String?
+  contactNumber                           Int?
+  whatsappNumber                          Int?
+  Gender             String?
+  whenDidYouStartWorkingInTheIndustry  DateTime?
+  whoIntroducedYouToTheFilmIndustry String?
+  give2ReferencesAndContactsFromTheFilmIndustry  String?
+  userID Int
+  user          User   @relation(fields: [userID], references: [id])
+}
+
+model Biography {
+  id                      Int      @id @default(autoincrement())
+  aboutme                  String?
+  education               String?
+  institute_name           String?
+  start_date               DateTime?
+  end_date                 DateTime?
+  skillset                String?
+  working_at_location       String?
+  upload_portfolio_pictures String?
+  personnel_showreel       String?
+  awards                  String?
+  award_name               String?
+  award_category           String?
+  result                  String?
+  user_id                  Int
+  user                    User     @relation(fields: [user_id], references: [id])
+}
+
+model MediaLinks{
+   id                      Int      @id @default(autoincrement())
+   FacebookAccountUrl   String? @map("facebook_account_url")
+instagram_account_url  String?
+linkedinaccounturl   String?
+twitteraccounturl    String?
+userid                  Int
+  user                    User     @relation(fields: [userid], references: [id])
+}

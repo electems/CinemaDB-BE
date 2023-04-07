@@ -58,13 +58,20 @@ export class UsersService {
     });
   }
 
+  /*
+   *In  this i have casted status and film industry columns from type enum to string
+   *coz in DB their types are enum here im passing string to search so i caasted them
+   */
+
   async searchUser(searchWord: string): Promise<any> {
     const result = await this.db.$queryRaw<{ max: number }>(
-      Prisma.sql`SELECT * FROM "User" WHERE "firstName" LIKE ${
+      Prisma.sql`SELECT * FROM "User" WHERE first_name LIKE ${
         '%' + searchWord + '%'
       } 
-      or "lastName" LIKE ${'%' + searchWord + '%'} 
-      or email LIKE ${'%' + searchWord + '%'} `,
+      or last_name LIKE ${'%' + searchWord + '%'} 
+      or email LIKE ${'%' + searchWord + '%'} or status ::text LIKE ${
+        '%' + searchWord + '%'
+      } or film_industry ::text LIKE ${'%' + searchWord + '%'} `,
     );
     return result;
   }

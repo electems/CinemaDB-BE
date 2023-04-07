@@ -9,9 +9,9 @@ export const seed = async (): Promise<void> => {
     update: {},
     create: {
       email: `alice@cool.org`,
-      firstName: 'Alice',
-      lastName: 'Hartmann',
-      password: await bcrypt.hash('alice', 11),
+      FirstName: 'Alice',
+      LastName: 'Hartmann',
+      Password: await bcrypt.hash('alice', 11),
     },
   });
 
@@ -20,9 +20,9 @@ export const seed = async (): Promise<void> => {
     update: {},
     create: {
       email: `bob@cool.org`,
-      firstName: 'Bob',
-      lastName: 'Cool',
-      password: await bcrypt.hash('bob', 11),
+      FirstName: 'Bob',
+      LastName: 'Cool',
+      Password: await bcrypt.hash('bob', 11),
     },
   });
 

@@ -1,0 +1,4 @@
+generator prismaCodeGenerator {
+  provider = "prisma-code-generator"
+  output   = "../gen"
+}

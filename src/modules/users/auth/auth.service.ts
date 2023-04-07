@@ -19,7 +19,7 @@ export class AuthService {
       return null;
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.Password);
     if (!isPasswordValid) {
       return null;
     }
@@ -31,16 +31,16 @@ export class AuthService {
     const payload = {
       sub: user.id,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      FirstName: user.FirstName,
+      LastName: user.LastName,
       role: user.role,
     };
 
     return {
       id: user.id,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: user.FirstName,
+      lastName: user.LastName,
       token: this.jwtService.sign(payload),
       role: user.role,
     };

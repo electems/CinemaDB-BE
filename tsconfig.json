@@ -36,5 +36,7 @@
       "@filters/*": ["src/filters/*"],
       "@pipes/*": ["src/pipes/*"]
     }
-  }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "generated", "dist", "**/*spec.ts", "gen/*"]
 }

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable lines-between-class-members */
 import {
   Body,
   Controller,
@@ -9,6 +11,7 @@ import {
   Param,
   ParseIntPipe,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
@@ -118,5 +121,16 @@ export class UsersController {
   @Get('search/:searchWord')
   async getAuthors(@Param('searchWord') searchWord: string): Promise<any> {
     return this.userService.searchUser(searchWord);
+  }
+  @Get('otp/:emailorphone')
+  async sentOTP(@Param('emailorphone') emailorphone: string) {
+    if (emailorphone === undefined) {
+      throw new BadRequestException('MISSING_REQUIRED_FIELD', {
+        cause: new Error(),
+        description: 'Email or phone number is required',
+      });
+    }
+
+    return this.userService.generateOTP(emailorphone);
   }
 }

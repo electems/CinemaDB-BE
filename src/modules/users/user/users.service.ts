@@ -1,5 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable lines-between-class-members */
+/* eslint-disable prettier/prettier */
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 import { DatabaseService } from '@database/database.service';
 
@@ -74,5 +82,75 @@ export class UsersService {
       } or film_industry ::text LIKE ${'%' + searchWord + '%'} `,
     );
     return result;
+  }
+  async findOneByUsername(UserName: string): Promise<User | null> {
+    return this.db.user.findFirst({
+      where: {
+        UserName,
+      },
+    });
+  }
+  async findOneByEmail(email: string): Promise<User | null> {
+    return this.db.user.findFirst({
+      where: {
+        email,
+      },
+    });
+  }
+  async findOneByMobileNumber(PhoneNumber: string): Promise<User | null> {
+    return this.db.user.findFirst({
+      where: {
+        PhoneNumber,
+      },
+    });
+  }
+  async generateOTP(emailorphone: string) {
+    const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    let userData;
+    const isEmailValid = this.isEmail(emailorphone);
+
+    if (isEmailValid) {
+      userData = await this.findOneByEmail(emailorphone);
+    } else if (phoneno.test(emailorphone)) {
+      userData = await this.findOneByMobileNumber(emailorphone);
+    } else {
+      throw new BadRequestException('INCORRECT_FORMAT', {
+        cause: new Error(),
+        description: 'Email or phone number are not in the correct format',
+      });
+    }
+
+    if (userData !== undefined) {
+      const otp = Math.random().toString().substring(2, 8);
+      const saltRounds = 10;
+      const hashed = await bcrypt.hash(otp, saltRounds);
+      const date = new Date();
+      date.setSeconds(date.getSeconds() + 120);
+      const user = {
+        UserName: emailorphone,
+        Password: hashed,
+        ElapsedOTPTime: date,
+      };
+      if (isEmailValid) {
+        await this.db.user.update({
+          where: { email: emailorphone },
+          data: user,
+        });
+      } else {
+        await this.db.user.update({
+          where: { PhoneNumber: emailorphone },
+          data: user,
+        });
+      }
+    } else {
+      throw new BadRequestException('MISSING_USER', {
+        cause: new Error(),
+        description: 'Not found user object',
+      });
+    }
+  }
+  private isEmail(search: string): boolean {
+    const regexp = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i);
+    return regexp.test(search);
   }
 }

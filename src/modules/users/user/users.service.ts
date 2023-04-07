@@ -6,6 +6,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Prisma, User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
@@ -13,7 +14,10 @@ import { DatabaseService } from '@database/database.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private db: DatabaseService) {}
+  constructor(
+    private db: DatabaseService,
+    private eventEmitter: EventEmitter2,
+  ) {}
 
   async findOne(email: string): Promise<User | null> {
     return this.db.user.findFirst({
@@ -83,13 +87,15 @@ export class UsersService {
     );
     return result;
   }
-  async findOneByUsername(UserName: string): Promise<User | null> {
+
+  async findOneByUsername(userName: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
-        UserName,
+        userName,
       },
     });
   }
+
   async findOneByEmail(email: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
@@ -97,13 +103,15 @@ export class UsersService {
       },
     });
   }
-  async findOneByMobileNumber(PhoneNumber: string): Promise<User | null> {
+
+  async findOneByMobileNumber(phoneNumber: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
-        PhoneNumber,
+        phoneNumber,
       },
     });
   }
+
   async generateOTP(emailorphone: string) {
     const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     let userData;
@@ -127,9 +135,9 @@ export class UsersService {
       const date = new Date();
       date.setSeconds(date.getSeconds() + 120);
       const user = {
-        UserName: emailorphone,
-        Password: hashed,
-        ElapsedOTPTime: date,
+        userName: emailorphone,
+        password: hashed,
+        elapsedOTPTime: date,
       };
       if (isEmailValid) {
         await this.db.user.update({
@@ -138,10 +146,16 @@ export class UsersService {
         });
       } else {
         await this.db.user.update({
-          where: { PhoneNumber: emailorphone },
+          where: { phoneNumber: emailorphone },
           data: user,
         });
       }
+      this.eventEmitter.emit('email.registration', {
+        firstName: userData?.firstName,
+        lastName: userData?.lastName,
+        email: userData?.email,
+        otp,
+      });
     } else {
       throw new BadRequestException('MISSING_USER', {
         cause: new Error(),

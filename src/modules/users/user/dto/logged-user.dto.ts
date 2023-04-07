@@ -18,4 +18,6 @@ export class LoggedUserDto {
 
   @ApiProperty()
   role: string;
+
+  otp: string;
 }

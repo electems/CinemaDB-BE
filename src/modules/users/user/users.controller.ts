@@ -122,6 +122,7 @@ export class UsersController {
   async getAuthors(@Param('searchWord') searchWord: string): Promise<any> {
     return this.userService.searchUser(searchWord);
   }
+
   @Get('otp/:emailorphone')
   async sentOTP(@Param('emailorphone') emailorphone: string) {
     if (emailorphone === undefined) {

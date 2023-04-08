@@ -9,6 +9,8 @@ import { User } from '@prisma/client';
 import { DatabaseService } from '@database/database.service';
 import { Util } from '@modules/common/util';
 
+import bcrypt from 'bcrypt';
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -41,6 +43,8 @@ export class UsersService {
   }
 
   async create(user: User): Promise<User> {
+    const bcryptPassword = await bcrypt.hash(user.password, 11);
+    user.password = bcryptPassword;
     return this.db.user.create({
       data: user,
     });

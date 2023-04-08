@@ -20,17 +20,17 @@ export const seed = async (): Promise<void> => {
   });
 
   await prisma.user.upsert({
-    where: { email: 'bob@cool.org' },
+    where: { email: 'shiva@electems.com' },
     update: {},
     create: {
-      userName: 'bobcool',
-      email: `bob@cool.org`,
-      firstName: 'Bob',
-      lastName: 'Cool',
+      userName: 'admin',
+      email: `shiva@electems.com`,
+      firstName: 'Super',
+      lastName: 'Admin',
       filmIndustry: 'sandalhood',
       status: 'ACTIVE',
-      role: 'USER',
-      password: await bcrypt.hash('bob', 11),
+      role: 'ADMIN',
+      password: await bcrypt.hash('admin', 11),
     },
   });
 

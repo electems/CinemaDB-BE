@@ -5,21 +5,33 @@ import {
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { User } from '@prisma/client';
-import bcrypt from 'bcrypt';
 
 import { DatabaseService } from '@database/database.service';
+import { Util } from '@modules/common/util';
 
 @Injectable()
 export class UsersService {
   constructor(
     private db: DatabaseService,
     private eventEmitter: EventEmitter2,
+    private util: Util,
   ) {}
 
-  async findOne(email: string): Promise<User | null> {
+  async findOne(userName: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
-        email,
+        AND: [
+          {
+            userName: {
+              equals: userName,
+            },
+          },
+          {
+            status: {
+              equals: 'ACTIVE',
+            },
+          },
+        ],
       },
     });
   }
@@ -129,7 +141,7 @@ export class UsersService {
   async generateOTP(emailorphone: string) {
     const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     let userData;
-    const isEmailValid = this.isEmail(emailorphone);
+    const isEmailValid = this.util.isEmail(emailorphone);
 
     if (isEmailValid) {
       userData = await this.findOneByEmail(emailorphone);
@@ -144,8 +156,7 @@ export class UsersService {
 
     if (userData !== undefined) {
       const otp = Math.random().toString().substring(2, 8);
-      const saltRounds = 10;
-      const hashed = await bcrypt.hash(otp, saltRounds);
+      const hashed = await this.util.generatePwd(otp);
       const date = new Date();
       date.setSeconds(date.getSeconds() + 120);
       const user = {
@@ -156,7 +167,11 @@ export class UsersService {
       if (isEmailValid) {
         await this.db.user.update({
           where: { email: emailorphone },
-          data: user,
+          data: {
+            userName: emailorphone,
+            elapsedOTPTime: date,
+            password: hashed,
+          },
         });
       } else {
         await this.db.user.update({
@@ -176,10 +191,5 @@ export class UsersService {
         description: 'Not found user object',
       });
     }
-  }
-
-  private isEmail(search: string): boolean {
-    const regexp = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i);
-    return regexp.test(search);
   }
 }

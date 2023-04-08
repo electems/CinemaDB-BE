@@ -20,8 +20,7 @@ export class EmailService {
       },
     };
     transport.sendMail(emailBody, (error) => {
-      console.log(error);
+      error;
     });
-    console.log(emailBody);
   }
 }

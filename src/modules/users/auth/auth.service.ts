@@ -13,14 +13,21 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<User | null> {
-    const user = await this.usersService.findOne(email);
+  async validateUser(userName: string, password: string): Promise<User | null> {
+    const user = await this.usersService.findOne(userName);
     if (!user) {
       return null;
     }
-
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid) {
+      return null;
+    }
+
+    if (user.role !== 'ADMIN') {
+      if (user.elapsedOTPTime > new Date()) {
+        return user;
+      }
       return null;
     }
 

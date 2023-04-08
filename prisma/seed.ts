@@ -8,9 +8,13 @@ export const seed = async (): Promise<void> => {
     where: { email: 'alice@cool.org' },
     update: {},
     create: {
+      userName: 'alicecool',
       email: `alice@cool.org`,
       firstName: 'Alice',
       lastName: 'Hartmann',
+      filmIndustry: 'sandalhood',
+      status: 'ACTIVE',
+      role: 'USER',
       password: await bcrypt.hash('alice', 11),
     },
   });
@@ -19,9 +23,13 @@ export const seed = async (): Promise<void> => {
     where: { email: 'bob@cool.org' },
     update: {},
     create: {
+      userName: 'bobcool',
       email: `bob@cool.org`,
       firstName: 'Bob',
       lastName: 'Cool',
+      filmIndustry: 'sandalhood',
+      status: 'ACTIVE',
+      role: 'USER',
       password: await bcrypt.hash('bob', 11),
     },
   });

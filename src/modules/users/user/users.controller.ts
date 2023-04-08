@@ -119,7 +119,7 @@ export class UsersController {
   }
 
   @Get('search/:searchWord')
-  async getAuthors(@Param('searchWord') searchWord: string): Promise<any> {
+  async getAuthors(@Param('searchWord') searchWord: string): Promise<User[]> {
     return this.userService.searchUser(searchWord);
   }
 

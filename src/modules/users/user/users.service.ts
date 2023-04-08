@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable lines-between-class-members */
-/* eslint-disable prettier/prettier */
 import {
   BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Prisma, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 import { DatabaseService } from '@database/database.service';
@@ -70,22 +67,39 @@ export class UsersService {
     });
   }
 
-  /*
-   *In  this i have casted status and film industry columns from type enum to string
-   *coz in DB their types are enum here im passing string to search so i caasted them
-   */
-
-  async searchUser(searchWord: string): Promise<any> {
-    const result = await this.db.$queryRaw<{ max: number }>(
-      Prisma.sql`SELECT * FROM "User" WHERE first_name LIKE ${
-        '%' + searchWord + '%'
-      } 
-      or last_name LIKE ${'%' + searchWord + '%'} 
-      or email LIKE ${'%' + searchWord + '%'} or status ::text LIKE ${
-        '%' + searchWord + '%'
-      } or film_industry ::text LIKE ${'%' + searchWord + '%'} `,
-    );
-    return result;
+  async searchUser(searchWord: string): Promise<User[]> {
+    const users = await this.db.user.findMany({
+      where: {
+        OR: [
+          {
+            firstName: {
+              contains: searchWord,
+            },
+          },
+          {
+            lastName: {
+              contains: searchWord,
+            },
+          },
+          {
+            email: {
+              contains: searchWord,
+            },
+          },
+          {
+            filmIndustry: {
+              contains: searchWord,
+            },
+          },
+          {
+            status: {
+              contains: searchWord,
+            },
+          },
+        ],
+      },
+    });
+    return users;
   }
 
   async findOneByUsername(userName: string): Promise<User | null> {
@@ -163,6 +177,7 @@ export class UsersService {
       });
     }
   }
+
   private isEmail(search: string): boolean {
     const regexp = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i);
     return regexp.test(search);

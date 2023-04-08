@@ -7,10 +7,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
 
 import { LoggerMiddleware } from '@decorators/logging.interceptor';
 
-import { EmailService } from './emailfolder/email.service';
-import { EventListnerController } from './eventEmitter/eventlistner.controller';
-import { EventListnerService } from './eventEmitter/eventlistner.service';
-import { RegistrationModule } from './registration/registration.module';
+import { EmailService } from './emails/email.service';
+import { EventListnerService } from './eventmanager/eventmanager.service';
+import { RegistrationModule } from './formmanager/formmanager.module';
 import { UsersModule } from './users/user/users.module';
 
 @Module({
@@ -22,7 +21,7 @@ import { UsersModule } from './users/user/users.module';
     MailerModule,
     PassportModule,
   ],
-  controllers: [EventListnerController],
+  controllers: [],
   providers: [EventListnerService, EmailService],
 })
 export class AppModule implements NestModule {

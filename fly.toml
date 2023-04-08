@@ -1,6 +1,6 @@
-# fly.toml file generated for nestjs-prisma-postgres-sandbox on 2022-07-25T18:27:38+02:00
+# fly.toml file generated for CinemaDBs
 
-app = "nestjs-prisma-postgres-sandbox"
+app = "CinemaDBs"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []

@@ -12,18 +12,8 @@ jobs:
         with:
           node-version: '16.13.0'
       - run: yarn install 
-      - run: yarn dev-db
       - run: yarn build
       - run: yarn lint
       - run: yarn type-check
-  cypress-run:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2-beta
-        with:
-          node-version: '16.13.0'
-      - uses: cypress-io/github-action@v2
-        with:
-          build: yarn build
-          start: yarn serve
+      - run: yarn start
+      - run: yarn cypress:run

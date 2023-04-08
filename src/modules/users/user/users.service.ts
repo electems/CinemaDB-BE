@@ -138,7 +138,7 @@ export class UsersService {
     });
   }
 
-  async generateOTP(emailorphone: string) {
+  async generateOTP(emailorphone: string): Promise<void> {
     const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     let userData;
     const isEmailValid = this.util.isEmail(emailorphone);

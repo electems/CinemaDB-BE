@@ -27,8 +27,10 @@ import { JwtPayloadDto } from '../auth/dto/jwt.payload.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt.auth-guard';
 import { LocalAuthGuard } from '../auth/guards/local.auth-guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('users')
 @ApiTags('auth-users')
+@ApiBearerAuth()
 export class UsersController {
   constructor(
     private readonly authService: AuthService,

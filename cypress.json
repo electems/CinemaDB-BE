@@ -8,9 +8,9 @@
   "baseUrl": "http://localhost:3001",
   "db": {
     "user": "postgres",
-    "host": "localhost",
+    "host": "106.51.104.234",
     "database": "cinemaDBS",
     "password": "postgres",
-    "port": 5432
+    "port": 15432
   }
 }

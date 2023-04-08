@@ -17,5 +17,5 @@ jobs:
       - run: yarn build
       - run: yarn lint
       - run: yarn type-check
-      - run: yarn start
+      - run: yarn start &
       - run: yarn cypress:run

@@ -24,7 +24,7 @@ export const bootstrap = async (): Promise<INestApplication> => {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('', app, document);
   app.enableCors({
-    origin: 'http://localhost:8081',
+    origin: 'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,

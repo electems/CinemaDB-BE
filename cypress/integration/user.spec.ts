@@ -1,11 +1,16 @@
 import { User } from './models';
 import { updateUser } from './models';
 
+
 const base_url = 'http://localhost:3001';
+const phoneNumber = Math.floor(Math.random() * 10000000000);
+const phone = phoneNumber.toString();
 
 describe('UserSection', () => {
   let userObject;
   let newUserId;
+  let newEmail='adarsh@electems.com'
+  let searchWord ='fffff';
   it('User > Login', () => {
     cy.request('POST', base_url + '/auth/login ', {
       username: 'admin',
@@ -59,6 +64,124 @@ describe('UserSection', () => {
     });
   });
 
+
+  it('User > Search/:string ', () => {
+     /*to check the string is present in firstName colum */
+    cy.request({
+      method: 'GET',
+      url: base_url +'/users/search/' + userObject.firstName,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+      body: {},
+
+    }).then((response) => {
+      console.log(response.body);
+      expect(response.status).to.eq(200);
+    });
+
+     /*to check the string is present in lastname colum */
+   
+    cy.request({
+      method: 'GET',
+      url: base_url +'/users/search/' + userObject.lastName,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+      body: {},
+
+    }).then((response) => {
+      console.log(response.body);
+      expect(response.status).to.eq(200);
+    });
+
+     /*to check the string is present in email colum */
+    cy.request({
+      method: 'GET',
+      url: base_url +'/users/search/' + userObject.email,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+      body: {},
+
+    }).then((response) => {
+      console.log(response.body);
+      expect(response.status).to.eq(200);
+    });
+
+     /*to check the string is present in filmIndustry colum */
+    cy.request({
+      method: 'GET',
+      url: base_url +'/users/search/' + userObject.filmIndustry,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+      body: {},
+
+    }).then((response) => {
+      console.log(response.body);
+      expect(response.status).to.eq(200);
+    });
+
+     /*to check if the string is not  present in colum */
+    cy.request({
+      method: 'GET',
+      url: base_url +'/users/search/' + searchWord,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+      body: {},
+
+    }).then((response) => {
+      console.log(response.body);
+      // expect(response.body.firstName).to.have.property('firstName')
+    });
+  });
+
+  it('User > Otp/:emailorphone ', () => {
+
+     /*get otp useing user email */
+    cy.request({
+      method: 'Get',
+      url: base_url + '/users/otp/' + userObject.email,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+    }).then((response) => {
+      console.log(response.body);
+      expect(response.status).to.eq(200);
+    });
+       /*check if the email is invalid  */
+    cy.request({
+      method: 'Get',
+      url: base_url + '/users/otp/' + newEmail,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+    }).then((response) => {
+      console.log(response.body);
+      expect(response.status).to.eq(500);
+    });
+
+     /*get otp useing user phoneNumber */
+    cy.request({
+      method: 'Get',
+      url: base_url + '/users/otp/' + userObject.phoneNumber,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+    }).then((response) => {
+      console.log(response.body);
+      expect(response.status).to.eq(200);
+    });
+
+	  /*check if the phoneNumber is invalid  */
+    cy.request({
+      method: 'Get',
+      url: base_url + '/users/otp/' + phone,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+    }).then((response) => {
+      console.log(response.body);
+      expect(response.status).to.eq(500);
+    });
+   
+  });
+
+
+
   it('User > Delete/:id ', () => {
     cy.request({
       method: 'Delete',
@@ -70,4 +193,5 @@ describe('UserSection', () => {
       expect(response.status).to.eq(200);
     });
   });
+
 });

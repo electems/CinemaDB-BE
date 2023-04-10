@@ -12,6 +12,7 @@ describe('UserSection', () => {
   let newEmail='adarsh@electems.com'
   let searchWord ='fffff';
   let userEmail;
+  
   it('User > Login', () => {
     cy.request('POST', base_url + '/auth/login ', {
       username: 'admin',

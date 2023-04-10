@@ -4,12 +4,12 @@ import {
   Get,
   Post,
   Request,
-  UseGuards,
   Put,
   Param,
   ParseIntPipe,
   Delete,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
@@ -101,7 +101,9 @@ export class UsersController {
   }
 
   @Get('otp/:emailorphone')
-  async sentOTP(@Param('emailorphone') emailorphone: string): Promise<void> {
+  async sentOTP(
+    @Param('emailorphone') emailorphone: string,
+  ): Promise<User | null> {
     if (emailorphone === undefined) {
       throw new BadRequestException('MISSING_REQUIRED_FIELD', {
         cause: new Error(),

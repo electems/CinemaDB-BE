@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
 import {
   BadRequestException,
   Injectable,
@@ -5,11 +7,10 @@ import {
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { User } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 import { DatabaseService } from '@database/database.service';
 import { Util } from '@modules/common/util';
-
-import bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -142,9 +143,10 @@ export class UsersService {
     });
   }
 
-  async generateOTP(emailorphone: string): Promise<void> {
+  async generateOTP(emailorphone: string): Promise<User | null> {
     const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     let userData;
+    let updatedUserData;
     const isEmailValid = this.util.isEmail(emailorphone);
 
     if (isEmailValid) {
@@ -169,7 +171,7 @@ export class UsersService {
         elapsedOTPTime: date,
       };
       if (isEmailValid) {
-        await this.db.user.update({
+        updatedUserData = await this.db.user.update({
           where: { email: emailorphone },
           data: {
             userName: emailorphone,
@@ -178,7 +180,7 @@ export class UsersService {
           },
         });
       } else {
-        await this.db.user.update({
+        updatedUserData = await this.db.user.update({
           where: { phoneNumber: emailorphone },
           data: user,
         });
@@ -195,5 +197,7 @@ export class UsersService {
         description: 'Not found user object',
       });
     }
+
+    return updatedUserData;
   }
 }

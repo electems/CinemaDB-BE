@@ -6,7 +6,7 @@ const base_url = 'http://localhost:3001';
 const phoneNumber = Math.floor(Math.random() * 10000000000);
 const newphone = phoneNumber.toString();
 
-describe('UserSection', () => {
+describe.only('UserSection', () => {
   let userObject;
   let newUserId;
   let newEmail='adarsh@electems.com'
@@ -33,6 +33,7 @@ describe('UserSection', () => {
     cy.task('dbQuery', {
       query: `SELECT * FROM "User" Where email='${User.email}'`,
     }).then((queryResponse) => {
+      console.log('inside then'+ queryResponse[0])
       if (queryResponse) {
         newUserId = queryResponse[0].id;
         userEmail = queryResponse[0].email
@@ -141,13 +142,12 @@ describe('UserSection', () => {
      /*get otp useing user email */
     cy.request({
       method: 'Get',
-      url: base_url + '/users/otp/' + userEmail,
+      url: base_url + '/users/otp/' + updateUser.email,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
-      failOnStatusCode: false
     }).then((response) => {
       console.log(response.body);
-      expect(response.status).to.eq(500);
+      expect(response.status).to.eq(200);
     });
 
        /*check if the email is invalid  */

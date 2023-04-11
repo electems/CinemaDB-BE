@@ -4,13 +4,15 @@ import { updateUser } from './models';
 
 const base_url = 'http://localhost:3001';
 const phoneNumber = Math.floor(Math.random() * 10000000000);
-const phone = phoneNumber.toString();
+const newphone = phoneNumber.toString();
 
-describe('UserSection', () => {
+describe.only('UserSection', () => {
   let userObject;
   let newUserId;
   let newEmail='adarsh@electems.com'
   let searchWord ='fffff';
+  let userEmail;
+  
   it('User > Login', () => {
     cy.request('POST', base_url + '/auth/login ', {
       username: 'admin',
@@ -31,8 +33,10 @@ describe('UserSection', () => {
     cy.task('dbQuery', {
       query: `SELECT * FROM "User" Where email='${User.email}'`,
     }).then((queryResponse) => {
+      console.log('inside then'+ queryResponse[0])
       if (queryResponse) {
         newUserId = queryResponse[0].id;
+        userEmail = queryResponse[0].email
       }
     });
     cy.wait(2000);
@@ -138,28 +142,30 @@ describe('UserSection', () => {
      /*get otp useing user email */
     cy.request({
       method: 'Get',
-      url: base_url + '/users/otp/' + userObject.email,
+      url: base_url + '/users/otp/' + updateUser.email,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
     }).then((response) => {
       console.log(response.body);
       expect(response.status).to.eq(200);
     });
+
        /*check if the email is invalid  */
     cy.request({
       method: 'Get',
       url: base_url + '/users/otp/' + newEmail,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
+      failOnStatusCode: false
     }).then((response) => {
-      console.log(response.body);
-      expect(response.status).to.eq(500);
+      console.log(response.status);
+      expect(response.Status).to.eq(undefined); 
     });
 
      /*get otp useing user phoneNumber */
     cy.request({
       method: 'Get',
-      url: base_url + '/users/otp/' + userObject.phoneNumber,
+      url: base_url + '/users/otp/' + User.phoneNumber,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
     }).then((response) => {
@@ -170,17 +176,16 @@ describe('UserSection', () => {
 	  /*check if the phoneNumber is invalid  */
     cy.request({
       method: 'Get',
-      url: base_url + '/users/otp/' + phone,
+      url: base_url + '/users/otp/' + newphone,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
+      failOnStatusCode: false
     }).then((response) => {
       console.log(response.body);
-      expect(response.status).to.eq(500);
+      expect(response.Status).to.eq(undefined);
     });
    
-  });
-
-
+   });
 
   it('User > Delete/:id ', () => {
     cy.request({

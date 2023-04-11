@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Form, FormElements, FormOptions } from '@prisma/client';
 
 import { ApiRoute } from '@decorators/api-route';
 import { JwtAuthGuard } from '@modules/users/auth/guards/jwt.auth-guard';
@@ -43,5 +52,42 @@ export class FormController {
       formlayout,
       body,
     );
+  }
+
+  @Post()
+  @ApiRoute({
+    summary: 'Create Form',
+    description: 'Create new form',
+    ok: { type: 'json', description: 'New form fields' },
+  })
+  async createForm(@Body() body: Form): Promise<Form> {
+    return this.registrationService.createForm(body);
+  }
+
+  @Post('formElements')
+  @ApiRoute({
+    summary: 'Create FormElements',
+    description: 'Create new FormElements',
+    ok: { type: 'json', description: 'New FormElements fields' },
+  })
+  async createFormElements(@Body() body: FormElements): Promise<FormElements> {
+    return this.registrationService.createFormElements(body);
+  }
+
+  @Post('formOptions')
+  @ApiRoute({
+    summary: 'Create FormOptions',
+    description: 'Create new FormOptions',
+    ok: { type: 'json', description: 'New FormOptions fields' },
+  })
+  async createFormOptions(@Body() body: FormOptions): Promise<FormOptions> {
+    return this.registrationService.createFormOptions(body);
+  }
+
+  @Get('singleform/getform/:id')
+  async findOneForm(
+    @Param('id', new ParseIntPipe()) id: number,
+  ): Promise<Form | null> {
+    return this.registrationService.getFormbyId(id);
   }
 }

@@ -46,7 +46,7 @@ export class UsersController {
     description: 'Retrieves all the users',
   })
   async getAllUsers(): Promise<Array<User>> {
-    return this.userService.getAll();
+    return this.userService.getAllUsers();
   }
 
   @Get(':id')
@@ -57,7 +57,7 @@ export class UsersController {
   async getUser(
     @Param('id', new ParseIntPipe()) id: number,
   ): Promise<User | null> {
-    return this.userService.getById(id);
+    return this.userService.getUserById(id);
   }
 
   @Post('createuser')
@@ -67,7 +67,7 @@ export class UsersController {
     badRequest: {},
   })
   async createUser(@Body() newUser: User): Promise<User> {
-    return this.userService.create(newUser);
+    return this.userService.createUser(newUser);
   }
 
   @Put('updateuser/:id')
@@ -81,7 +81,7 @@ export class UsersController {
     @Param('id', new ParseIntPipe()) id: number,
     @Body() user: User,
   ): Promise<User> {
-    return this.userService.update(id, user);
+    return this.userService.updateUser(id, user);
   }
 
   @Delete('delete/:id')
@@ -91,7 +91,7 @@ export class UsersController {
     notFound: { description: "The requested User wasn't found" },
   })
   async deleteUser(@Param('id', new ParseIntPipe()) id: number): Promise<User> {
-    return this.userService.deleteById(id);
+    return this.userService.deleteUserById(id);
   }
 
   @Get('search/:searchWord')

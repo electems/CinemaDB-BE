@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
 import {
   BadRequestException,
   Injectable,
@@ -20,7 +18,7 @@ export class UsersService {
     private util: Util,
   ) {}
 
-  async findOne(userName: string): Promise<User | null> {
+  async findOneUser(userName: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
         AND: [
@@ -39,11 +37,11 @@ export class UsersService {
     });
   }
 
-  async getAll(): Promise<Array<User>> {
+  async getAllUsers(): Promise<Array<User>> {
     return this.db.user.findMany();
   }
 
-  async create(user: User): Promise<User> {
+  async createUser(user: User): Promise<User> {
     const bcryptPassword = await bcrypt.hash(user.password, 11);
     user.password = bcryptPassword;
     return this.db.user.create({
@@ -51,7 +49,7 @@ export class UsersService {
     });
   }
 
-  async getById(id: number): Promise<User | null> {
+  async getUserById(id: number): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
         id,
@@ -59,8 +57,8 @@ export class UsersService {
     });
   }
 
-  async update(id: number, user: User): Promise<User> {
-    const existingUser = await this.getById(id);
+  async updateUser(id: number, user: User): Promise<User> {
+    const existingUser = await this.getUserById(id);
     if (!existingUser) {
       throw new NotFoundException();
     }
@@ -71,8 +69,8 @@ export class UsersService {
     });
   }
 
-  async deleteById(id: number): Promise<User> {
-    const user = await this.getById(id);
+  async deleteUserById(id: number): Promise<User> {
+    const user = await this.getUserById(id);
     if (!user) {
       throw new NotFoundException();
     }
@@ -119,7 +117,7 @@ export class UsersService {
     return users;
   }
 
-  async findOneByUsername(userName: string): Promise<User | null> {
+  async findOneUserByUsername(userName: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
         userName,
@@ -127,7 +125,7 @@ export class UsersService {
     });
   }
 
-  async findOneByEmail(email: string): Promise<User | null> {
+  async findOneUserByEmail(email: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
         email,
@@ -135,7 +133,7 @@ export class UsersService {
     });
   }
 
-  async findOneByMobileNumber(phoneNumber: string): Promise<User | null> {
+  async findOneUserByMobileNumber(phoneNumber: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
         phoneNumber,
@@ -150,9 +148,9 @@ export class UsersService {
     const isEmailValid = this.util.isEmail(emailorphone);
 
     if (isEmailValid) {
-      userData = await this.findOneByEmail(emailorphone);
+      userData = await this.findOneUserByEmail(emailorphone);
     } else if (phoneno.test(emailorphone)) {
-      userData = await this.findOneByMobileNumber(emailorphone);
+      userData = await this.findOneUserByMobileNumber(emailorphone);
     } else {
       throw new BadRequestException('INCORRECT_FORMAT', {
         cause: new Error(),

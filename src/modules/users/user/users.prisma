@@ -1,6 +1,9 @@
 model User {
    id             Int      @id @default(autoincrement())
    createdAt      DateTime @default(now()) @map("created_at")
+   updatedAt      DateTime   @default(now()) @map("updated_at")
+   createdBy      String?     @map("created_by")
+   updatedBy      String?    @map("updated_by")
    email          String   @unique @map("email")
    firstName      String? @map("first_name")
    lastName       String? @map("last_name")
@@ -15,6 +18,10 @@ model User {
 
 model Biography {
   id                      Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now()) @map("created_at")
+   updatedAt      DateTime   @default(now()) @map("updated_at")
+   createdBy      String?     @map("created_by")
+   updatedBy      String?    @map("updated_by")
   aboutMe                 String? @map("about_me")
   education               String? @map("education")
   instituteName           String? @map("institute_name")
@@ -35,6 +42,10 @@ model Biography {
 
 model PersonalInformation {
   id                                      Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now()) @map("created_at")
+   updatedAt      DateTime   @default(now()) @map("updated_at")
+   createdBy      String?     @map("created_by")
+   updatedBy      String?    @map("updated_by")
   firstName                               String?  @map("first_name")
   lastName                                String?  @map("last_name")
   uploadYourPassportPicture               String?  @map("upload_your_passport_picture")
@@ -55,6 +66,10 @@ model PersonalInformation {
 
 model MediaLinks {
   id                  Int          @id @default(autoincrement())
+  createdAt      DateTime @default(now()) @map("created_at")
+   updatedAt      DateTime   @default(now()) @map("updated_at")
+   createdBy      String?     @map("created_by")
+   updatedBy      String?    @map("updated_by")
   facebookAccountUrl  String?      @map("facebook_account_url")
   instagramAccountUrl String?      @map("instagram_account_url")
   linkedinAccountUrl  String?      @map("linkedin_account_url")

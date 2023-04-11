@@ -8,7 +8,6 @@ import {
   Param,
   ParseIntPipe,
   Delete,
-  BadRequestException,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -98,18 +97,5 @@ export class UsersController {
   @Get('search/:searchWord')
   async getAuthors(@Param('searchWord') searchWord: string): Promise<User[]> {
     return this.userService.searchUser(searchWord);
-  }
-
-  @Get('otp/:emailorphone')
-  async sentOTP(
-    @Param('emailorphone') emailorphone: string,
-  ): Promise<User | null> {
-    if (emailorphone === undefined) {
-      throw new BadRequestException('MISSING_REQUIRED_FIELD', {
-        cause: new Error(),
-        description: 'Email or phone number is required',
-      });
-    }
-    return this.userService.generateOTP(emailorphone);
   }
 }

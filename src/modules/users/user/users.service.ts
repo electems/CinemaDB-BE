@@ -145,7 +145,7 @@ export class UsersService {
 
   async generateOTP(emailorphone: string): Promise<User | null> {
     const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    let userData;
+    let userData = undefined;
     let updatedUserData;
     const isEmailValid = this.util.isEmail(emailorphone);
 
@@ -160,7 +160,7 @@ export class UsersService {
       });
     }
 
-    if (userData !== undefined) {
+    if (userData !== null) {
       const otp = Math.random().toString().substring(2, 8);
       const hashed = await this.util.generatePwd(otp);
       const date = new Date();

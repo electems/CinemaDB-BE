@@ -4,7 +4,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ApiRoute } from '@decorators/api-route';
 import { JwtAuthGuard } from '@modules/users/auth/guards/jwt.auth-guard';
 
-import { RegistrationService } from './registration.service';
+import { RegistrationService } from './formmanager.service';
 
 @UseGuards(JwtAuthGuard)
 @Controller('form')

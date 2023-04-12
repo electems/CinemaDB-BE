@@ -7,8 +7,6 @@ import transport from '../../config/emialConfiguration';
 
 @Injectable()
 export class EmailService {
-  constructor() {}
-
   loginEmail(user: LoggedUserDto): void {
     const emailBody = {
       from: emailconfig.fromEmailAddress,
@@ -20,8 +18,7 @@ export class EmailService {
       },
     };
     transport.sendMail(emailBody, (error) => {
-      console.log(error);
+      error;
     });
-    console.log(emailBody);
   }
 }

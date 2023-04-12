@@ -1,0 +1,16 @@
+{
+  "integrationFolder": "cypress/integration",
+  "supportFile": "cypress/support/index.ts",
+  "videosFolder": "cypress/videos",
+  "screenshotsFolder": "cypress/screenshots",
+  "pluginsFile": "cypress/plugins/index.ts",
+  "fixturesFolder": "cypress/fixtures",
+  "baseUrl": "http://localhost:3001",
+  "db": {
+    "user": "postgres",
+    "host": "106.51.104.234",
+    "database": "cinemaDBS",
+    "password": "postgres",
+    "port": 15432
+  }
+}

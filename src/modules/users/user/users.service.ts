@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable lines-between-class-members */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import {
   BadRequestException,
@@ -7,22 +6,35 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Prisma, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 import { DatabaseService } from '@database/database.service';
+import { Util } from '@modules/common/util';
 
 @Injectable()
 export class UsersService {
   constructor(
     private db: DatabaseService,
     private eventEmitter: EventEmitter2,
+    private util: Util,
   ) {}
 
-  async findOne(email: string): Promise<User | null> {
+  async findOne(userName: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
-        email,
+        AND: [
+          {
+            userName: {
+              equals: userName,
+            },
+          },
+          {
+            status: {
+              equals: 'ACTIVE',
+            },
+          },
+        ],
       },
     });
   }
@@ -32,6 +44,8 @@ export class UsersService {
   }
 
   async create(user: User): Promise<User> {
+    const bcryptPassword = await bcrypt.hash(user.password, 11);
+    user.password = bcryptPassword;
     return this.db.user.create({
       data: user,
     });
@@ -70,22 +84,39 @@ export class UsersService {
     });
   }
 
-  /*
-   *In  this i have casted status and film industry columns from type enum to string
-   *coz in DB their types are enum here im passing string to search so i caasted them
-   */
-
-  async searchUser(searchWord: string): Promise<any> {
-    const result = await this.db.$queryRaw<{ max: number }>(
-      Prisma.sql`SELECT * FROM "User" WHERE first_name LIKE ${
-        '%' + searchWord + '%'
-      } 
-      or last_name LIKE ${'%' + searchWord + '%'} 
-      or email LIKE ${'%' + searchWord + '%'} or status ::text LIKE ${
-        '%' + searchWord + '%'
-      } or film_industry ::text LIKE ${'%' + searchWord + '%'} `,
-    );
-    return result;
+  async searchUser(searchWord: string): Promise<User[]> {
+    const users = await this.db.user.findMany({
+      where: {
+        OR: [
+          {
+            firstName: {
+              contains: searchWord,
+            },
+          },
+          {
+            lastName: {
+              contains: searchWord,
+            },
+          },
+          {
+            email: {
+              contains: searchWord,
+            },
+          },
+          {
+            filmIndustry: {
+              contains: searchWord,
+            },
+          },
+          {
+            status: {
+              contains: searchWord,
+            },
+          },
+        ],
+      },
+    });
+    return users;
   }
 
   async findOneByUsername(userName: string): Promise<User | null> {
@@ -112,10 +143,11 @@ export class UsersService {
     });
   }
 
-  async generateOTP(emailorphone: string) {
+  async generateOTP(emailorphone: string): Promise<User | null> {
     const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    let userData;
-    const isEmailValid = this.isEmail(emailorphone);
+    let userData = undefined;
+    let updatedUserData;
+    const isEmailValid = this.util.isEmail(emailorphone);
 
     if (isEmailValid) {
       userData = await this.findOneByEmail(emailorphone);
@@ -128,10 +160,9 @@ export class UsersService {
       });
     }
 
-    if (userData !== undefined) {
+    if (userData !== null) {
       const otp = Math.random().toString().substring(2, 8);
-      const saltRounds = 10;
-      const hashed = await bcrypt.hash(otp, saltRounds);
+      const hashed = await this.util.generatePwd(otp);
       const date = new Date();
       date.setSeconds(date.getSeconds() + 120);
       const user = {
@@ -140,12 +171,16 @@ export class UsersService {
         elapsedOTPTime: date,
       };
       if (isEmailValid) {
-        await this.db.user.update({
+        updatedUserData = await this.db.user.update({
           where: { email: emailorphone },
-          data: user,
+          data: {
+            userName: emailorphone,
+            elapsedOTPTime: date,
+            password: hashed,
+          },
         });
       } else {
-        await this.db.user.update({
+        updatedUserData = await this.db.user.update({
           where: { phoneNumber: emailorphone },
           data: user,
         });
@@ -162,9 +197,7 @@ export class UsersService {
         description: 'Not found user object',
       });
     }
-  }
-  private isEmail(search: string): boolean {
-    const regexp = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i);
-    return regexp.test(search);
+
+    return updatedUserData;
   }
 }

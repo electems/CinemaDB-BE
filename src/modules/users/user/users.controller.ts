@@ -1,57 +1,33 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable lines-between-class-members */
 import {
   Body,
   Controller,
   Get,
   Post,
   Request,
-  UseGuards,
   Put,
   Param,
   ParseIntPipe,
   Delete,
-  BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import { Request as ExpressRequest } from 'express';
 
 import { ApiRoute } from '@decorators/api-route';
 
-import { LoggedUserDto } from './dto/logged-user.dto';
-import { LoginDto } from './dto/login.dto';
 import { UsersService } from './users.service';
-import { AuthService } from '../auth/auth.service';
 import { JwtPayloadDto } from '../auth/dto/jwt.payload.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt.auth-guard';
-import { LocalAuthGuard } from '../auth/guards/local.auth-guard';
 
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 @Controller('users')
 @ApiTags('auth-users')
 export class UsersController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly userService: UsersService,
-  ) {}
+  constructor(private readonly userService: UsersService) {}
 
-  @UseGuards(LocalAuthGuard)
-  @Post('login')
-  @ApiBody({ description: 'The user credentials', type: LoginDto })
-  @ApiRoute({
-    summary: 'Login route',
-    description: 'The login route',
-    created: { type: LoggedUserDto, description: 'Authentication succeeded' },
-  })
-  async login(
-    @Request() req: ExpressRequest & { user: User },
-  ): Promise<LoggedUserDto> {
-    return this.authService.getLoggedUser(req.user);
-  }
-
-  @UseGuards(JwtAuthGuard)
   @Get('profile')
-  @ApiBearerAuth()
   @ApiRoute({
     summary: 'Logged user profile',
     description:
@@ -119,19 +95,7 @@ export class UsersController {
   }
 
   @Get('search/:searchWord')
-  async getAuthors(@Param('searchWord') searchWord: string): Promise<any> {
+  async getAuthors(@Param('searchWord') searchWord: string): Promise<User[]> {
     return this.userService.searchUser(searchWord);
-  }
-
-  @Get('otp/:emailorphone')
-  async sentOTP(@Param('emailorphone') emailorphone: string) {
-    if (emailorphone === undefined) {
-      throw new BadRequestException('MISSING_REQUIRED_FIELD', {
-        cause: new Error(),
-        description: 'Email or phone number is required',
-      });
-    }
-
-    return this.userService.generateOTP(emailorphone);
   }
 }

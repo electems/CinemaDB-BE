@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 
 import { AuthModule } from '@modules/users/auth/auth.module';
 
-import { FormController } from './registration.controller';
-import { RegistrationService } from './registration.service';
+import { FormController } from './formmanager.controller';
+import { RegistrationService } from './formmanager.service';
 
 @Module({
   imports: [AuthModule],

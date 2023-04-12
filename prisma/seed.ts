@@ -8,21 +8,29 @@ export const seed = async (): Promise<void> => {
     where: { email: 'alice@cool.org' },
     update: {},
     create: {
+      userName: 'alicecool',
       email: `alice@cool.org`,
       firstName: 'Alice',
       lastName: 'Hartmann',
+      filmIndustry: 'sandalhood',
+      status: 'ACTIVE',
+      role: 'USER',
       password: await bcrypt.hash('alice', 11),
     },
   });
 
   await prisma.user.upsert({
-    where: { email: 'bob@cool.org' },
+    where: { email: 'shiva@electems.com' },
     update: {},
     create: {
-      email: `bob@cool.org`,
-      firstName: 'Bob',
-      lastName: 'Cool',
-      password: await bcrypt.hash('bob', 11),
+      userName: 'admin',
+      email: `shiva@electems.com`,
+      firstName: 'Super',
+      lastName: 'Admin',
+      filmIndustry: 'sandalhood',
+      status: 'ACTIVE',
+      role: 'ADMIN',
+      password: await bcrypt.hash('admin', 11),
     },
   });
 

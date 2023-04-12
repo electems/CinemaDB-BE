@@ -19,16 +19,19 @@
     "start-debug": "nest start --debug --watch",
     "start-prod": "node dist/src/main",
     "lint": "eslint \"{src,prisma,scripts}/**/*.ts\" --fix",
-    "type-check": "tsc --noEmit --pretty",   
+    "type-check": "tsc --noEmit --pretty",
     "prisma-merge": "ts-node ./scripts/merge.prisma.schemas.ts && yarn prisma format --schema prisma/schema.prisma",
     "prisma-gen": "prisma generate",
     "prisma-seed": "yarn prisma migrate dev && yarn prisma db seed",
     "sync-icons": "yarn generateReadmeIcons -h 50",
     "fly-scale-up": "flyctl scale count 1",
     "fly-scale-down": "flyctl scale count 0",
-    "fly-deploy": "flyctl deploy -a nestjs-prisma-postgres-sandbox"
+    "fly-deploy": "flyctl deploy -a nestjs-prisma-postgres-sandbox",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@handlebars/allow-prototype-access": "^1.0.5",
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/cli": "^9.3.0",
@@ -42,9 +45,12 @@
     "@nestjs/swagger": "^6.2.1",
     "@nestjs/terminus": "^9.2.1",
     "@prisma/client": "^4.11.0",
+    "@testing-library/cypress": "^9.0.0",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15",
     "nodemailer": "^6.7.1",
     "nodemailer-express-handlebars": "^4.0.0",
     "passport": "^0.6.0",
@@ -67,19 +73,22 @@
     "@types/express": "^4.17.17",
     "@types/fs-extra": "^9.0.12",
     "@types/jsonwebtoken": "^9.0.1",
-    "@types/node": "^18.15.10",
+    "@types/lodash": "^4.14.191",
+    "@types/node": "^18.15.11",
     "@types/nodemailer-express-handlebars": "^4.0.2",
     "@types/passport-jwt": "^3.0.8",
     "@types/passport-local": "^1.0.35",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
+    "cypress": "^9.2.0",
+    "cypress-postgres": "^1.1.1",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "fs-extra": "^11.1.1",  
+    "fs-extra": "^11.1.1",
     "jsonwebtoken": "^9.0.0",
     "prettier": "^2.8.7",
     "prisma": "^4.11.0",
@@ -93,5 +102,10 @@
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
-  }
+  },
+  "eslintIgnore": [
+    "*.spec.ts",
+    "prisma/*",
+    "scripts/*"
+  ]
 }

@@ -4,7 +4,7 @@ import { User } from '@prisma/client';
 
 import { LoggedUserDto } from '@modules/users/user/dto/logged-user.dto';
 
-import { EmailService } from '../emailfolder/email.service';
+import { EmailService } from '../emails/email.service';
 @Injectable()
 export class EventListnerService {
   constructor(
@@ -15,7 +15,6 @@ export class EventListnerService {
   @OnEvent('email.registration', { async: true })
   handleLoginEmail(user: LoggedUserDto): void {
     this.emailService.loginEmail(user);
-    console.log('Received Object From event emitter: ', user);
   }
 
   emitEvent(payload: User): void {

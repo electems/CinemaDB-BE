@@ -10,15 +10,12 @@ plugins:
   - '@typescript-eslint/eslint-plugin'
   - prettier
   - import
-  - jest
 
 extends:
   - eslint:recommended
   - plugin:@typescript-eslint/recommended
   - plugin:prettier/recommended
   - plugin:import/typescript
-  - plugin:jest/recommended
-  - plugin:jest/style
 
 env:
   jest: true
@@ -98,7 +95,6 @@ rules:
           position: before
       pathGroupsExcludedImportTypes:
         - builtin
-  jest/no-conditional-expect: off
   key-spacing: error
   keyword-spacing: error
   lines-between-class-members: error
@@ -127,8 +123,3 @@ rules:
     - error
     - never
   valid-typeof: error
-  jest/expect-expect:
-    - error
-    - assertFunctionNames:
-        - expect
-        - request.**.expect

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import fs from 'fs';
 
 import { Injectable } from '@nestjs/common';
@@ -9,8 +8,6 @@ import pathconfig from '../../config/pathconfig.json';
 @Injectable()
 export class RegistrationService {
   jsonList = jsonList;
-
-  constructor() {}
 
   async getFormLayout(language: string, formlayout: string): Promise<JSON> {
     const data = fs.readFileSync(
@@ -31,7 +28,6 @@ export class RegistrationService {
       `${pathconfig.FilePath}/${language}/${formlayout}.json`,
       jsondata,
     );
-    //const jsonData = JSON.parse(data);
     return jsondata;
   }
 }

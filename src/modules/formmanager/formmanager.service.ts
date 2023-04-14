@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Form, FormElements, FormOptions } from '@prisma/client';
 import jsonList from 'src/forms/EN/registration.json';
 
@@ -9,7 +9,7 @@ import { DatabaseService } from '@modules/database/database.service';
 import pathconfig from '../../config/pathconfig.json';
 
 @Injectable()
-export class RegistrationService {
+export class FormsService {
   jsonList = jsonList;
 
   constructor(private db: DatabaseService) {}
@@ -36,10 +36,17 @@ export class RegistrationService {
     return jsondata;
   }
 
-  async createForm(form: Form): Promise<Form> {
+  async createForm(form: any): Promise<Form> {
     const formData = await this.db.form.create({
-      data: form,
+      data: {
+        ...form,
+        FormElements: {
+          create: form.FormElements,
+        },
+      },
+      include: { FormElements: { include: { FormOptions: true } } },
     });
+
     return formData;
   }
 
@@ -65,5 +72,111 @@ export class RegistrationService {
       include: { FormElements: { include: { FormOptions: true } } },
     });
     return formById;
+  }
+
+  async getFormElementById(id: number): Promise<FormElements | null> {
+    const formById = this.db.formElements.findFirst({
+      where: {
+        id,
+      },
+      include: { FormOptions: true },
+    });
+    return formById;
+  }
+
+  async getFormOptionsById(id: number): Promise<FormOptions | null> {
+    const formById = this.db.formOptions.findFirst({
+      where: {
+        id,
+      },
+    });
+    return formById;
+  }
+
+  async updateFormbyId(id: number, form: any): Promise<Form> {
+    const existingForm = await this.getFormbyId(id);
+    if (!existingForm) {
+      throw new NotFoundException();
+    }
+    return this.db.form.update({
+      where: { id },
+      data: {
+        ...form,
+        FormElements: {
+          update: form.FormElements,
+        },
+      },
+    });
+  }
+
+  async updateFormElementsById(
+    id: number,
+    formElement: FormElements,
+  ): Promise<FormElements> {
+    const existingUser = await this.getFormElementById(id);
+    if (!existingUser) {
+      throw new NotFoundException();
+    }
+
+    return this.db.formElements.update({
+      where: { id },
+      data: formElement,
+    });
+  }
+
+  async updateFormOptions(
+    id: number,
+    formOptions: FormOptions,
+  ): Promise<FormOptions> {
+    const existingUser = await this.getFormOptionsById(id);
+    if (!existingUser) {
+      throw new NotFoundException();
+    }
+
+    return this.db.formOptions.update({
+      where: { id },
+      data: formOptions,
+    });
+  }
+
+  async deleteFormById(id: number): Promise<Form> {
+    const form = await this.getFormbyId(id);
+    if (!form) {
+      throw new NotFoundException();
+    }
+
+    return this.db.form.delete({
+      where: {
+        id,
+      },
+      include: { FormElements: { include: { FormOptions: true } } },
+    });
+  }
+
+  async deleteFormElementById(id: number): Promise<FormElements> {
+    const formElements = await this.getFormElementById(id);
+    if (!formElements) {
+      throw new NotFoundException();
+    }
+
+    return this.db.formElements.delete({
+      where: {
+        id,
+      },
+      include: { FormOptions: true },
+    });
+  }
+
+  async deleteFormOptionsById(id: number): Promise<FormOptions> {
+    const formOptions = await this.getFormOptionsById(id);
+    if (!formOptions) {
+      throw new NotFoundException();
+    }
+
+    return this.db.formOptions.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

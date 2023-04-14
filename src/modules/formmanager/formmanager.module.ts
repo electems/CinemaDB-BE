@@ -3,13 +3,13 @@ import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@modules/database/database.module';
 import { AuthModule } from '@modules/users/auth/auth.module';
 
-import { FormController } from './formmanager.controller';
-import { RegistrationService } from './formmanager.service';
+import { FormsController } from './formmanager.controller';
+import { FormsService } from './formmanager.service';
 
 @Module({
   imports: [AuthModule, DatabaseModule],
-  controllers: [FormController],
-  providers: [RegistrationService],
-  exports: [RegistrationService],
+  controllers: [FormsController],
+  providers: [FormsService],
+  exports: [FormsService],
 })
-export class RegistrationModule {}
+export class FormsModule {}

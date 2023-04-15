@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "title": "Exclusive movies curated for you",
+    "image1": "http://localhost:3001/irer.png"
+  },
+  {
+    "id": "2",
+    "title": "New Uploads",
+    "image1": "http://localhost:3001/irer.png"
+  },
+  {
+    "id": "3",
+    "title": "Continue Watching",
+    "image1": "http://localhost:3001/irer.png"
+  },
+  {
+    "id": "4",
+    "title": "Latest Top 20 most watched movies",
+    "image1": "http://localhost:3001/irer.png"
+  }
+]

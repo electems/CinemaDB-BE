@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "label": "Film Promotion & Campaign"
+  },
+
+  {
+    "id": 2,
+    "label": "Digital Print"
+  },
+
+  {
+    "id": 3,
+    "label": "Film Journalists"
+  },
+
+  {
+    "id": 4,
+    "label": "Advertisement"
+  },
+  {
+    "id": 5,
+    "label": "TV Media Companies"
+  },
+  {
+    "id": 5,
+    "label": "Production Unit"
+  },
+  {
+    "id": 5,
+    "label": "Print Media"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "code": "Trending",
+    "title": "Exclusive movies curated for you"
+  },
+  {
+    "id": "2",
+    "code": "Trending",
+    "title": "New Uploads"
+  },
+  {
+    "id": "3",
+    "code": "Trending",
+    "title": "Continue Watching"
+  },
+  {
+    "id": "4",
+    "code": "Trending",
+    "title": "Latest Top 20 most watched movies"
+  },
+  {
+    "id": "4",
+    "code": "Trending",
+    "title": "Latest and Trending Trailers"
+  },
+  {
+    "id": "5",
+    "code": "Trending",
+    "title": "Top Pics for you"
+  },
+  {
+    "id": "6",
+    "code": "Trending",
+    "title": "Upcoming Movies"
+  }
+]

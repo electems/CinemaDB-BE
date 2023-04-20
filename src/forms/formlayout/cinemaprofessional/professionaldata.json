@@ -1,0 +1,97 @@
+[
+  {
+    "id": "D4116A67-6D6E-4E9D-BF60-4CC0AE5EC60A",
+    "element": "Label",
+    "text": "Label",
+    "static": true,
+    "required": false,
+    "bold": false,
+    "italic": false,
+    "content": "Placeholder text...",
+    "canHavePageBreakBefore": true,
+    "canHaveAlternateForm": true,
+    "canHaveDisplayHorizontal": true,
+    "canHaveOptionCorrect": true,
+    "canHaveOptionValue": true,
+    "canPopulateFromApi": true
+  },
+  {
+    "id": "A3270845-AF5C-4828-9C1D-BC70301C2735",
+    "element": "Label",
+    "text": "Label",
+    "static": true,
+    "required": false,
+    "bold": false,
+    "italic": false,
+    "content": "Placeholder text...",
+    "canHavePageBreakBefore": true,
+    "canHaveAlternateForm": true,
+    "canHaveDisplayHorizontal": true,
+    "canHaveOptionCorrect": true,
+    "canHaveOptionValue": true,
+    "canPopulateFromApi": true
+  },
+  {
+    "id": "5105E2C3-91D1-432B-9310-DF72888824A2",
+    "element": "LineBreak",
+    "text": "Line Break",
+    "static": true,
+    "required": false,
+    "bold": false,
+    "italic": false,
+    "canHavePageBreakBefore": true,
+    "canHaveAlternateForm": true,
+    "canHaveDisplayHorizontal": true,
+    "canHaveOptionCorrect": true,
+    "canHaveOptionValue": true,
+    "canPopulateFromApi": true
+  },
+  {
+    "id": "F453E8E8-4E83-46A6-A88F-81864AF90B79",
+    "element": "Label",
+    "text": "Label",
+    "static": true,
+    "required": false,
+    "bold": false,
+    "italic": false,
+    "content": "Placeholder text...",
+    "canHavePageBreakBefore": true,
+    "canHaveAlternateForm": true,
+    "canHaveDisplayHorizontal": true,
+    "canHaveOptionCorrect": true,
+    "canHaveOptionValue": true,
+    "canPopulateFromApi": true
+  },
+  {
+    "id": "B4C79C0A-2775-438B-81D7-B16518B77A90",
+    "element": "Dropdown",
+    "text": "Dropdown",
+    "required": false,
+    "canHaveAnswer": true,
+    "canHavePageBreakBefore": true,
+    "canHaveAlternateForm": true,
+    "canHaveDisplayHorizontal": true,
+    "canHaveOptionCorrect": true,
+    "canHaveOptionValue": true,
+    "canPopulateFromApi": true,
+    "field_name": "dropdown_5E9FFEE1-94DE-4B7D-BEC3-5C3A5D4C4E7D",
+    "label": "Placeholder label",
+    "options": [
+      {
+        "value": "place_holder_option_1",
+        "text": "Place holder option 1",
+        "key": "dropdown_option_ED10991C-0BDB-4F64-8FFE-CCCDAC1279DB"
+      },
+      {
+        "value": "place_holder_option_2",
+        "text": "Place holder option 2",
+        "key": "dropdown_option_2BA280B0-DCFF-478F-B997-E88BEC3F8263"
+      },
+      {
+        "value": "place_holder_option_3",
+        "text": "Place holder option 3",
+        "key": "dropdown_option_37023AEF-D2C3-4D03-96B0-86FA65E5EA95"
+      }
+    ]
+  }
+]

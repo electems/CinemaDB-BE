@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
@@ -26,22 +28,18 @@ export class FormController {
     return this.registrationService.getFormLayout(language, formlayout);
   }
 
-  @Post('/:language/:formlayout')
+  @Post('/:path/:formlayout')
   @ApiRoute({
     summary: 'Insert fields',
     description: 'Insert dynamic fields',
     ok: { type: 'json', description: 'The form fields' },
   })
   async createFormLayout(
-    @Param('language') language: string,
+    @Param('path') path: string,
     @Param('formlayout') formlayout: string,
     @Body() body: object,
   ): Promise<string> {
     //const jsonData = JSON.parse(data);
-    return this.registrationService.createFormLayout(
-      language,
-      formlayout,
-      body,
-    );
+    return this.registrationService.createFormLayout(path, formlayout, body);
   }
 }

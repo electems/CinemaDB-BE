@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable no-var */
 import fs from 'fs';
 
 import { Injectable } from '@nestjs/common';
@@ -19,13 +22,17 @@ export class RegistrationService {
   }
 
   async createFormLayout(
-    language: string,
+    path: string,
     formlayout: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     body: object,
   ): Promise<string> {
     const jsondata = JSON.stringify(body);
+    if (!fs.existsSync(`${pathconfig.FilePath}/${path}`)) {
+      fs.mkdirSync(`${pathconfig.FilePath}/${path}`);
+    }
     fs.writeFileSync(
-      `${pathconfig.FilePath}/${language}/${formlayout}.json`,
+      `${pathconfig.FilePath}/${path}/${formlayout}.json`,
       jsondata,
     );
     return jsondata;

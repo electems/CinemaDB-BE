@@ -88,19 +88,16 @@ export class FormController {
   }
 
   //Delete directory
-  @Delete('deletedirectory/:path/:dirname')
+  @Delete('deletedirectory/:dirname')
   @ApiRoute({
     summary: 'Insert fields',
     description: 'Insert dynamic fields',
     ok: { type: 'json', description: 'The form fields' },
   })
-  async deleteDirectory(
-    @Param('path') path: string,
-    @Param('dirname') dirname: string,
-  ) {
+  async deleteDirectory(@Param('dirname') dirname: string) {
     //const jsonData = JSON.parse(data);
-    if (fs.existsSync(`${pathconfig.FilePath}/${path}/${dirname}`)) {
-      fs.rmdirSync(`${pathconfig.FilePath}/${path}/${dirname}`, {
+    if (fs.existsSync(`${pathconfig.FilePath}/${dirname}`)) {
+      fs.rmdirSync(`${pathconfig.FilePath}/${dirname}`, {
         recursive: true,
       });
     }

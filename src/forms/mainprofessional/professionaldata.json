@@ -1,26 +1,26 @@
 [
   {
-    "title": "Main Professional",
-    "expanded": true,
-    "children": [{ "title": "sssss" }]
-  },
-  { "title": "Ad agency/ Promoter" },
-  { "title": "ProductionHouse / Company" },
-  {
+    "key": "1",
     "title": "Cinema Professional",
-    "children": [
-      {
-        "title": "Select the film industry",
-        "children": [
-          { "title": "Film Festival" },
-          { "title": "Sandalwood" },
-          { "title": "Tollywod" },
-          { "title": "Kollywood" },
-          { "title": "Mollywood" }
-        ],
-        "expanded": true
-      }
-    ],
-    "expanded": true
+    "isLeaf": false,
+    "children": []
+  },
+  {
+    "key": "2",
+    "title": "Production House/ Company",
+    "isLeaf": false,
+    "children": []
+  },
+  {
+    "key": "3",
+    "title": "Film Festivals",
+    "isLeaf": false,
+    "children": []
+  },
+  {
+    "key": "4",
+    "title": "Ad agency / Promoter",
+    "isLeaf": false,
+    "children": []
   }
 ]

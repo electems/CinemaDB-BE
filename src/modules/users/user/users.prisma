@@ -14,6 +14,8 @@ model User {
    role           String @map("role")
    status         String @map("status")
    filmIndustry   String @map("film_industry")
+   industrySelection  Json[]  @map("industryselection")
+   step String? @map("step")
 }
 
 model Biography {

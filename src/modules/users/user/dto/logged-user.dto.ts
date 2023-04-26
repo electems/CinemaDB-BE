@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LoggedUserDto {
@@ -20,4 +21,8 @@ export class LoggedUserDto {
   role: string;
 
   otp: string;
+
+  step: string | null;
+
+  industrySelection: any;
 }

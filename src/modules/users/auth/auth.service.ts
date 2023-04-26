@@ -41,6 +41,8 @@ export class AuthService {
       firstName: user.firstName,
       lastName: user.lastName,
       role: user.role,
+      step: user.step,
+      industrySelection: user.industrySelection
     };
 
     return {
@@ -51,6 +53,8 @@ export class AuthService {
       token: this.jwtService.sign(payload),
       role: user.role,
       otp: '',
+      step: user.step,
+      industrySelection: user.industrySelection
     };
   }
 }

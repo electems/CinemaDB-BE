@@ -9,28 +9,38 @@ import { DatabaseService } from '@modules/database/database.service';
 import pathconfig from '../../config/pathconfig.json';
 
 @Injectable()
-export class FormsService {
+export class FormManagerService {
   jsonList = jsonList;
 
   constructor(private db: DatabaseService) {}
 
-  async getFormLayout(language: string, formlayout: string): Promise<JSON> {
-    const data = fs.readFileSync(
-      `${pathconfig.FilePath}/${language}/${formlayout}.json`,
-      'utf8',
-    );
-    const jsonData = JSON.parse(data);
-    return jsonData;
+  async getFormLayout(language: string, formlayout: string): Promise<string> {
+    if (fs.existsSync(`${pathconfig.FilePath}/${language}/${formlayout}.json`)) {
+      const data = fs.readFileSync(
+        `${pathconfig.FilePath}/${language}/${formlayout}.json`,
+        'utf8',
+      );
+      const jsonData = JSON.parse(data)
+      return jsonData
+    } else {
+      const obj = { error: 'FILE_NOT_FOUND' }
+      return JSON.stringify(obj)
+    }
+
   }
 
   async createFormLayout(
-    language: string,
+    path: string,
     formlayout: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     body: object,
   ): Promise<string> {
     const jsondata = JSON.stringify(body);
+    if (!fs.existsSync(`${pathconfig.FilePath}/${path}`)) {
+      fs.mkdirSync(`${pathconfig.FilePath}/${path}`);
+    }
     fs.writeFileSync(
-      `${pathconfig.FilePath}/${language}/${formlayout}.json`,
+      `${pathconfig.FilePath}/${path}/${formlayout}.json`,
       jsondata,
     );
     return jsondata;

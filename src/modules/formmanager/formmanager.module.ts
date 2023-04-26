@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 
-import { DatabaseModule } from '@modules/database/database.module';
 import { AuthModule } from '@modules/users/auth/auth.module';
 
 import { FormsController } from './formmanager.controller';
-import { FormsService } from './formmanager.service';
+import { FormManagerService } from './formmanager.service';
+import { DatabaseService } from '@modules/database/database.service';
 
 @Module({
-  imports: [AuthModule, DatabaseModule],
+  imports: [AuthModule],
   controllers: [FormsController],
-  providers: [FormsService],
-  exports: [FormsService],
+  providers: [FormManagerService,DatabaseService],
+  exports: [FormManagerService],
 })
-export class FormsModule {}
+export class FormManagerModule {}

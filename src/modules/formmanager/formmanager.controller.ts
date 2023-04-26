@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 import {
   Body,
   Controller,
@@ -14,10 +16,9 @@ import { Form, FormElements, FormOptions } from '@prisma/client';
 
 import { ApiRoute } from '@decorators/api-route';
 import { JwtAuthGuard } from '@modules/users/auth/guards/jwt.auth-guard';
-import fs from 'fs';
-import pathconfig from '../../config/pathconfig.json';
 
 import { FormManagerService } from './formmanager.service';
+import pathconfig from '../../config/pathconfig.json';
 
 @UseGuards(JwtAuthGuard)
 @Controller('form')
@@ -49,7 +50,7 @@ export class FormsController {
     @Param('language') language: string,
     @Param('formlayout') formlayout: string,
     @Body() body: object,
-  ): Promise<string> {    
+  ): Promise<string> {
     return this.formsService.createFormLayout(language, formlayout, body);
   }
 
@@ -189,11 +190,11 @@ export class FormsController {
     description: 'Retrieves all fields',
     ok: { type: 'json', description: 'The form fields' },
   })
-  async getDirectoryListing(@Param('path') path: string): Promise<any> {
+  async getDirectoryListing(@Param('path') path: string): Promise<string[]> {
     const directoriesInDirectory = fs
       .readdirSync(`${pathconfig.FilePath}/${path}`, { withFileTypes: true })
       .filter((item: { isDirectory: () => any }) => item.isDirectory())
-      .map((item: { name: any }) => item.name);
+      .map((item: { name: string }) => item.name);
     return directoriesInDirectory;
   }
 
@@ -207,7 +208,7 @@ export class FormsController {
   async createDirectory(
     @Param('path') path: string,
     @Param('dirname') dirname: string,
-  ): Promise<any> {
+  ): Promise<void> {
     //const jsonData = JSON.parse(data);
     if (!fs.existsSync(`${pathconfig.FilePath}/${path}/${dirname}`)) {
       fs.mkdirSync(`${pathconfig.FilePath}/${path}/${dirname}`);
@@ -221,7 +222,10 @@ export class FormsController {
     description: 'Insert dynamic fields',
     ok: { type: 'json', description: 'The form fields' },
   })
-  async deleteDirectory( @Param('path') path: string,@Param('dirname') dirname: string) {
+  async deleteDirectory(
+    @Param('path') path: string,
+    @Param('dirname') dirname: string,
+  ): Promise<void> {
     //const jsonData = JSON.parse(data);
     if (fs.existsSync(`${pathconfig.FilePath}/${path}/${dirname}`)) {
       fs.rmdirSync(`${pathconfig.FilePath}/${path}/${dirname}`, {

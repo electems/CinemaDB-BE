@@ -28,3 +28,9 @@ export const updateUser = {
   status: 'ACTIVE',
   filmIndustry: 'sandalhood',
 };
+
+export const errorMsg = {
+  error: "Not found user object",
+  message: "MISSING_USER",
+  statusCode: 404
+};

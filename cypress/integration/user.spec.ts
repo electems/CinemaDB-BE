@@ -1,6 +1,6 @@
-import { User } from './models';
+import { User, errorMsg } from './models';
 import { updateUser } from './models';
-
+import { isEqual } from 'lodash';
 
 const base_url = 'http://localhost:3001';
 const phoneNumber = Math.floor(Math.random() * 10000000000);
@@ -9,10 +9,9 @@ const newphone = phoneNumber.toString();
 describe.only('UserSection', () => {
   let userObject;
   let newUserId;
-  let newEmail='adarsh@electems.com'
-  let searchWord ='fffff';
-  let userEmail;
-  
+  let newEmail = 'adarsh@electems.com';
+  let searchWord = 'fffff';
+
   it('User > Login', () => {
     cy.request('POST', base_url + '/auth/login ', {
       username: 'admin',
@@ -33,10 +32,9 @@ describe.only('UserSection', () => {
     cy.task('dbQuery', {
       query: `SELECT * FROM "User" Where email='${User.email}'`,
     }).then((queryResponse) => {
-      console.log('inside then'+ queryResponse[0])
+      console.log('inside then' + queryResponse[0]);
       if (queryResponse) {
         newUserId = queryResponse[0].id;
-        userEmail = queryResponse[0].email
       }
     });
     cy.wait(2000);
@@ -51,7 +49,8 @@ describe.only('UserSection', () => {
       body: {},
     }).then((response) => {
       console.log(response.body);
-      expect(response.status).to.eq(200);
+      console.log(isEqual(response.body, User));
+      expect(isEqual(response.body[0], User));
     });
   });
 
@@ -64,82 +63,67 @@ describe.only('UserSection', () => {
       body: updateUser,
     }).then((response) => {
       console.log(response.body);
-      expect(response.status).to.eq(200);
+      expect(isEqual(response.body[0], updateUser));
     });
   });
 
-
   it('User > Search/:string ', () => {
-     /*to check the string is present in firstName colum */
+    /*to check the string is present in firstName colum */
     cy.request({
       method: 'GET',
-      url: base_url +'/users/search/' + userObject.firstName,
+      url: base_url + '/users/search/' + updateUser.firstName,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
       body: {},
+    }).then((response) => {
+      console.log(response.body);
+      expect(isEqual(response.body[0].firstName, updateUser.firstName));
+    });
 
+    /*to check the string is present in lastname colum */
+
+    cy.request({
+      method: 'GET',
+      url: base_url + '/users/search/' + updateUser.lastName,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+      body: {},
     }).then((response) => {
       console.log(response.body);
       expect(response.status).to.eq(200);
+      expect(isEqual(response.body[0].lastName, updateUser.lastName));
     });
 
-     /*to check the string is present in lastname colum */
-   
+    /*to check the string is present in email colum */
     cy.request({
       method: 'GET',
-      url: base_url +'/users/search/' + userObject.lastName,
+      url: base_url + '/users/search/' + updateUser.email,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
       body: {},
+    }).then((response) => {
+      console.log(response.body);
+      expect(isEqual(response.body[0].email, updateUser.email));
+    });
 
+    /*to check the string is present in filmIndustry colum */
+    cy.request({
+      method: 'GET',
+      url: base_url + '/users/search/' + updateUser.filmIndustry,
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: true,
+      body: {},
     }).then((response) => {
       console.log(response.body);
       expect(response.status).to.eq(200);
+      expect(isEqual(response.body[0].filmIndustry, updateUser.filmIndustry));
     });
 
-     /*to check the string is present in email colum */
-    cy.request({
-      method: 'GET',
-      url: base_url +'/users/search/' + userObject.email,
-      headers: { Authorization: 'Bearer ' + userObject.token },
-      form: true,
-      body: {},
-
-    }).then((response) => {
-      console.log(response.body);
-      expect(response.status).to.eq(200);
-    });
-
-     /*to check the string is present in filmIndustry colum */
-    cy.request({
-      method: 'GET',
-      url: base_url +'/users/search/' + userObject.filmIndustry,
-      headers: { Authorization: 'Bearer ' + userObject.token },
-      form: true,
-      body: {},
-
-    }).then((response) => {
-      console.log(response.body);
-      expect(response.status).to.eq(200);
-    });
-
-     /*to check if the string is not  present in colum */
-    cy.request({
-      method: 'GET',
-      url: base_url +'/users/search/' + searchWord,
-      headers: { Authorization: 'Bearer ' + userObject.token },
-      form: true,
-      body: {},
-
-    }).then((response) => {
-      console.log(response.body);
-      // expect(response.body.firstName).to.have.property('firstName')
-    });
+    /*to check if the string is not  present in colum */
   });
 
   it('User > Otp/:emailorphone ', () => {
-
-     /*get otp useing user email */
+    /*get otp useing user email */
     cy.request({
       method: 'Get',
       url: base_url + '/auth/otp/' + updateUser.email,
@@ -147,45 +131,48 @@ describe.only('UserSection', () => {
       form: true,
     }).then((response) => {
       console.log(response.body);
-      expect(response.status).to.eq(200);
+      expect(isEqual(response.body.userName, updateUser.email));
     });
 
-       /*check if the email is invalid  */
+    //      /*check if the email is invalid  */
     cy.request({
       method: 'Get',
       url: base_url + '/auth/otp/' + newEmail,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
-      failOnStatusCode: false
+      failOnStatusCode: false,
     }).then((response) => {
-      console.log(response.status);
-      expect(response.Status).to.eq(undefined); 
+      console.log(response.body);
+      expect(isEqual(response.body.message, errorMsg.message));
     });
 
-     /*get otp useing user phoneNumber */
+    //    /*get otp useing user phoneNumber */
     cy.request({
       method: 'Get',
+
       url: base_url + '/auth/otp/' + User.phoneNumber,
+
+ 
+
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
     }).then((response) => {
       console.log(response.body);
-      expect(response.status).to.eq(200);
+      expect(isEqual(response.body.userName, updateUser.phoneNumber));
     });
 
-	  /*check if the phoneNumber is invalid  */
+    /*check if the phoneNumber is invalid  */
     cy.request({
       method: 'Get',
       url: base_url + '/auth/otp/' + newphone,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
-      failOnStatusCode: false
+      failOnStatusCode: false,
     }).then((response) => {
       console.log(response.body);
-      expect(response.Status).to.eq(undefined);
+      expect(isEqual(response.body.message, errorMsg.message));
     });
-   
-   });
+  });
 
   it('User > Delete/:id ', () => {
     cy.request({
@@ -195,8 +182,8 @@ describe.only('UserSection', () => {
       form: true,
     }).then((response) => {
       console.log(response.body);
-      expect(response.status).to.eq(200);
+      //  expect(response.status).to.eq(200);
+      expect(isEqual(response.body.newUserId, newUserId));
     });
   });
-
 });

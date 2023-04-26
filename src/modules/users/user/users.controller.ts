@@ -94,7 +94,7 @@ export class UsersController {
     return this.userService.deleteUserById(id);
   }
 
-  @Get('userSubCategory')
+  @Get('userSubCategory/all')
   @ApiRoute({
     summary: 'Get All UserSubCategory',
     description: 'Retrieves  UserSubCategory',

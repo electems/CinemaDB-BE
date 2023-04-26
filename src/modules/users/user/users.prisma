@@ -11,10 +11,10 @@ model User {
    phoneNumber    String? @unique @map("phonenumber")
    userName       String?  @unique @map("username")
    elapsedOTPTime DateTime @default(now()) @db.Timestamptz(3) @map("elapsedotptime")
-   role           String @map("role")
-   status         String @map("status")
-   filmIndustry   String @map("film_industry")
-   industrySelection  Json[]  @map("industryselection")
+   role           String? @map("role")
+   status         String? @map("status")
+   filmIndustry   String? @map("film_industry")
+   industrySelection  Json[]  @map("industry_selection")
    step String? @map("step")
 }
 
@@ -37,9 +37,9 @@ model Biography {
   awardName               String? @map("award_name")
   awardCategory           String? @map("award_category")
   result                  String? @map("result")
-  userId                  Int @map("user_id")
-  user                    User     @relation(fields: [userId], references: [id])
-  filmIndustry            String @map("film_industry")
+  userId                  Int? @map("user_id")
+  user                    User?     @relation(fields: [userId], references: [id])
+  filmIndustry            String? @map("film_industry")
 }
 
 model PersonalInformation {
@@ -61,9 +61,9 @@ model PersonalInformation {
   whenDidYouStartWorkingInTheIndustry     DateTime? @map("when_did_you_start_working_in_the_industry")
   whoIntroducedYouToTheFilmIndustry       String?  @map("who_introduced_you_to_the_film_industry")
   give2ReferencesAndContactsFromTheFilmIndustry  String? @map("give_2references_and_contacts_from_the_film_industry")
-  userId                                  Int      @map("uer_id")
-  user                                    User     @relation(fields: [userId], references: [id])  
-  filmIndustry                            String   @map("film_industry")
+  userId                                  Int?      @map("user_id")
+  user                                    User?     @relation(fields: [userId], references: [id])  
+  filmIndustry                            String?   @map("film_industry")
 }
 
 model MediaLinks {
@@ -76,7 +76,19 @@ model MediaLinks {
   instagramAccountUrl String?      @map("instagram_account_url")
   linkedinAccountUrl  String?      @map("linkedin_account_url")
   twitterAccountUrl   String?      @map("twitter_account_url")
-  userId              Int          @map("user_id")
-  user                User         @relation(fields: [userId], references: [id])
-  filmIndustry        String       @map("film_industry")
+  userId              Int?          @map("user_id")
+  user                User?         @relation(fields: [userId], references: [id])
+  filmIndustry        String?       @map("film_industry")
+} 
+
+model UserSubCategory{
+  id                  Int          @id @default(autoincrement())
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime   @default(now()) @map("updated_at")
+  createdBy      String?     @map("created_by")
+  updatedBy      String?    @map("updated_by")
+  key       String?    @map("key")
+  value     Json[]     @map("value")
+  userId    Int?       @map("user_id")
+  user      User?      @relation(fields: [userId], references: [id])
 }

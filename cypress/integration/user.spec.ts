@@ -142,7 +142,7 @@ describe.only('UserSection', () => {
      /*get otp useing user email */
     cy.request({
       method: 'Get',
-      url: base_url + '/users/otp/' + updateUser.email,
+      url: base_url + '/auth/otp/' + updateUser.email,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
     }).then((response) => {
@@ -153,7 +153,7 @@ describe.only('UserSection', () => {
        /*check if the email is invalid  */
     cy.request({
       method: 'Get',
-      url: base_url + '/users/otp/' + newEmail,
+      url: base_url + '/auth/otp/' + newEmail,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
       failOnStatusCode: false
@@ -165,7 +165,7 @@ describe.only('UserSection', () => {
      /*get otp useing user phoneNumber */
     cy.request({
       method: 'Get',
-      url: base_url + '/users/otp/' + User.phoneNumber,
+      url: base_url + '/auth/otp/' + User.phoneNumber,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
     }).then((response) => {
@@ -176,7 +176,7 @@ describe.only('UserSection', () => {
 	  /*check if the phoneNumber is invalid  */
     cy.request({
       method: 'Get',
-      url: base_url + '/users/otp/' + newphone,
+      url: base_url + '/auth/otp/' + newphone,
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
       failOnStatusCode: false

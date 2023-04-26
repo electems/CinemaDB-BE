@@ -36,7 +36,7 @@ export class PublicController {
     created: { type: LoggedUserDto, description: 'Authentication succeeded' },
   })
   async login(
-    @Request() req: ExpressRequest & { user: User },
+    @Request() req: ExpressRequest & { user: LoggedUserDto },
   ): Promise<LoggedUserDto> {
     return this.authService.getLoggedUser(req.user);
   }

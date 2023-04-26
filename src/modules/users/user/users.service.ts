@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { User } from '@prisma/client';
+import { User, UserSubCategory } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 import { DatabaseService } from '@database/database.service';
@@ -38,15 +38,29 @@ export class UsersService {
   }
 
   async getAllUsers(): Promise<Array<User>> {
-    return this.db.user.findMany();
+    return this.db.user.findMany({ include: { UserSubCategory: true } });
   }
 
-  async createUser(user: User): Promise<User> {
+  async createUser(user: any): Promise<User> {
     const bcryptPassword = await bcrypt.hash(user.password, 11);
     user.password = bcryptPassword;
-    return this.db.user.create({
-      data: user,
-    });
+    if (user.UserSubCategory) {
+      return this.db.user.create({
+        data: {
+          ...user,
+          UserSubCategory: {
+            create: user.UserSubCategory,
+          },
+        },
+        include: { UserSubCategory: true },
+      });
+    } else {
+      return this.db.user.create({
+        data: {
+          ...user,
+        },
+      });
+    }
   }
 
   async getUserById(id: number): Promise<User | null> {
@@ -54,19 +68,38 @@ export class UsersService {
       where: {
         id,
       },
+      include: { UserSubCategory: true },
     });
   }
 
-  async updateUser(id: number, user: User): Promise<User> {
+  async updateUser(id: number, user: any): Promise<User> {
     const existingUser = await this.getUserById(id);
     if (!existingUser) {
       throw new NotFoundException();
     }
-
-    return this.db.user.update({
-      where: { id },
-      data: user,
-    });
+    if (user.UserSubCategory) {
+      return this.db.user.update({
+        where: { id },
+        data: {
+          ...user,
+          UserSubCategory: {
+            update: {
+              where: { id: user.UserSubCategory[0].id },
+              data: user.UserSubCategory[0],
+            },
+          },
+        },
+        include: { UserSubCategory: true },
+      });
+    } else {
+      return this.db.user.update({
+        where: { id },
+        data: {
+          ...user,
+        },
+        
+      });
+    }
   }
 
   async deleteUserById(id: number): Promise<User> {
@@ -79,6 +112,7 @@ export class UsersService {
       where: {
         id,
       },
+      include: { UserSubCategory: true },
     });
   }
 
@@ -197,5 +231,52 @@ export class UsersService {
     }
 
     return updatedUserData;
+  }
+
+  async createUserSubCategory(user: UserSubCategory): Promise<UserSubCategory> {
+    const userSubCategory = this.db.userSubCategory.create({
+      data: user,
+    });
+    return userSubCategory;
+  }
+
+  async getAllUserSubCategory(): Promise<Array<UserSubCategory>> {
+    return this.db.userSubCategory.findMany()
+  }
+
+  async getUserSubCategoryById(id: number): Promise<UserSubCategory | null> {
+    return this.db.userSubCategory.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async updateUserSubCategory(
+    id: number,
+    user: UserSubCategory,
+  ): Promise<UserSubCategory> {
+    const existingUser = await this.getUserById(id);
+    if (!existingUser) {
+      throw new NotFoundException();
+    }
+
+    return this.db.userSubCategory.update({
+      where: { id },
+      data: user,
+    });
+  }
+
+  async deleteUserSubCategoryById(id: number): Promise<UserSubCategory> {
+    const user = await this.getUserSubCategoryById(id);
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    return this.db.userSubCategory.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

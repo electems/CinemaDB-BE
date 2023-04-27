@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
 import {
   BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { User } from '@prisma/client';
+import { User, UserSubCategory } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 import { DatabaseService } from '@database/database.service';
@@ -20,7 +18,7 @@ export class UsersService {
     private util: Util,
   ) {}
 
-  async findOne(userName: string): Promise<User | null> {
+  async findOneUser(userName: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
         AND: [
@@ -39,40 +37,73 @@ export class UsersService {
     });
   }
 
-  async getAll(): Promise<Array<User>> {
-    return this.db.user.findMany();
+  async getAllUsers(): Promise<Array<User>> {
+    return this.db.user.findMany({ include: { UserSubCategory: true } });
   }
 
-  async create(user: User): Promise<User> {
+  async createUser(user: any): Promise<User> {
     const bcryptPassword = await bcrypt.hash(user.password, 11);
     user.password = bcryptPassword;
-    return this.db.user.create({
-      data: user,
-    });
+    if (user.UserSubCategory) {
+      return this.db.user.create({
+        data: {
+          ...user,
+          UserSubCategory: {
+            create: user.UserSubCategory,
+          },
+        },
+        include: { UserSubCategory: true },
+      });
+    } else {
+      return this.db.user.create({
+        data: {
+          ...user,
+        },
+      });
+    }
   }
 
-  async getById(id: number): Promise<User | null> {
+  async getUserById(id: number): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
         id,
       },
+      include: { UserSubCategory: true },
     });
   }
 
-  async update(id: number, user: User): Promise<User> {
-    const existingUser = await this.getById(id);
+  async updateUser(id: number, user: any): Promise<User> {
+    const existingUser = await this.getUserById(id);
     if (!existingUser) {
       throw new NotFoundException();
     }
-
-    return this.db.user.update({
-      where: { id },
-      data: user,
-    });
+    if (user.UserSubCategory) {
+      return this.db.user.update({
+        where: { id },
+        data: {
+          ...user,
+          UserSubCategory: {
+            update: {
+              where: { id: user.UserSubCategory[0].id },
+              data: user.UserSubCategory[0],
+            },
+          },
+        },
+        include: { UserSubCategory: true },
+      });
+    } else {
+      return this.db.user.update({
+        where: { id },
+        data: {
+          ...user,
+        },
+        
+      });
+    }
   }
 
-  async deleteById(id: number): Promise<User> {
-    const user = await this.getById(id);
+  async deleteUserById(id: number): Promise<User> {
+    const user = await this.getUserById(id);
     if (!user) {
       throw new NotFoundException();
     }
@@ -81,6 +112,7 @@ export class UsersService {
       where: {
         id,
       },
+      include: { UserSubCategory: true },
     });
   }
 
@@ -119,7 +151,7 @@ export class UsersService {
     return users;
   }
 
-  async findOneByUsername(userName: string): Promise<User | null> {
+  async findOneUserByUsername(userName: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
         userName,
@@ -127,7 +159,7 @@ export class UsersService {
     });
   }
 
-  async findOneByEmail(email: string): Promise<User | null> {
+  async findOneUserByEmail(email: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
         email,
@@ -135,7 +167,7 @@ export class UsersService {
     });
   }
 
-  async findOneByMobileNumber(phoneNumber: string): Promise<User | null> {
+  async findOneUserByMobileNumber(phoneNumber: string): Promise<User | null> {
     return this.db.user.findFirst({
       where: {
         phoneNumber,
@@ -150,9 +182,9 @@ export class UsersService {
     const isEmailValid = this.util.isEmail(emailorphone);
 
     if (isEmailValid) {
-      userData = await this.findOneByEmail(emailorphone);
+      userData = await this.findOneUserByEmail(emailorphone);
     } else if (phoneno.test(emailorphone)) {
-      userData = await this.findOneByMobileNumber(emailorphone);
+      userData = await this.findOneUserByMobileNumber(emailorphone);
     } else {
       throw new BadRequestException('INCORRECT_FORMAT', {
         cause: new Error(),
@@ -199,5 +231,52 @@ export class UsersService {
     }
 
     return updatedUserData;
+  }
+
+  async createUserSubCategory(user: UserSubCategory): Promise<UserSubCategory> {
+    const userSubCategory = this.db.userSubCategory.create({
+      data: user,
+    });
+    return userSubCategory;
+  }
+
+  async getAllUserSubCategory(): Promise<Array<UserSubCategory>> {
+    return this.db.userSubCategory.findMany()
+  }
+
+  async getUserSubCategoryById(id: number): Promise<UserSubCategory | null> {
+    return this.db.userSubCategory.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async updateUserSubCategory(
+    id: number,
+    user: UserSubCategory,
+  ): Promise<UserSubCategory> {
+    const existingUser = await this.getUserById(id);
+    if (!existingUser) {
+      throw new NotFoundException();
+    }
+
+    return this.db.userSubCategory.update({
+      where: { id },
+      data: user,
+    });
+  }
+
+  async deleteUserSubCategoryById(id: number): Promise<UserSubCategory> {
+    const user = await this.getUserSubCategoryById(id);
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    return this.db.userSubCategory.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

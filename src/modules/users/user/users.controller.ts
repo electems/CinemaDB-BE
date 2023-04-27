@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { User } from '@prisma/client';
+import { User, UserSubCategory } from '@prisma/client';
 import { Request as ExpressRequest } from 'express';
 
 import { ApiRoute } from '@decorators/api-route';
@@ -46,7 +46,7 @@ export class UsersController {
     description: 'Retrieves all the users',
   })
   async getAllUsers(): Promise<Array<User>> {
-    return this.userService.getAll();
+    return this.userService.getAllUsers();
   }
 
   @Get(':id')
@@ -57,7 +57,7 @@ export class UsersController {
   async getUser(
     @Param('id', new ParseIntPipe()) id: number,
   ): Promise<User | null> {
-    return this.userService.getById(id);
+    return this.userService.getUserById(id);
   }
 
   @Post('createuser')
@@ -67,7 +67,7 @@ export class UsersController {
     badRequest: {},
   })
   async createUser(@Body() newUser: User): Promise<User> {
-    return this.userService.create(newUser);
+    return this.userService.createUser(newUser);
   }
 
   @Put('updateuser/:id')
@@ -81,7 +81,7 @@ export class UsersController {
     @Param('id', new ParseIntPipe()) id: number,
     @Body() user: User,
   ): Promise<User> {
-    return this.userService.update(id, user);
+    return this.userService.updateUser(id, user);
   }
 
   @Delete('delete/:id')
@@ -91,7 +91,61 @@ export class UsersController {
     notFound: { description: "The requested User wasn't found" },
   })
   async deleteUser(@Param('id', new ParseIntPipe()) id: number): Promise<User> {
-    return this.userService.deleteById(id);
+    return this.userService.deleteUserById(id);
+  }
+
+  @Get('userSubCategory/all')
+  @ApiRoute({
+    summary: 'Get All UserSubCategory',
+    description: 'Retrieves  UserSubCategory',
+  })
+  async getAllUserSubCategory(): Promise<Array<UserSubCategory>> {
+    return this.userService.getAllUserSubCategory();
+  }
+
+  @Get('userSubCategory/:id')
+  @ApiRoute({
+    summary: 'Get UserSubCategory',
+    description: 'Retrieves  UserSubCategory',
+  })
+  async getUserSubCategoryById(
+    @Param('id', new ParseIntPipe()) id: number,
+  ): Promise<UserSubCategory | null> {
+    return this.userService.getUserSubCategoryById(id);
+  }
+
+  @Post('createuser')
+  @ApiRoute({
+    summary: 'Create a UserSubCategory',
+    description: 'Creates a new UserSubCategory',
+    badRequest: {},
+  })
+  async createUserSubCategory(@Body() newUserSubCategory: UserSubCategory): Promise<UserSubCategory> {
+    return this.userService.createUserSubCategory(newUserSubCategory);
+  }
+
+  @Put('updateUserSubCategory/:id')
+  @ApiRoute({
+    summary: 'Update a UserSubCategory',
+    description: 'Modifies a UserSubCategory',
+    notFound: { description: "The requested UserSubCategory wasn't found" },
+    badRequest: {},
+  })
+  async updateUserSubCategory(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() userSubCategory: UserSubCategory,
+  ): Promise<UserSubCategory> {
+    return this.userService.updateUserSubCategory(id, userSubCategory);
+  }
+
+  @Delete('deleteUserSubCategory/:id')
+  @ApiRoute({
+    summary: 'Delete a UserSubCategory',
+    description: 'Removes a UserSubCategory',
+    notFound: { description: "The requested UserSubCategory wasn't found" },
+  })
+  async deleteUserSubCategoryById(@Param('id', new ParseIntPipe()) id: number): Promise<UserSubCategory> {
+    return this.userService.deleteUserSubCategoryById(id);
   }
 
   @Get('search/:searchWord')

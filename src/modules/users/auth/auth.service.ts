@@ -10,11 +10,11 @@ import { UsersService } from '../user/users.service';
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService,
+    private jwtService: JwtService,   
   ) {}
 
   async validateUser(userName: string, password: string): Promise<User | null> {
-    const user = await this.usersService.findOne(userName);
+    const user = await this.usersService.findOneUser(userName);
     if (!user) {
       return null;
     }
@@ -34,15 +34,18 @@ export class AuthService {
     return user;
   }
 
-  getLoggedUser(user: User): LoggedUserDto {
+  getLoggedUser(user: any): LoggedUserDto {
     const payload = {
       sub: user.id,
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
       role: user.role,
+      step: user.step,
+      industrySelection: user.industrySelection,
+      userSubCategory: user.userSubCategory
     };
-
+    
     return {
       id: user.id,
       email: user.email,
@@ -51,6 +54,11 @@ export class AuthService {
       token: this.jwtService.sign(payload),
       role: user.role,
       otp: '',
+      step: user.step,
+      industrySelection: user.industrySelection,
+      userSubCategory:user.userSubCategory,
+      
     };
+    
   }
 }

@@ -149,7 +149,11 @@ describe.only('UserSection', () => {
     //    /*get otp useing user phoneNumber */
     cy.request({
       method: 'Get',
-      url: base_url + '/auth/otp/' + updateUser.phoneNumber,
+
+      url: base_url + '/auth/otp/' + User.phoneNumber,
+
+ 
+
       headers: { Authorization: 'Bearer ' + userObject.token },
       form: true,
     }).then((response) => {

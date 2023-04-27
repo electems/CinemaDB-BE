@@ -114,7 +114,7 @@ export class UsersController {
     return this.userService.getUserSubCategoryById(id);
   }
 
-  @Post('createuser')
+  @Post('createUserSubCategory')
   @ApiRoute({
     summary: 'Create a UserSubCategory',
     description: 'Creates a new UserSubCategory',

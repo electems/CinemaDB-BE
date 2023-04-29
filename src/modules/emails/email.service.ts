@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
+import { OTPPayload } from '@modules/eventmanager/eventmanager.service';
 
 import emailconfig from '../../config/emailconfig.json';
 import transport from '../../config/emialConfiguration';
-import { OTPPayload } from '@modules/eventmanager/eventmanager.service';
 
 @Injectable()
 export class EmailService {

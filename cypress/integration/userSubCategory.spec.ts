@@ -1,4 +1,4 @@
-import {  userSubCategory,updateUserSubCategory} from './models';
+import {  userSubCategory,updateUserSubCategory, userAndUserSubCategory} from './models';
 import { isEqual } from 'lodash';
 
 const base_url = 'http://localhost:3001';
@@ -17,11 +17,12 @@ describe.only('UserSubCategorySection', () => {
   });
 
   it('UserSubCategory > Create', () => {
+    console.log(userSubCategory)
     cy.request({
       method: 'POST',
       url: base_url + '/users/createUserSubCategory',
       headers: { Authorization: 'Bearer ' + userObject.token },
-      form: true,
+      form: false,
       body: userSubCategory,
     });
     cy.task('dbQuery', {
@@ -40,7 +41,7 @@ describe.only('UserSubCategorySection', () => {
       method: 'GET',
       url: base_url + '/users/userSubCategory/' + newUserSubCategoryId,
       headers: { Authorization: 'Bearer ' + userObject.token },
-      form: true,
+      form: false,
       body: {},
     }).then((response) => {
       console.log(response.body);
@@ -54,7 +55,7 @@ describe.only('UserSubCategorySection', () => {
       method: 'Put',
       url: base_url + '/users/updateUserSubCategory/' + newUserSubCategoryId,
       headers: { Authorization: 'Bearer ' + userObject.token },
-      form: true,
+      form: false,
       body: updateUserSubCategory,
     }).then((response) => {
       console.log(response.body);
@@ -67,11 +68,20 @@ describe.only('UserSubCategorySection', () => {
       method: 'Delete',
       url: base_url + '/users/deleteUserSubCategory/' + newUserSubCategoryId,
       headers: { Authorization: 'Bearer ' + userObject.token },
-      form: true,
+      form: false,
     }).then((response) => {
-      console.log(response.body);
-      //  expect(response.status).to.eq(200);
+      console.log(response.body);      
       expect(isEqual(response.body.newUserSubCategoryId, newUserSubCategoryId));
     });
+  });
+
+  it('UserAndUserSubCategory > Create/UpdateAND/Delete', () => {   
+    cy.request({
+      method: 'POST',
+      url: base_url + '/users/userAndUserSubCategory',
+      headers: { Authorization: 'Bearer ' + userObject.token },
+      form: false,
+      body: userAndUserSubCategory,
+    });   
   });
 });

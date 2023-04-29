@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiProperty } from '@nestjs/swagger';
 
-
 export class LoggedUserDto {
   @ApiProperty()
   id: number;
@@ -25,5 +24,5 @@ export class LoggedUserDto {
 
   industrySelection: any;
 
-  userSubCategory: any
+  userSubCategory: any;
 }

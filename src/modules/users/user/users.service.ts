@@ -41,25 +41,14 @@ export class UsersService {
     return this.db.user.findMany();
   }
 
-  async createUser(user: any): Promise<User> {
+  async createUser(user: User): Promise<User> {
     const bcryptPassword = await bcrypt.hash(user.password, 11);
     user.password = bcryptPassword;
-    if (user.UserSubCategory) {
-      return this.db.user.create({
-        data: {
-          ...user,
-          UserSubCategory: {
-            create: user.UserSubCategory,
-          },
-        },
-      });
-    } else {
-      return this.db.user.create({
-        data: {
-          ...user,
-        },
-      });
-    }
+    return this.db.user.create({
+      data: {
+        ...user,
+      },
+    });
   }
 
   async getUserById(id: number): Promise<User | null> {
@@ -72,31 +61,18 @@ export class UsersService {
       "User" u WHERE u.id=${id} AND us.user_id =${id} group by u.id`;
   }
 
-  async updateUser(id: number, user: any): Promise<User> {
+  async updateUser(id: number, user: User): Promise<User> {
     const existingUser = await this.getUserById(id);
     if (!existingUser) {
       throw new NotFoundException();
     }
-    if (user.UserSubCategory) {
-      return this.db.user.update({
-        where: { id },
-        data: {
-          ...user,
-          UserSubCategory: {
-            create: {
-              data: user.UserSubCategory[0],
-            },
-          },
-        },
-      });
-    } else {
-      return this.db.user.update({
-        where: { id },
-        data: {
-          ...user,
-        },
-      });
-    }
+
+    return this.db.user.update({
+      where: { id },
+      data: {
+        ...user,
+      },
+    });
   }
 
   async deleteUserById(id: number): Promise<User> {
@@ -231,11 +207,13 @@ export class UsersService {
     return updatedUserData;
   }
 
-  async createOne(body: UserSubCategory): Promise<UserSubCategory> {
-    const ret = await this.db.userSubCategory.create({
-      data: { ...body },
+  async createOneUserSubCategory(
+    body: UserSubCategory,
+  ): Promise<UserSubCategory> {
+    const userSubCategory = await this.db.userSubCategory.create({
+      data: body,
     });
-    return ret;
+    return userSubCategory;
   }
 
   async getAllUserSubCategory(): Promise<Array<UserSubCategory>> {
@@ -281,13 +259,12 @@ export class UsersService {
 
   async userAndUserSubCategory(
     userAndUserSubCategory: any,
-  ): Promise<UserSubCategory> {    
+  ): Promise<UserSubCategory> {
     const userSubCategoryIDs = await this.db.userSubCategory.findMany({
       select: {
         id: true,
       },
     });
-    console.log(userSubCategoryIDs);
     for (const userSubCategory of userAndUserSubCategory.UserSubCategory) {
       if (userSubCategory.id === undefined) {
         await this.db.userSubCategory.create({
@@ -295,29 +272,25 @@ export class UsersService {
             ...userSubCategory,
           },
         });
-      }
-      else if (userSubCategory.id) {
+      } else if (userSubCategory.id) {
         await this.db.userSubCategory.update({
           where: { id: userSubCategory.id },
           data: userSubCategory,
         });
       }
-    const indexOfId = userSubCategoryIDs.indexOf(userSubCategory.id);
-    const removePresentIDs = userSubCategoryIDs.splice(indexOfId, 1)
-    console.log(removePresentIDs)
+      const indexOfId = userSubCategoryIDs.indexOf(userSubCategory.id);
+      userSubCategoryIDs.splice(indexOfId, 1);
     }
 
-    console.log(userSubCategoryIDs)
-      for (const removeIDs of userSubCategoryIDs) {
-        await this.db.userSubCategory.deleteMany({
-          where: {
-            id: {
-              equals: removeIDs.id,
-            },
+    for (const removeIDs of userSubCategoryIDs) {
+      await this.db.userSubCategory.deleteMany({
+        where: {
+          id: {
+            equals: removeIDs.id,
           },
-        });
-        console.log(removeIDs.id);
-      } 
+        },
+      });
+    }
     return userAndUserSubCategory;
   }
 }

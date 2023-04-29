@@ -10,7 +10,7 @@ import { UsersService } from '../user/users.service';
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService,   
+    private jwtService: JwtService,
   ) {}
 
   async validateUser(userName: string, password: string): Promise<User | null> {
@@ -43,9 +43,9 @@ export class AuthService {
       role: user.role,
       step: user.step,
       industrySelection: user.industrySelection,
-      userSubCategory: user.userSubCategory
+      userSubCategory: user.userSubCategory,
     };
-    
+
     return {
       id: user.id,
       email: user.email,
@@ -55,8 +55,7 @@ export class AuthService {
       role: user.role,
       step: user.step,
       industrySelection: user.industrySelection,
-      userSubCategory: user.userSubCategory,      
+      userSubCategory: user.userSubCategory,
     };
-    
   }
 }

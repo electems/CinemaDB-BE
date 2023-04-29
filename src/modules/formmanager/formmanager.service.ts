@@ -3,14 +3,11 @@ import fs from 'fs';
 import { Injectable } from '@nestjs/common';
 import jsonList from 'src/forms/EN/registration.json';
 
-
 import pathconfig from '../../config/pathconfig.json';
 
 @Injectable()
 export class FormManagerService {
   jsonList = jsonList;
-
-  constructor() {}
 
   async getFormLayout(language: string, formlayout: string): Promise<string> {
     if (
@@ -42,5 +39,4 @@ export class FormManagerService {
     );
     return jsondata;
   }
-
 }

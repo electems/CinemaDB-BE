@@ -10,6 +10,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
 import { ApiRoute } from '@decorators/api-route';
 import { JwtAuthGuard } from '@modules/users/auth/guards/jwt.auth-guard';
 

@@ -233,11 +233,11 @@ export class UsersService {
     return updatedUserData;
   }
 
-  async createUserSubCategory(user: UserSubCategory): Promise<UserSubCategory> {
-    const userSubCategory = this.db.userSubCategory.create({
-      data: user,
+  async createUserSubCategory(userSubCategory: UserSubCategory): Promise<UserSubCategory> {
+    const userSubCategoryData = this.db.userSubCategory.create({
+      data: userSubCategory,
     });
-    return userSubCategory;
+    return userSubCategoryData;
   }
 
   async getAllUserSubCategory(): Promise<Array<UserSubCategory>> {

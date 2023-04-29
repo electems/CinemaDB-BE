@@ -53,11 +53,9 @@ export class AuthService {
       lastName: user.lastName,
       token: this.jwtService.sign(payload),
       role: user.role,
-      otp: '',
       step: user.step,
       industrySelection: user.industrySelection,
-      userSubCategory:user.userSubCategory,
-      
+      userSubCategory: user.userSubCategory,      
     };
     
   }

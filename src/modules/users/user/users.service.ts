@@ -38,7 +38,7 @@ export class UsersService {
   }
 
   async getAllUsers(): Promise<Array<User>> {
-    return this.db.user.findMany({ include: { UserSubCategory: true } });
+    return this.db.user.findMany();
   }
 
   async createUser(user: any): Promise<User> {
@@ -52,7 +52,6 @@ export class UsersService {
             create: user.UserSubCategory,
           },
         },
-        include: { UserSubCategory: true },
       });
     } else {
       return this.db.user.create({
@@ -64,12 +63,13 @@ export class UsersService {
   }
 
   async getUserById(id: number): Promise<User | null> {
-    return this.db.user.findFirst({
-      where: {
-        id,
-      },
-      include: { UserSubCategory: true },
-    });
+    return this.db
+      .$queryRaw`SELECT u.* ,JSONB_agg(JSONB_build_object('id', us."id",'createdAt',
+      us."created_at",'updatedAt',us."updated_at",
+      'createdBy',us."created_by",'updatedBy',us."updated_by",'key',us."key",
+      'value',us."value",'userId',us."user_id")) 
+      as UserSubCategory FROM "UserSubCategory" us, 
+      "User" u WHERE u.id=${id} AND us.user_id =${id} group by u.id`;
   }
 
   async updateUser(id: number, user: any): Promise<User> {
@@ -83,13 +83,11 @@ export class UsersService {
         data: {
           ...user,
           UserSubCategory: {
-            update: {
-              where: { id: user.UserSubCategory[0].id },
+            create: {
               data: user.UserSubCategory[0],
             },
           },
         },
-        include: { UserSubCategory: true },
       });
     } else {
       return this.db.user.update({
@@ -97,7 +95,6 @@ export class UsersService {
         data: {
           ...user,
         },
-        
       });
     }
   }
@@ -112,7 +109,6 @@ export class UsersService {
       where: {
         id,
       },
-      include: { UserSubCategory: true },
     });
   }
 
@@ -218,9 +214,11 @@ export class UsersService {
         });
       }
       this.eventEmitter.emit('email.registration', {
-        firstName: userData?.firstName,
-        lastName: userData?.lastName,
-        email: userData?.email,
+        user: {
+          firstName: userData?.firstName,
+          lastName: userData?.lastName,
+          email: userData?.email,
+        },
         otp,
       });
     } else {
@@ -233,15 +231,15 @@ export class UsersService {
     return updatedUserData;
   }
 
-  async createUserSubCategory(userSubCategory: UserSubCategory): Promise<UserSubCategory> {
-    const userSubCategoryData = this.db.userSubCategory.create({
-      data: userSubCategory,
+  async createOne(body: UserSubCategory): Promise<UserSubCategory> {
+    const ret = await this.db.userSubCategory.create({
+      data: { ...body },
     });
-    return userSubCategoryData;
+    return ret;
   }
 
   async getAllUserSubCategory(): Promise<Array<UserSubCategory>> {
-    return this.db.userSubCategory.findMany()
+    return this.db.userSubCategory.findMany();
   }
 
   async getUserSubCategoryById(id: number): Promise<UserSubCategory | null> {
@@ -256,7 +254,7 @@ export class UsersService {
     id: number,
     user: UserSubCategory,
   ): Promise<UserSubCategory> {
-    const existingUser = await this.getUserById(id);
+    const existingUser = await this.getUserSubCategoryById(id);
     if (!existingUser) {
       throw new NotFoundException();
     }
@@ -267,16 +265,59 @@ export class UsersService {
     });
   }
 
-  async deleteUserSubCategoryById(id: number): Promise<UserSubCategory> {
+  async deleteUserSubCategoryById(id: number): Promise<string> {
     const user = await this.getUserSubCategoryById(id);
     if (!user) {
       throw new NotFoundException();
     }
 
-    return this.db.userSubCategory.delete({
+    await this.db.userSubCategory.delete({
       where: {
         id,
       },
     });
+    return 'Record Is Deleted Successfully';
+  }
+
+  async userAndUserSubCategory(
+    userAndUserSubCategory: any,
+  ): Promise<UserSubCategory> {    
+    const userSubCategoryIDs = await this.db.userSubCategory.findMany({
+      select: {
+        id: true,
+      },
+    });
+    console.log(userSubCategoryIDs);
+    for (const userSubCategory of userAndUserSubCategory.UserSubCategory) {
+      if (userSubCategory.id === undefined) {
+        await this.db.userSubCategory.create({
+          data: {
+            ...userSubCategory,
+          },
+        });
+      }
+      else if (userSubCategory.id) {
+        await this.db.userSubCategory.update({
+          where: { id: userSubCategory.id },
+          data: userSubCategory,
+        });
+      }
+    const indexOfId = userSubCategoryIDs.indexOf(userSubCategory.id);
+    const removePresentIDs = userSubCategoryIDs.splice(indexOfId, 1)
+    console.log(removePresentIDs)
+    }
+
+    console.log(userSubCategoryIDs)
+      for (const removeIDs of userSubCategoryIDs) {
+        await this.db.userSubCategory.deleteMany({
+          where: {
+            id: {
+              equals: removeIDs.id,
+            },
+          },
+        });
+        console.log(removeIDs.id);
+      } 
+    return userAndUserSubCategory;
   }
 }

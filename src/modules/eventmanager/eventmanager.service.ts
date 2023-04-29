@@ -2,9 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { User } from '@prisma/client';
 
-import { LoggedUserDto } from '@modules/users/user/dto/logged-user.dto';
-
 import { EmailService } from '../emails/email.service';
+
+export interface OTPPayload {
+  user: User;
+  otp: string;
+}
+
 @Injectable()
 export class EventListnerService {
   constructor(
@@ -13,11 +17,11 @@ export class EventListnerService {
   ) {}
 
   @OnEvent('email.registration', { async: true })
-  handleLoginEmail(user: LoggedUserDto): void {
-    this.emailService.loginEmail(user);
+  handleLoginEmail(payload: OTPPayload): void {
+    this.emailService.loginEmail(payload);
   }
 
-  emitEvent(payload: User): void {
+  emitEvent(payload: OTPPayload): void {
     this.eventEmitter.emit('email.registration', payload);
   }
 }

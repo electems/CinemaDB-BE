@@ -15,7 +15,8 @@ model User {
    status         String? @map("status")
    filmIndustry   String? @map("film_industry")
    industrySelection  Json[]  @map("industry_selection")
-   step String? @map("step")
+   step           String? @map("step")
+   
 }
 
 model Biography {
@@ -37,8 +38,8 @@ model Biography {
   awardName               String? @map("award_name")
   awardCategory           String? @map("award_category")
   result                  String? @map("result")
-  userId                  Int? @map("user_id")
-  user                    User?     @relation(fields: [userId], references: [id])
+  userId                  Int @map("user_id")
+  user                    User     @relation(fields: [userId], references: [id])
   filmIndustry            String? @map("film_industry")
 }
 
@@ -61,8 +62,8 @@ model PersonalInformation {
   whenDidYouStartWorkingInTheIndustry     DateTime? @map("when_did_you_start_working_in_the_industry")
   whoIntroducedYouToTheFilmIndustry       String?  @map("who_introduced_you_to_the_film_industry")
   give2ReferencesAndContactsFromTheFilmIndustry  String? @map("give_2references_and_contacts_from_the_film_industry")
-  userId                                  Int?      @map("user_id")
-  user                                    User?     @relation(fields: [userId], references: [id])  
+  userId                                  Int      @map("user_id")
+  user                                    User     @relation(fields: [userId], references: [id])  
   filmIndustry                            String?   @map("film_industry")
 }
 
@@ -76,8 +77,8 @@ model MediaLinks {
   instagramAccountUrl String?      @map("instagram_account_url")
   linkedinAccountUrl  String?      @map("linkedin_account_url")
   twitterAccountUrl   String?      @map("twitter_account_url")
-  userId              Int?          @map("user_id")
-  user                User?         @relation(fields: [userId], references: [id])
+  userId              Int          @map("user_id")
+  user                User         @relation(fields: [userId], references: [id])
   filmIndustry        String?       @map("film_industry")
 } 
 
@@ -89,6 +90,5 @@ model UserSubCategory{
   updatedBy      String?    @map("updated_by")
   key       String?    @map("key")
   value     Json[]     @map("value")
-  userId    Int?       @map("user_id")
-  user      User?      @relation(fields: [userId], references: [id])
+  userId    Int       @map("user_id")
 }

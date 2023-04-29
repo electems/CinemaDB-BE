@@ -7,17 +7,19 @@ import { LoggerMiddleware } from '@decorators/logging.interceptor';
 
 import { EmailService } from './emails/email.service';
 import { EventListnerService } from './eventmanager/eventmanager.service';
-import { FormManagerModule } from './formmanager/formmanager.module';
+
 import { UsersModule } from './users/user/users.module';
+
 
 @Module({
   imports: [
     UsersModule,
-    FormManagerModule,
+
 
     EventEmitterModule.forRoot({}),
     MailerModule,
     PassportModule,
+    
   ],
   controllers: [],
   providers: [EventListnerService, EmailService],

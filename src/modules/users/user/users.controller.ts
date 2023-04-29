@@ -20,6 +20,7 @@ import { UsersService } from './users.service';
 import { JwtPayloadDto } from '../auth/dto/jwt.payload.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt.auth-guard';
 
+
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 @Controller('users')
@@ -81,6 +82,7 @@ export class UsersController {
     @Param('id', new ParseIntPipe()) id: number,
     @Body() user: User,
   ): Promise<User> {
+   
     return this.userService.updateUser(id, user);
   }
 
@@ -121,7 +123,7 @@ export class UsersController {
     badRequest: {},
   })
   async createUserSubCategory(@Body() newUserSubCategory: UserSubCategory): Promise<UserSubCategory> {
-    return this.userService.createUserSubCategory(newUserSubCategory);
+    return this.userService.createOne(newUserSubCategory);
   }
 
   @Put('updateUserSubCategory/:id')
@@ -144,7 +146,7 @@ export class UsersController {
     description: 'Removes a UserSubCategory',
     notFound: { description: "The requested UserSubCategory wasn't found" },
   })
-  async deleteUserSubCategoryById(@Param('id', new ParseIntPipe()) id: number): Promise<UserSubCategory> {
+  async deleteUserSubCategoryById(@Param('id', new ParseIntPipe()) id: number): Promise<string> {
     return this.userService.deleteUserSubCategoryById(id);
   }
 
@@ -152,4 +154,9 @@ export class UsersController {
   async getAuthors(@Param('searchWord') searchWord: string): Promise<User[]> {
     return this.userService.searchUser(searchWord);
   }
+  
+  @Post('userAndUserSubCategory')
+  async userAndUserSubCategory(@Body() userAndUserSubCategory:any) {
+    await this.userService.userAndUserSubCategory(userAndUserSubCategory)
+}
 }

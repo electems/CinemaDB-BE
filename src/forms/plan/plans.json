@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "name": "CDBS Actor",
+    "price": 2999,
+    "features": [
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur"
+    ]
+  },
+  {
+    "id": "2",
+    "name": "CDBS Production",
+    "price": 9999,
+    "features": [
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur"
+    ]
+  },
+  {
+    "id": "3",
+    "name": "CDBS Lifetime",
+    "price": 39999,
+    "features": [
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur"
+    ]
+  },
+  {
+    "id": "4",
+    "name": "CDBS Technicians",
+    "price": 4999,
+    "features": [
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur",
+      "Lorem ipsum dolor sit amet, consectetur"
+    ]
+  }
+]

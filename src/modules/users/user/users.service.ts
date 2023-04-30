@@ -51,13 +51,13 @@ export class UsersService {
     });
   }
 
-  async getUserById(id: number): Promise<User | null> {
+  async getUserById(id: number): Promise<any> {
     return this.db
       .$queryRaw`SELECT u.* ,JSONB_agg(JSONB_build_object('id', us."id",'createdAt',
       us."created_at",'updatedAt',us."updated_at",
       'createdBy',us."created_by",'updatedBy',us."updated_by",'key',us."key",
       'value',us."value",'userId',us."user_id")) 
-      as UserSubCategory FROM "UserSubCategory" us, 
+      as userSubCategory FROM "UserSubCategory" us, 
       "User" u WHERE u.id=${id} AND us.user_id =${id} group by u.id`;
   }
 

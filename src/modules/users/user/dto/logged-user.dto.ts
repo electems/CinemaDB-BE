@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiProperty } from '@nestjs/swagger';
+import { Prisma } from '@prisma/client';
 
 export class LoggedUserDto {
   @ApiProperty()
@@ -24,5 +25,5 @@ export class LoggedUserDto {
 
   industrySelection: any;
 
-  userSubCategory: any;
+  userSubCategory: Prisma.JsonArray;
 }

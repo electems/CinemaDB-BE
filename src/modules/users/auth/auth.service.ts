@@ -34,7 +34,7 @@ export class AuthService {
     return user;
   }
 
-  getLoggedUser(user: any): LoggedUserDto {
+  async getLoggedUser(user: any): Promise<LoggedUserDto> {
     const payload = {
       sub: user.id,
       email: user.email,
@@ -46,7 +46,9 @@ export class AuthService {
       userSubCategory: user.userSubCategory,
     };
 
-    return {
+    const userAndUserSubCategory = await this.usersService.getUserById(user.id);
+
+    const returnObject = {
       id: user.id,
       email: user.email,
       firstName: user.firstName,
@@ -55,7 +57,9 @@ export class AuthService {
       role: user.role,
       step: user.step,
       industrySelection: user.industrySelection,
-      userSubCategory: user.userSubCategory,
+      userSubCategory: userAndUserSubCategory[0].usersubcategory,
     };
+
+    return returnObject;
   }
 }

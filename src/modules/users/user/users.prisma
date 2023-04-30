@@ -15,7 +15,7 @@ model User {
    status         String? @map("status")
    filmIndustry   String? @map("film_industry")
    industrySelection  Json[]  @map("industry_selection")
-   step           String? @map("step")
+   step           String? @map("step")  
    
 }
 

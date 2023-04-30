@@ -3,17 +3,14 @@ import { faker } from '@faker-js/faker';
 const phoneNumber = Math.floor(Math.random() * 10000000000);
 const phone = phoneNumber.toString();
 
-const userIds = Math.floor(Math.random() * 10);
-const userId : number = +userIds
-
-export const industrySelection = {  
-  key: "cd4f577f-213a-41f8-ab02-f12e58162ebb",
-  pos: "0-0-0-1",
-  title: "Tollywod",
+export const industrySelection = {
+  key: 'cd4f577f-213a-41f8-ab02-f12e58162ebb',
+  pos: '0-0-0-1',
+  title: 'Tollywod',
   active: false,
   isLeaf: false,
   loaded: false,
-  parent: "e12e8f68-7d89-435e-8328-6befdc2bdc91",
+  parent: 'e12e8f68-7d89-435e-8328-6befdc2bdc91',
   checked: false,
   loading: false,
   children: [],
@@ -22,33 +19,32 @@ export const industrySelection = {
   selected: false,
   halfChecked: false,
   dragOverGapTop: false,
-  dragOverGapBottom: false
-
-}
+  dragOverGapBottom: false,
+};
 
 export const value = {
-  key: "fe613a58-70e2-417a-9f42-93d665869b51",
- title: "Kollywood",
- isLeaf: false,
- parent: "e12e8f68-7d89-435e-8328-6befdc2bdc91",
- children: []
+  key: 'fe613a58-70e2-417a-9f42-93d665869b51',
+  title: 'Kollywood',
+  isLeaf: false,
+  parent: 'e12e8f68-7d89-435e-8328-6befdc2bdc91',
+  children: [],
 };
 
 export const userSubCategory = {
   createdBy: faker.lorem.word(),
-  updatedBy:faker.lorem.word() ,
+  updatedBy: faker.lorem.word(),
   key: faker.lorem.word(),
-  value:[value] ,
-  userId : userId
+  value: [value],
+  userId: 2,
 };
 
 export const userSubCategoryUpdateRecord = {
-  id:13,
+  id: 13,
   createdBy: faker.lorem.word(),
-  updatedBy:faker.lorem.word() ,
+  updatedBy: faker.lorem.word(),
   key: faker.lorem.word(),
-  value:[value] ,
-  userId : userId
+  value: [value],
+  userId: 2,
 };
 
 export const userAndUserSubCategory = {
@@ -63,21 +59,19 @@ export const userAndUserSubCategory = {
   role: 'USER',
   status: 'ACTIVE',
   filmIndustry: 'sandalhood',
-  industrySelection:[industrySelection], 
-  UserSubCategory:[userSubCategory , userSubCategoryUpdateRecord]
+  industrySelection: [industrySelection],
+  UserSubCategory: [userSubCategory, userSubCategoryUpdateRecord],
 };
 
 export const updateUserSubCategory = {
   createdBy: faker.lorem.word(),
-  updatedBy:faker.lorem.word() ,
+  updatedBy: faker.lorem.word(),
   key: faker.lorem.word(),
-  value:[] ,
-  userId:2
+  value: [],
+  userId: 2,
 };
 
-
-
-export const  User = {
+export const User = {
   email: faker.lorem.word() + '@gmail.com',
   firstName: faker.lorem.word(),
   lastName: faker.lorem.word(),
@@ -89,7 +83,8 @@ export const  User = {
   role: 'USER',
   status: 'ACTIVE',
   filmIndustry: 'sandalhood',
-  industrySelection:[industrySelection], 
+  industrySelection: [industrySelection],
+  step: 'step',
 };
 
 export const updateUser = {
@@ -104,12 +99,11 @@ export const updateUser = {
   role: 'USER',
   status: 'ACTIVE',
   filmIndustry: 'sandalhood',
-  industrySelection:[industrySelection],
+  industrySelection: [industrySelection],
 };
 
 export const errorMsg = {
-  error: "Not found user object",
-  message: "MISSING_USER",
-  statusCode: 404
+  error: 'Not found user object',
+  message: 'MISSING_USER',
+  statusCode: 404,
 };
-

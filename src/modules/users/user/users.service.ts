@@ -277,9 +277,9 @@ export class UsersService {
           where: { id: userSubCategory.id },
           data: userSubCategory,
         });
+        const indexOfId = userSubCategoryIDs.indexOf(userSubCategory.id);
+        userSubCategoryIDs.splice(indexOfId, 1);
       }
-      const indexOfId = userSubCategoryIDs.indexOf(userSubCategory.id);
-      userSubCategoryIDs.splice(indexOfId, 1);
     }
 
     for (const removeIDs of userSubCategoryIDs) {

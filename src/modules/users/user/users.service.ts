@@ -265,32 +265,34 @@ export class UsersService {
         id: true,
       },
     });
-    for (const userSubCategory of userAndUserSubCategory.UserSubCategory) {
-      if (userSubCategory.id === undefined) {
-        await this.db.userSubCategory.create({
-          data: {
-            ...userSubCategory,
+    if (userAndUserSubCategory.userSubCategory) {
+      for (const userSubCategory of userAndUserSubCategory.userSubCategory) {
+        if (userSubCategory.id === undefined) {
+          await this.db.userSubCategory.create({
+            data: {
+              ...userSubCategory,
+            },
+          });
+        } else if (userSubCategory.id) {
+          await this.db.userSubCategory.update({
+            where: { id: userSubCategory.id },
+            data: userSubCategory,
+          });
+          const indexOfId = userSubCategoryIDs.indexOf(userSubCategory.id);
+          userSubCategoryIDs.splice(indexOfId, 1);
+        }
+      }
+      for (const removeIDs of userSubCategoryIDs) {
+        await this.db.userSubCategory.deleteMany({
+          where: {
+            id: {
+              equals: removeIDs.id,
+            },
           },
         });
-      } else if (userSubCategory.id) {
-        await this.db.userSubCategory.update({
-          where: { id: userSubCategory.id },
-          data: userSubCategory,
-        });
-        const indexOfId = userSubCategoryIDs.indexOf(userSubCategory.id);
-        userSubCategoryIDs.splice(indexOfId, 1);
       }
     }
 
-    for (const removeIDs of userSubCategoryIDs) {
-      await this.db.userSubCategory.deleteMany({
-        where: {
-          id: {
-            equals: removeIDs.id,
-          },
-        },
-      });
-    }
     return userAndUserSubCategory;
   }
 }

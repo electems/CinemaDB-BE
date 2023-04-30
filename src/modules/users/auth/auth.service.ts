@@ -35,6 +35,17 @@ export class AuthService {
   }
 
   async getLoggedUser(user: any): Promise<LoggedUserDto> {
+    let returnObject: LoggedUserDto = {
+      id: user.id,
+      email: '',
+      firstName: '',
+      lastName: '',
+      token: '',
+      role: '',
+      step: '',
+      industrySelection: [],
+      userSubCategory: [],
+    };
     const payload = {
       sub: user.id,
       email: user.email,
@@ -48,18 +59,31 @@ export class AuthService {
 
     const userAndUserSubCategory = await this.usersService.getUserById(user.id);
 
-    const returnObject = {
-      id: user.id,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      token: this.jwtService.sign(payload),
-      role: user.role,
-      step: user.step,
-      industrySelection: user.industrySelection,
-      userSubCategory: userAndUserSubCategory[0].usersubcategory,
-    };
-
+    if (userAndUserSubCategory.length === 0) {
+      returnObject = {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        token: this.jwtService.sign(payload),
+        role: user.role,
+        step: user.step,
+        industrySelection: user.industrySelection,
+        userSubCategory: [],
+      };
+    } else {
+      returnObject = {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        token: this.jwtService.sign(payload),
+        role: user.role,
+        step: user.step,
+        industrySelection: user.industrySelection,
+        userSubCategory: userAndUserSubCategory[0].usersubcategory,
+      };
+    }
     return returnObject;
   }
 }

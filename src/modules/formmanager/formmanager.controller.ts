@@ -114,12 +114,19 @@ export class FormsController {
     @Param('location') location: string,
     @Param('filename') filename: string,
   ): Promise<JSON> {
-    const readFile = fs.readFileSync(
-      `${pathconfig.FilePath}/${path}/${location}/${filename}.json`,
-      'utf8',
-    );
-    const jsonData = JSON.parse(readFile);
-    return jsonData;
+    let readFile = "{ error: 'FILE_NOT_FOUND' }";
+    if (
+      fs.existsSync(
+        `${pathconfig.FilePath}/${path}/${location}/${filename}.json`,
+      )
+    ) {
+      readFile = fs.readFileSync(
+        `${pathconfig.FilePath}/${path}/${location}/${filename}.json`,
+        'utf8',
+      );
+    }
+
+    return JSON.parse(readFile);
   }
 
   //Write file inside directory

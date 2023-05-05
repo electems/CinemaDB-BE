@@ -26,4 +26,6 @@ export class LoggedUserDto {
   industrySelection: any;
 
   userSubCategory: Prisma.JsonArray;
+
+  userName: string
 }

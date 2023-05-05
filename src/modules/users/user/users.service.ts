@@ -44,11 +44,18 @@ export class UsersService {
   async createUser(user: User): Promise<User> {
     const bcryptPassword = await bcrypt.hash(user.password, 11);
     user.password = bcryptPassword;
-    return this.db.user.create({
+    const dbUser = await this.db.user.create({
       data: {
         ...user,
       },
     });
+
+    await this.db.userSubCategory.create({
+      data: {
+        userId: dbUser.id,
+      },
+    });
+    return dbUser;
   }
 
   async getUserById(id: number): Promise<any> {

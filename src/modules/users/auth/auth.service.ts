@@ -51,6 +51,7 @@ export class AuthService {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      userName: user.userName,
       role: user.role,
       step: user.step,
       industrySelection: user.industrySelection,
@@ -67,6 +68,7 @@ export class AuthService {
         lastName: user.lastName,
         token: this.jwtService.sign(payload),
         role: user.role,
+        userName: user.userName,
         step: user.step,
         industrySelection: user.industrySelection,
         userSubCategory: [],
@@ -80,6 +82,7 @@ export class AuthService {
         token: this.jwtService.sign(payload),
         role: user.role,
         step: user.step,
+        userName: user.userName,
         industrySelection: user.industrySelection,
         userSubCategory: userAndUserSubCategory[0].usersubcategory,
       };

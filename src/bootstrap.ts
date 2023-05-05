@@ -1,11 +1,14 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import path from 'path';
+
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from '@modules/app.module';
 
-export const bootstrap = async (): Promise<INestApplication> => {
-  const app = await NestFactory.create<INestApplication>(AppModule);
+export const bootstrap = async (): Promise<NestExpressApplication> => {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -30,6 +33,7 @@ export const bootstrap = async (): Promise<INestApplication> => {
     optionsSuccessStatus: 204,
     credentials: true,
   });
+  app.useStaticAssets(path.join(__dirname, '../public'));
   const port = process.env.PORT || 3001;
   await app.listen(port, 'localhost');
 

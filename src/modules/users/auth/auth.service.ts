@@ -45,6 +45,7 @@ export class AuthService {
       step: '',
       industrySelection: [],
       userSubCategory: [],
+      userName: ''
     };
     const payload = {
       sub: user.id,

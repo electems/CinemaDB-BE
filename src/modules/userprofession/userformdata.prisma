@@ -1,0 +1,12 @@
+model UserProfessionFormData {​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+    id                 Int        @id @default(autoincrement())
+    createdAt          DateTime   @default(now()) @map("created_at")
+    updatedAt          DateTime   @default(now()) @map("updated_at")
+    createdBy          String?    @map("created_by")
+    updatedBy          String?    @map("updated_by")
+    userId             Int        @map("user_id")
+    subCategory        String?    @map("subCategory")
+    subCategoryType    String?    @map("subCategoryType")
+    status             String?    @default("PENDING_APPROVAL")  @map("status")
+    value              Json[]     @map("value")
+}

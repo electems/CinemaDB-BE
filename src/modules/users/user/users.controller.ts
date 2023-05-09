@@ -8,7 +8,6 @@ import {
   Param,
   ParseIntPipe,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User, UserSubCategory } from '@prisma/client';
@@ -18,9 +17,9 @@ import { ApiRoute } from '@decorators/api-route';
 
 import { UsersService } from './users.service';
 import { JwtPayloadDto } from '../auth/dto/jwt.payload.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt.auth-guard';
+// import { JwtAuthGuard } from '../auth/guards/jwt.auth-guard';
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 @Controller('users')
 @ApiTags('auth-users')

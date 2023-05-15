@@ -1,0 +1,88 @@
+[
+    {
+        "id": "C952AAA2-0288-4E36-9266-8C2CC433DB81",
+        "element": "TwoColumnRow",
+        "text": "Movie Form",
+        "group_name": "Movie Form",
+        "static": true,
+        "required": false,
+        "key": "TestComponent",
+        "custom": true,
+        "props": {
+            "test": "test_comp"
+        },
+        "custom_options": [],
+        "bold": false,
+        "italic": false,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "movie_input2FB33861-F5E6-4068-A819-0FE0E2DF8FE4",
+        "label": "Movie Inputs",
+        "childItems": [
+            null,
+            null
+        ],
+        "isContainer": true
+    },
+    {
+        "id": "BCFDD124-55D6-4F48-AD47-0F2075C3CFE6",
+        "element": "TwoColumnRow",
+        "text": "Movie Form",
+        "group_name": "Movie Form",
+        "static": true,
+        "required": false,
+        "key": "TestComponent",
+        "custom": true,
+        "props": {
+            "test": "test_comp"
+        },
+        "component": {},
+        "custom_options": [],
+        "bold": false,
+        "italic": false,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "movie_input5236569C-B001-4E2C-B8D3-DA7AAB70EC27",
+        "label": "Movie Inputs",
+        "col": 1,
+        "parentId": "A90A4519-F1FD-483F-96A3-E3D626173731",
+        "parentIndex": -1
+    },
+    {
+        "id": "6303EB93-A87D-49B4-8BB4-4026633270BF",
+        "element": "TwoColumnRow",
+        "text": "Movie Form",
+        "group_name": "Movie Form",
+        "static": true,
+        "required": false,
+        "key": "TestComponent",
+        "custom": true,
+        "props": {
+            "test": "test_comp"
+        },
+        "custom_options": [],
+        "bold": false,
+        "italic": false,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "movie_input726A0C2B-0AD0-445E-BE15-45758E52659E",
+        "label": "Movie Inputs",
+        "childItems": [
+            null,
+            null
+        ],
+        "isContainer": true
+    }
+]

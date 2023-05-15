@@ -33,6 +33,19 @@ export const seed = async (): Promise<void> => {
       password: await bcrypt.hash('admin', 11),
     },
   });
+  await prisma.user.upsert({
+    where: { email: 'penman@electems.com' },
+    update: {},
+    create: {
+      userName: 'penman',
+      email: `penman@electems.com`,
+      firstName: 'penman',
+      lastName: 'penman',
+      status: 'ACTIVE',
+      role: 'PENMAN',
+      password: await bcrypt.hash('penman', 11),
+    },
+  });
 
   // eslint-disable-next-line no-console
   console.log('Database seeded');

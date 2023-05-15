@@ -32,9 +32,9 @@
         "dirty": false
     },
     {
-        "id": "EB8A4C75-67A7-4272-AC75-AAF3E091E0C1",
-        "element": "TextInput",
-        "text": "Text Input",
+        "id": "BD87251D-0C4B-4554-8DB6-07D4177E30C5",
+        "element": "PhoneNumber",
+        "text": "Phone Number",
         "required": false,
         "canHaveAnswer": true,
         "canHavePageBreakBefore": true,
@@ -43,14 +43,13 @@
         "canHaveOptionCorrect": true,
         "canHaveOptionValue": true,
         "canPopulateFromApi": true,
-        "field_name": "text_input_E9377633-AA7F-4C75-B098-DC1A573EE51E",
-        "label": "Company Email ",
-        "dirty": false
+        "field_name": "phone_input_103F93E8-AE5E-41D3-9AE0-4EBE8999E53F",
+        "label": "Phone Number"
     },
     {
-        "id": "47BA7C13-EC7C-4AA8-8942-FCB28F740780",
-        "element": "TextInput",
-        "text": "Text Input",
+        "id": "2CEED65C-FD9A-4C6C-BDA0-F62A4C957BE6",
+        "element": "EmailInput",
+        "text": "Email",
         "required": false,
         "canHaveAnswer": true,
         "canHavePageBreakBefore": true,
@@ -59,8 +58,7 @@
         "canHaveOptionCorrect": true,
         "canHaveOptionValue": true,
         "canPopulateFromApi": true,
-        "field_name": "text_input_186C9A7E-F9DB-43C1-8FD8-80A2C6E0EA0E",
-        "label": "Address ",
-        "dirty": false
+        "field_name": "email_input_C586C5D3-E85A-47E3-8E19-7C92C7DC89BC",
+        "label": "E-Mail"
     }
 ]

@@ -1,1 +1,160 @@
-{}
+[
+    {
+        "id": "C3A6B1FC-41B7-4783-9535-382F95954147",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_72DEFCA6-3735-487C-9A76-86AF3D021B88",
+        "label": "Company Name ",
+        "dirty": false
+    },
+    {
+        "id": "B06C5FEE-834C-45D3-AF2A-9EBFDEA4A030",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_54095680-698C-475B-B90D-06FA6C066895",
+        "label": "Company Contact ",
+        "dirty": false
+    },
+    {
+        "id": "2A549CAD-9720-4F9B-9929-D2DBB6125C86",
+        "element": "Dropdown",
+        "text": "Dropdown",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "dropdown_4C2C4D37-119E-4DDD-A07C-56F1E1EDC29B",
+        "label": "Placeholder label",
+        "options": [
+            {
+                "value": "place_holder_option_1",
+                "text": "Place holder option 1",
+                "key": "dropdown_option_C25C405C-5DE4-464B-B408-65C60234D892"
+            },
+            {
+                "value": "place_holder_option_2",
+                "text": "Place holder option 2",
+                "key": "dropdown_option_1E368017-B19E-417C-80F5-8393BF02D984"
+            },
+            {
+                "value": "place_holder_option_3",
+                "text": "Place holder option 3",
+                "key": "dropdown_option_D78C794D-1524-4DE5-92DD-04C2E834B46A"
+            }
+        ]
+    },
+    {
+        "id": "E094D017-87ED-4DC9-93D7-607948EA74D4",
+        "element": "Checkboxes",
+        "text": "Checkboxes",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "checkboxes_ECCA2BF3-9EA8-42E4-9056-FB4239CD9848",
+        "label": "Placeholder label",
+        "options": [
+            {
+                "value": "place_holder_option_1",
+                "text": "Place holder option 1",
+                "key": "checkboxes_option_4B513C45-2D61-40B4-B4CD-CABD2E76655C"
+            },
+            {
+                "value": "place_holder_option_2",
+                "text": "Place holder option 2",
+                "key": "checkboxes_option_4F79292E-383C-4C39-96A3-88EF5188F6EE"
+            },
+            {
+                "value": "place_holder_option_3",
+                "text": "Place holder option 3",
+                "key": "checkboxes_option_67A1949E-2B3E-4CAF-93C3-604465F73EDC"
+            }
+        ]
+    },
+    {
+        "id": "1C06705B-53A2-479F-BF77-C3C263B38312",
+        "element": "RadioButtons",
+        "text": "Multiple Choice",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "radiobuttons_51A54E86-C1D8-40A0-84C8-9F9429B0AA7A",
+        "label": "Placeholder label",
+        "options": [
+            {
+                "value": "place_holder_option_1",
+                "text": "Place holder option 1",
+                "key": "radiobuttons_option_0EE1A822-2DB2-478E-BA21-D0A95AAB07DA"
+            },
+            {
+                "value": "place_holder_option_2",
+                "text": "Place holder option 2",
+                "key": "radiobuttons_option_AE7C69BC-2308-4798-8C2E-AD69AF4CB4E9"
+            },
+            {
+                "value": "place_holder_option_3",
+                "text": "Place holder option 3",
+                "key": "radiobuttons_option_50986850-98F5-4AC7-B961-4BDA6047348E"
+            }
+        ]
+    },
+    {
+        "id": "BD87251D-0C4B-4554-8DB6-07D4177E30C5",
+        "element": "PhoneNumber",
+        "text": "Phone Number",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "phone_input_103F93E8-AE5E-41D3-9AE0-4EBE8999E53F",
+        "label": "Phone Number"
+    },
+    {
+        "id": "2CEED65C-FD9A-4C6C-BDA0-F62A4C957BE6",
+        "element": "EmailInput",
+        "text": "Email",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "email_input_C586C5D3-E85A-47E3-8E19-7C92C7DC89BC",
+        "label": "E-Mail"
+    }
+]

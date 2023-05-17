@@ -153,4 +153,31 @@ export class FormsController {
     );
     return writeFile;
   }
+
+  @Get('mastertemplatereadfile/:folderpath/:path/:location/:filename')
+  @ApiRoute({
+    summary: 'Get all fields',
+    description: 'Retrieves all fields',
+    ok: { type: 'json', description: 'The form fields' },
+  })
+  async getMasterTemplateFile(
+    @Param('folderpath') folderpath: string,
+    @Param('path') path: string,
+    @Param('location') location: string,
+    @Param('filename') filename: string,
+  ): Promise<JSON> {
+    let readFile = "{ error: 'FILE_NOT_FOUND' }";
+    if (
+      fs.existsSync(
+        `${pathconfig.FilePath}/${folderpath}/${path}/${location}/${filename}.json`,
+      )
+    ) {
+      readFile = fs.readFileSync(
+        `${pathconfig.FilePath}/${folderpath}/${path}/${location}/${filename}.json`,
+        'utf8',
+      );
+    }
+
+    return JSON.parse(readFile);
+  }
 }

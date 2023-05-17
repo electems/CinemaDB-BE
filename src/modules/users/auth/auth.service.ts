@@ -24,7 +24,7 @@ export class AuthService {
       return null;
     }
 
-    if (user.role !== 'ADMIN') {
+    if (user.role !== 'ADMIN' && user.role !== 'PENMAN') {
       if (user.elapsedOTPTime > new Date()) {
         return user;
       }
@@ -45,7 +45,7 @@ export class AuthService {
       step: '',
       industrySelection: [],
       userSubCategory: [],
-      userName: ''
+      userName: '',
     };
     const payload = {
       sub: user.id,

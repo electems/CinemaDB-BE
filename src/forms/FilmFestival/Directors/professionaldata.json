@@ -1,0 +1,46 @@
+[
+    {
+        "id": "570B285A-EB57-4CB1-87A8-30E3FF241FBF",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_E36D86C8-3F78-41B8-A94B-1F3745279739",
+        "label": "Placeholder label"
+    },
+    {
+        "id": "A05D5D01-DEB7-4469-9058-ED9D1D9D141C",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_9D098140-17AA-4B28-9A40-0E53D784F114",
+        "label": "Placeholder label"
+    },
+    {
+        "id": "39E768E5-F1C0-43E7-8AFA-29CC15F5D501",
+        "element": "FileUpload",
+        "text": "File Upload",
+        "required": false,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "file_upload_D740456E-27C7-4BCD-AACE-322F3AB58DF4",
+        "label": "Placeholder label"
+    }
+]

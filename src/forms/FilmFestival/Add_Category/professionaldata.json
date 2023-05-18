@@ -1,0 +1,34 @@
+[
+    {
+        "id": "C3A6B1FC-41B7-4783-9535-382F95954147",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_72DEFCA6-3735-487C-9A76-86AF3D021B88",
+        "label": "Company Name ",
+        "dirty": false
+    },
+    {
+        "id": "B06C5FEE-834C-45D3-AF2A-9EBFDEA4A030",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_54095680-698C-475B-B90D-06FA6C066895",
+        "label": "Company Contact ",
+        "dirty": false
+    }
+]

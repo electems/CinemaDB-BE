@@ -30,4 +30,8 @@ export class FilmFestivalService {
     });
     return filmFestivalUpdate;
   }
+
+  async getAllFilmFestivalUsers(): Promise<Array<FilmFestival>> {
+    return this.db.filmFestival.findMany();
+  }
 }

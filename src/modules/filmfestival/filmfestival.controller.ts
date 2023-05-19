@@ -37,4 +37,13 @@ export class FilmFestivalController {
   async getUserForm(@Param('id', new ParseIntPipe()) id: number): Promise<any> {
     return this.filmFestival.getFilmFestivalById(id);
   }
+
+  @Get()
+  @ApiRoute({
+    summary: 'Get all users',
+    description: 'Retrieves all the users',
+  })
+  async getAllFilmFestivalUsers(): Promise<Array<FilmFestival>> {
+    return this.filmFestival.getAllFilmFestivalUsers();
+  }
 }

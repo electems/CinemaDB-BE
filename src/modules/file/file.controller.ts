@@ -23,8 +23,8 @@ export class FileController {
   @Post('file')
   @UseInterceptors(FileInterceptor('image', multerOptions))
   public async upload(@UploadedFile() file: Express.Multer.File) {
-    try {
-      return file.destination;
+    try { 
+      return file.path;
     } catch (e) {
       throw new HttpException(
         'Error in <FileControllers.upload>',

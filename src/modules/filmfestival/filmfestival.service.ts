@@ -10,7 +10,7 @@ export class FilmFestivalService {
 
   async getFilmFestivalById(id: number): Promise<any> {
     return this.db.$queryRaw`SELECT * FROM "FilmFestival"
-       WHERE user_id=${id}`;
+       WHERE id=${id}`;
   }
 
   async createFilmFestival(filmFestival: FilmFestival): Promise<FilmFestival> {

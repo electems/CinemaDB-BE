@@ -6,8 +6,10 @@ import { extname } from 'path';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
-const createFolder = uuidv4()
-const fileUploadPath = `./uploads/${createFolder}`
+
+import pathconfig from '../../config/pathconfig.json';
+const createFolder = uuidv4();
+const fileUploadPath = `./${pathconfig.FilePath}/filmfestivals/${createFolder}`;
 export const multerConfig = {
   dest: fileUploadPath,
 };

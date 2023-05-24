@@ -1,0 +1,46 @@
+[
+    {
+        "id": "C1C9F2EC-C936-4831-83AD-5DC057DDC512",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_03B623D3-6369-4BFD-9EEF-0F9C84F54DEC",
+        "label": "First Name"
+    },
+    {
+        "id": "644A7F26-5113-4183-A624-295535F0BB3A",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_50C83EA0-A27B-42D2-85FE-A9FAF201D92F",
+        "label": "Last Name"
+    },
+    {
+        "id": "9E325626-436B-459C-A41D-8FDE7FF9DE28",
+        "element": "FileUpload",
+        "text": "File Upload",
+        "required": false,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "file_upload_4E5F4FF4-3C7C-48F3-A20C-9DFFB6985649",
+        "label": "Photo"
+    }
+]

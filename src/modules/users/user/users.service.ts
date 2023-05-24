@@ -10,6 +10,9 @@ import bcrypt from 'bcrypt';
 import { DatabaseService } from '@database/database.service';
 import { Util } from '@modules/common/util';
 
+interface UserStep {
+  step: ""
+}
 @Injectable()
 export class UsersService {
   constructor(
@@ -170,7 +173,6 @@ export class UsersService {
         description: 'Email or phone number are not in the correct format',
       });
     }
-
     if (userData !== null) {
       const otp = Math.random().toString().substring(2, 8);
       const hashed = await this.util.generatePwd(otp);
@@ -271,6 +273,13 @@ export class UsersService {
       select: {
         id: true,
       },
+    });
+    const updateStep: UserStep = {
+      step: userAndUserSubCategory.step
+    }
+    await this.db.user.update({
+      where: { id: userAndUserSubCategory.id },
+      data: updateStep,
     });
     if (userAndUserSubCategory.userSubCategory) {
       for (const userSubCategory of userAndUserSubCategory.userSubCategory) {

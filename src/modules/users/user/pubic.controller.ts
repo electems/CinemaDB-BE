@@ -6,6 +6,7 @@ import {
   Get,
   BadRequestException,
   Param,
+  Body,
 } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
@@ -52,5 +53,15 @@ export class PublicController {
       });
     }
     return this.userService.generateOTP(emailorphone);
+  }
+
+  @Post('createuser')
+  @ApiRoute({
+    summary: 'Create a user',
+    description: 'Creates a new user',
+    badRequest: {},
+  })
+  async createUser(@Body() newUser: User): Promise<User> {
+    return this.userService.createUser(newUser);
   }
 }

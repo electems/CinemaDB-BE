@@ -59,16 +59,6 @@ export class UsersController {
     return this.userService.getUserById(id);
   }
 
-  @Post('createuser')
-  @ApiRoute({
-    summary: 'Create a user',
-    description: 'Creates a new user',
-    badRequest: {},
-  })
-  async createUser(@Body() newUser: User): Promise<User> {
-    return this.userService.createUser(newUser);
-  }
-
   @Put('updateuser/:id')
   @ApiRoute({
     summary: 'Update a User',

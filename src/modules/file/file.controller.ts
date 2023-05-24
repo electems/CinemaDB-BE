@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-
 import {
   Body,
   Controller,
@@ -16,6 +15,7 @@ import {
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 import { multerOptions } from '@modules/common/fileupload';
+import { videoUploadOptions } from '@modules/common/videoupload';
 @Controller('fileupload')
 export class FileController {
   constructor() {}
@@ -23,8 +23,21 @@ export class FileController {
   @Post('file')
   @UseInterceptors(FileInterceptor('image', multerOptions))
   public async upload(@UploadedFile() file: Express.Multer.File) {
-    try { 
-      return file.path;
+    try {
+      return file;
+    } catch (e) {
+      throw new HttpException(
+        'Error in <FileControllers.upload>',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Post('file/video')
+  @UseInterceptors(FileInterceptor('video', videoUploadOptions))
+  public async uploadVideo(@UploadedFile() file: Express.Multer.File) {
+    try {
+      return file;
     } catch (e) {
       throw new HttpException(
         'Error in <FileControllers.upload>',
@@ -37,7 +50,7 @@ export class FileController {
   @UseInterceptors(FilesInterceptor('image', 5, multerOptions))
   public async uploadMultipleFiles(@UploadedFile() file: Express.Multer.File) {
     try {
-      return file.destination;
+      return file;
     } catch (e) {
       throw new HttpException(
         'Error in <FileControllers.upload>',

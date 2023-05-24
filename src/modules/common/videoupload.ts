@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { existsSync, mkdirSync } from 'fs';
+
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,9 +11,9 @@ export const multerConfig = {
   dest: `./${pathconfig.FilePath}/filmfestivals/${uuidv4()}`,
 };
 
-export const multerOptions = {
+export const videoUploadOptions = {
   fileFilter: (_req: any, file: any, cb: any) => {
-    if (!file.mimetype.match(/\/(jpg|jpeg|png|gif|txt|pdf)$/)) {
+    if (!file.mimetype.match(/\/(mp4|AI|doc|docx|ppt|pptx)$/)) {
       return cb(new Error('Only image files are allowed!'), false);
     }
     cb(null, true);

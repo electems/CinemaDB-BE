@@ -28,4 +28,6 @@ export class LoggedUserDto {
   userSubCategory: Prisma.JsonArray;
 
   userName: string
+
+  planId: number
 }

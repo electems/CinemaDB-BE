@@ -11,7 +11,7 @@ import { DatabaseService } from '@database/database.service';
 import { Util } from '@modules/common/util';
 
 interface UserStep {
-  step: ""
+  step: '';
 }
 @Injectable()
 export class UsersService {
@@ -275,8 +275,8 @@ export class UsersService {
       },
     });
     const updateStep: UserStep = {
-      step: userAndUserSubCategory.step
-    }
+      step: userAndUserSubCategory.step,
+    };
     await this.db.user.update({
       where: { id: userAndUserSubCategory.id },
       data: updateStep,

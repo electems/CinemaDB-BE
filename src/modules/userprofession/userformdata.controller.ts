@@ -40,4 +40,13 @@ export class UserFormController {
   ): Promise<void> {
     await this.userFormService.updateAndCreateForm(userProfessionFormData);
   }
+
+  @Get('movies')
+  @ApiRoute({
+    summary: 'Get user',
+    description: 'Retrieves  user',
+  })
+  async getAllMovies(): Promise<any> {
+    return this.userFormService.getUserById();
+  }
 }

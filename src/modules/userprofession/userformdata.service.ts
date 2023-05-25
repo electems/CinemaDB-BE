@@ -1,5 +1,7 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-console */
 import { Injectable } from '@nestjs/common';
-import { UserProfessionFormData } from '@prisma/client';
+import { Prisma, UserProfessionFormData } from '@prisma/client';
 
 import { DatabaseService } from '@database/database.service';
 
@@ -29,6 +31,7 @@ export class UserFormService {
         await this.db.userProfessionFormData.create({
           data: {
             ...userProfessionFormData,
+            value: userProfessionFormData.value as Prisma.JsonObject,
           },
         });
       return createUserProfessionForm;
@@ -38,8 +41,18 @@ export class UserFormService {
         where: { id: userProfessionFormData.id },
         data: {
           ...userProfessionFormData,
+          value: userProfessionFormData.value as Prisma.JsonObject,
         },
       });
     return updateUserProfessionForm;
+  }
+
+  async getUserById(): Promise<UserProfessionFormData[]> {
+    const query = await this.db.$queryRaw<UserProfessionFormData[]>`SELECT value
+    FROM "UserProfessionFormData"
+    WHERE EXISTS (SELECT *
+    FROM jsonb_array_elements("UserProfessionFormData".value) c
+    WHERE c->>'name' LIKE 'movie%')`;
+    return query
   }
 }

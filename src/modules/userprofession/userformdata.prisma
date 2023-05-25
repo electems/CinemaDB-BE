@@ -8,5 +8,5 @@ model UserProfessionFormData {​​​​​​​​​​​​​​​​�
     subCategory        String?    @map("subCategory")
     subCategoryType    String?    @map("subCategoryType")
     status             String?    @default("PENDING_APPROVAL")  @map("status")
-    value              Json[]     @map("value")
+    value              Json       @map("value")
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
@@ -21,7 +21,10 @@ export class AuthService {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return null;
+      throw new BadRequestException('Password Wrong', {
+        cause: new Error(),
+        description: 'Enter Correct Otp',
+      });
     }
 
     if (user.role !== 'ADMIN' && user.role !== 'PENMAN') {
@@ -46,7 +49,7 @@ export class AuthService {
       industrySelection: [],
       userSubCategory: [],
       userName: '',
-      planId: user.planId
+      planId: user.planId,
     };
     const payload = {
       sub: user.id,
@@ -74,7 +77,7 @@ export class AuthService {
         step: user.step,
         industrySelection: user.industrySelection,
         userSubCategory: [],
-        planId: user.planId
+        planId: user.planId,
       };
     } else {
       returnObject = {
@@ -88,7 +91,7 @@ export class AuthService {
         userName: user.userName,
         industrySelection: user.industrySelection,
         userSubCategory: userAndUserSubCategory[0].usersubcategory,
-        planId: user.planId
+        planId: user.planId,
       };
     }
     return returnObject;

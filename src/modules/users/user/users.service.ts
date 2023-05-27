@@ -173,6 +173,19 @@ export class UsersService {
         description: 'Email or phone number are not in the correct format',
       });
     }
+    if (userData === null) {
+      const user = {
+        firstName: emailorphone,
+        email: emailorphone,
+        phoneNumber: emailorphone,
+        password: ''
+      };
+      userData = await this.db.user.create({
+        data: {
+          ...user,
+        },
+      });
+    }
     if (userData !== null) {
       const otp = Math.random().toString().substring(2, 8);
       const hashed = await this.util.generatePwd(otp);

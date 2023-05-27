@@ -9,4 +9,5 @@ model UserProfessionFormData {​​​​​​​​​​​​​​​​�
     subCategoryType    String?    @map("subCategoryType")
     status             String?    @default("PENDING_APPROVAL")  @map("status")
     value              Json       @map("value")
+    movieFk            Int?       @map("movie_fk")
 }

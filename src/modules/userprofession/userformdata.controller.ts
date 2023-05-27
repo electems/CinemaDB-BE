@@ -47,6 +47,6 @@ export class UserFormController {
     description: 'Retrieves  user',
   })
   async getAllMovies(): Promise<any> {
-    return this.userFormService.getUserById();
+    return this.userFormService.getMovies();
   }
 }

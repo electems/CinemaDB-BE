@@ -3,6 +3,7 @@ import fs from 'fs';
 import { Injectable } from '@nestjs/common';
 import jsonList from 'src/forms/EN/registration.json';
 
+
 import pathconfig from '../../config/pathconfig.json';
 
 @Injectable()
@@ -39,4 +40,5 @@ export class FormManagerService {
     );
     return jsondata;
   }
+
 }

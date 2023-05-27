@@ -13,6 +13,7 @@ import { User } from '@prisma/client';
 import { Request as ExpressRequest } from 'express';
 
 import { ApiRoute } from '@decorators/api-route';
+import { FormManagerService } from '@modules/formmanager/formmanager.service';
 
 import { LoggedUserDto } from './dto/logged-user.dto';
 import { LoginDto } from './dto/login.dto';
@@ -26,6 +27,7 @@ export class PublicController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UsersService,
+    private readonly formsService: FormManagerService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
@@ -63,5 +65,19 @@ export class PublicController {
   })
   async createUser(@Body() newUser: User): Promise<User> {
     return this.userService.createUser(newUser);
+  }
+
+  //Used to retrive picture in main screen before login
+  @Get('/:language/:formlayout')
+  @ApiRoute({
+    summary: 'Get all fields',
+    description: 'Retrieves all fields',
+    ok: { type: 'json', description: 'The form fields' },
+  })
+  async getFormLayout(
+    @Param('language') language: string,
+    @Param('formlayout') formlayout: string,
+  ): Promise<string> {
+    return this.formsService.getFormLayout(language, formlayout);
   }
 }

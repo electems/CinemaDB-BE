@@ -9,7 +9,7 @@ export class Util {
   }
 
   public async generatePwd(plainText: string): Promise<string> {
-    const pwdText = await bcrypt.hash(plainText, 10);
+    const pwdText = await bcrypt.hash(plainText, 11);
     return pwdText;
   }
 }

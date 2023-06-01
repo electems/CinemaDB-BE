@@ -1,0 +1,32 @@
+[
+    {
+        "id": "26959268-149A-418E-87A2-15989A12B41F",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_58580520-5B1D-40DA-A4F1-2E26E00A501B",
+        "label": "Placeholder label"
+    },
+    {
+        "id": "2D157427-09FA-4E18-9A1C-B90D1DEF4FDF",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_D2B55EBE-3804-461C-A88F-38E0C6926780",
+        "label": "Placeholder label"
+    }
+]

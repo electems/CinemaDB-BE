@@ -1,88 +1,50 @@
 [
     {
-        "id": "C952AAA2-0288-4E36-9266-8C2CC433DB81",
-        "element": "TwoColumnRow",
-        "text": "Movie Form",
+        "id": "BCC90830-F60E-4B0A-AB7E-4D6B457C27F0",
+        "element": "TextInput",
+        "text": "MovieName",
         "group_name": "Movie Form",
-        "static": true,
         "required": false,
-        "key": "TestComponent",
-        "custom": true,
-        "props": {
-            "test": "test_comp"
-        },
-        "custom_options": [],
-        "bold": false,
-        "italic": false,
+        "canHaveAnswer": true,
         "canHavePageBreakBefore": true,
         "canHaveAlternateForm": true,
         "canHaveDisplayHorizontal": true,
         "canHaveOptionCorrect": true,
         "canHaveOptionValue": true,
         "canPopulateFromApi": true,
-        "field_name": "movie_input2FB33861-F5E6-4068-A819-0FE0E2DF8FE4",
-        "label": "Movie Inputs",
-        "childItems": [
-            null,
-            null
-        ],
-        "isContainer": true
+        "field_name": "movie_name2028B1D3-7B89-48B5-8C13-89E92815B32D",
+        "label": "Movie Name"
     },
     {
-        "id": "BCFDD124-55D6-4F48-AD47-0F2075C3CFE6",
-        "element": "TwoColumnRow",
-        "text": "Movie Form",
+        "id": "9B5FC02C-3137-430A-B5FB-7F9E3A6C165A",
+        "element": "TextInput",
+        "text": "ActorName",
         "group_name": "Movie Form",
-        "static": true,
         "required": false,
-        "key": "TestComponent",
-        "custom": true,
-        "props": {
-            "test": "test_comp"
-        },
-        "component": {},
-        "custom_options": [],
-        "bold": false,
-        "italic": false,
+        "canHaveAnswer": true,
         "canHavePageBreakBefore": true,
         "canHaveAlternateForm": true,
         "canHaveDisplayHorizontal": true,
         "canHaveOptionCorrect": true,
         "canHaveOptionValue": true,
         "canPopulateFromApi": true,
-        "field_name": "movie_input5236569C-B001-4E2C-B8D3-DA7AAB70EC27",
-        "label": "Movie Inputs",
-        "col": 1,
-        "parentId": "A90A4519-F1FD-483F-96A3-E3D626173731",
-        "parentIndex": -1
+        "field_name": "actor_name93AB399C-1C49-43D2-87F8-CBD67F2F7CDC",
+        "label": "Actor Name"
     },
     {
-        "id": "6303EB93-A87D-49B4-8BB4-4026633270BF",
-        "element": "TwoColumnRow",
-        "text": "Movie Form",
+        "id": "BFE73560-CE3A-4790-9273-14AB80382DF8",
+        "element": "TextInput",
+        "text": "DirectorName",
         "group_name": "Movie Form",
-        "static": true,
         "required": false,
-        "key": "TestComponent",
-        "custom": true,
-        "props": {
-            "test": "test_comp"
-        },
-        "custom_options": [],
-        "bold": false,
-        "italic": false,
+        "canHaveAnswer": true,
         "canHavePageBreakBefore": true,
         "canHaveAlternateForm": true,
         "canHaveDisplayHorizontal": true,
         "canHaveOptionCorrect": true,
         "canHaveOptionValue": true,
         "canPopulateFromApi": true,
-        "field_name": "movie_input726A0C2B-0AD0-445E-BE15-45758E52659E",
-        "label": "Movie Inputs",
-        "childItems": [
-            null,
-            null
-        ],
-        "isContainer": true
+        "field_name": "director_name13E41804-F786-46DA-BC86-8628BFBF4986",
+        "label": "Director Name"
     }
 ]

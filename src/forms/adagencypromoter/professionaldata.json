@@ -1,0 +1,37 @@
+[
+    {
+        "key": "6deb10b6-9bfb-4f77-b19d-37a44f0fd15c",
+        "title": "Ad agency / Promoter",
+        "isLeaf": false,
+        "children": [
+            {
+                "key": "41ad129c-72c8-4500-8895-abb4a35df42a",
+                "title": "Digital_Print",
+                "isLeaf": false,
+                "parent": "6deb10b6-9bfb-4f77-b19d-37a44f0fd15c",
+                "children": []
+            },
+            {
+                "key": "d9d3c5c4-6079-4b09-b5bb-4905c0e24e6c",
+                "title": "Film_Journalists",
+                "isLeaf": false,
+                "parent": "6deb10b6-9bfb-4f77-b19d-37a44f0fd15c",
+                "children": []
+            },
+            {
+                "key": "9911b650-b806-475c-89ef-60e30e2c339b",
+                "title": "Advertisement",
+                "isLeaf": false,
+                "parent": "6deb10b6-9bfb-4f77-b19d-37a44f0fd15c",
+                "children": []
+            },
+            {
+                "key": "a38251ca-f363-4bba-bdc2-8fe8b6365b72",
+                "title": "TV_Media_Companies",
+                "isLeaf": false,
+                "parent": "6deb10b6-9bfb-4f77-b19d-37a44f0fd15c",
+                "children": []
+            }
+        ]
+    }
+]

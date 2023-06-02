@@ -1,1 +1,17 @@
-[{"id":"E6BA64CB-B791-4AFB-A357-CBDA3FCE56A7","element":"Checkboxes","text":"Checkboxes","required":false,"canHaveAnswer":true,"canHavePageBreakBefore":true,"canHaveAlternateForm":true,"canHaveDisplayHorizontal":true,"canHaveOptionCorrect":true,"canHaveOptionValue":true,"canPopulateFromApi":true,"field_name":"checkboxes_A3636BA6-981F-4F7C-AA05-BC58CD23FE07","label":"Placeholder label","options":[{"value":"harsha","text":"harsha","key":"checkboxes_option_CEA38650-9B0A-4A80-8A17-85DF8CB59271"},{"value":"adarash","text":"adarash","key":"checkboxes_option_61928E0F-3F2A-4B37-9E12-09D96ED5EFC1"},{"value":"shashi","text":"shashi","key":"checkboxes_option_310E3BA9-6DCF-45E2-AC80-6F586A4E2EAA"}],"dirty":false},{"id":"576EE65C-CE12-49B9-B211-8E6190BCA80E","element":"Dropdown","text":"Dropdown","required":false,"canHaveAnswer":true,"canHavePageBreakBefore":true,"canHaveAlternateForm":true,"canHaveDisplayHorizontal":true,"canHaveOptionCorrect":true,"canHaveOptionValue":true,"canPopulateFromApi":true,"field_name":"dropdown_99FC1F70-97B9-4C1A-8C3E-D4D4C0792362","label":"Placeholder label","options":[{"value":"place_holder_option_1","text":"Place holder option 1","key":"dropdown_option_CBF57BBE-D899-4B1B-A7BB-FD2AF5FA35DC"},{"value":"place_holder_option_2","text":"Place holder option 2","key":"dropdown_option_CA552DB6-C491-47B1-8FA8-824C9F3FF3E1"},{"value":"place_holder_option_3","text":"Place holder option 3","key":"dropdown_option_0BEB63B2-8ADB-4E13-BA1D-2253E6F17A3C"}]},{"id":"79FAC4D5-5141-4E61-8CA4-B69BF9025EB2","element":"Checkboxes","text":"Checkboxes","required":false,"canHaveAnswer":true,"canHavePageBreakBefore":true,"canHaveAlternateForm":true,"canHaveDisplayHorizontal":true,"canHaveOptionCorrect":true,"canHaveOptionValue":true,"canPopulateFromApi":true,"field_name":"checkboxes_47955607-0DC3-4DEC-AB08-2148CF386709","label":"Placeholder label","options":[{"value":"shashi","text":"shashi","key":"checkboxes_option_65567C72-B20B-4F28-960C-9CBBBB17ECE6"},{"value":"harsha","text":"harsha","key":"checkboxes_option_F1EC8A3B-9ACB-4426-BC3F-D5334F21A8AE"},{"value":"adarash","text":"adarash","key":"checkboxes_option_046D42B4-FAA9-4987-B021-918704C388A9"}],"dirty":false}]
+[
+    {
+        "id": "C9D97BF0-220B-4AAF-A2A9-4572D885FF7D",
+        "element": "TextInput",
+        "text": "Text Input",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "text_input_1DA45802-0094-4DA9-ADE4-B568F7D2CCC0",
+        "label": "Placeholder label"
+    }
+]

@@ -8,6 +8,7 @@ import {
   Param,
   ParseIntPipe,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User, UserSubCategory } from '@prisma/client';
@@ -17,9 +18,9 @@ import { ApiRoute } from '@decorators/api-route';
 
 import { UsersService } from './users.service';
 import { JwtPayloadDto } from '../auth/dto/jwt.payload.dto';
-// import { JwtAuthGuard } from '../auth/guards/jwt.auth-guard';
+import { JwtAuthGuard } from '../auth/guards/jwt.auth-guard';
 
-// @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 @Controller('users')
 @ApiTags('auth-users')
@@ -57,6 +58,17 @@ export class UsersController {
     @Param('id', new ParseIntPipe()) id: number,
   ): Promise<User | null> {
     return this.userService.getUserById(id);
+  }
+
+  @Get('user/:id')
+  @ApiRoute({
+    summary: 'Get UserSubCategory',
+    description: 'Retrieves  UserSubCategory',
+  })
+  async getUserById(
+    @Param('id', new ParseIntPipe()) id: number,
+  ): Promise<User | null> {
+    return this.userService.getUser(id);
   }
 
   @Put('updateuser/:id')

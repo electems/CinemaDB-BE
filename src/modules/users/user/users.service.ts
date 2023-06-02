@@ -157,6 +157,14 @@ export class UsersService {
     });
   }
 
+  async getUser(id: number): Promise<User | null> {
+    return this.db.user.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
+
   async generateOTP(emailorphone: string): Promise<User | null> {
     const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     let userData = undefined;
@@ -170,7 +178,7 @@ export class UsersService {
     } else {
       throw new BadRequestException('INCORRECT_FORMAT', {
         cause: new Error(),
-        description: 'Email or phone number are not in the correct format',
+        description: 'Email or phone number is not in the correct format',
       });
     }
     if (userData === null) {
@@ -249,6 +257,7 @@ export class UsersService {
       },
     });
   }
+
 
   async updateUserSubCategory(
     id: number,

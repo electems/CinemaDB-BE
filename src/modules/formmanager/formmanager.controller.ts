@@ -24,6 +24,18 @@ import pathconfig from '../../config/pathconfig.json';
 export class FormsController {
   constructor(private readonly formsService: FormManagerService) {}
 
+  @Get('/:language/:formlayout')
+  @ApiRoute({
+    summary: 'Get all fields',
+    description: 'Retrieves all fields',
+    ok: { type: 'json', description: 'The form fields' },
+  })
+  async getFormLayout(
+    @Param('language') language: string,
+    @Param('formlayout') formlayout: string,
+  ): Promise<string> {
+    return this.formsService.getFormLayout(language, formlayout);
+  }
 
   @Post('/:language/:formlayout')
   @ApiRoute({
@@ -85,6 +97,21 @@ export class FormsController {
     //const jsonData = JSON.parse(data);
     if (fs.existsSync(`${pathconfig.FilePath}/${path}/${dirname}`)) {
       fs.rmdirSync(`${pathconfig.FilePath}/${path}/${dirname}`, {
+        recursive: true,
+      });
+    }
+  }
+
+  @Delete('deletedirectory/:path')
+  @ApiRoute({
+    summary: 'Insert fields',
+    description: 'Insert dynamic fields',
+    ok: { type: 'json', description: 'The form fields' },
+  })
+  async deleteDirectoryTree(@Param('path') path: string): Promise<void> {
+    //const jsonData = JSON.parse(data);
+    if (fs.existsSync(`${pathconfig.FilePath}/${path}`)) {
+      fs.rmdirSync(`${pathconfig.FilePath}/${path}`, {
         recursive: true,
       });
     }

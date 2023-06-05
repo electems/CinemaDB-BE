@@ -22,6 +22,8 @@ model FilmFestival {​​​​​​​​​​​​​​​​​​​​
     writers            Json[]     @map("writers")
     producers          Json[]     @map("producers")
     cast               Json[]     @map("cast")
+    movieFile          Json[]     @map("movieFile")
+    trailer            Json[]     @map("trailer")
     status             String?    @default("PENDING_APPROVAL")  @map("status")
     userId             Int?       @map("user_id")
 }

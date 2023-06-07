@@ -128,7 +128,7 @@ export class FormsController {
     @Param('path') path: string,
     @Param('location') location: string,
     @Param('filename') filename: string,
-  ): Promise<JSON> {
+  ): Promise<any> {
     let readFile = "{ error: 'FILE_NOT_FOUND' }";
     if (
       fs.existsSync(
@@ -139,6 +139,12 @@ export class FormsController {
         `${pathconfig.FilePath}/${path}/${location}/${filename}.json`,
         'utf8',
       );
+    } else if (
+      !fs.existsSync(
+        `${pathconfig.FilePath}/${path}/${location}/${filename}.json`,
+      )
+    ) {
+      return (readFile = 'FILE_NOT_FOUND');
     }
 
     return JSON.parse(readFile);

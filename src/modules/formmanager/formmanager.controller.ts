@@ -24,19 +24,6 @@ import pathconfig from '../../config/pathconfig.json';
 export class FormsController {
   constructor(private readonly formsService: FormManagerService) {}
 
-  @Get('/:language/:formlayout')
-  @ApiRoute({
-    summary: 'Get all fields',
-    description: 'Retrieves all fields',
-    ok: { type: 'json', description: 'The form fields' },
-  })
-  async getFormLayout(
-    @Param('language') language: string,
-    @Param('formlayout') formlayout: string,
-  ): Promise<string> {
-    return this.formsService.getFormLayout(language, formlayout);
-  }
-
   @Post('/:language/:formlayout')
   @ApiRoute({
     summary: 'Insert fields',

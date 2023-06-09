@@ -71,19 +71,6 @@ export class UsersController {
     return this.userService.getUser(id);
   }
 
-  @Put('updateuser/:id')
-  @ApiRoute({
-    summary: 'Update a User',
-    description: 'Modifies a User',
-    notFound: { description: "The requested User wasn't found" },
-    badRequest: {},
-  })
-  async updateUser(
-    @Param('id', new ParseIntPipe()) id: number,
-    @Body() user: User,
-  ): Promise<User> {
-    return this.userService.updateUser(id, user);
-  }
 
   @Delete('delete/:id')
   @ApiRoute({

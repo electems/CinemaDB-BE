@@ -7,6 +7,8 @@ import {
   BadRequestException,
   Param,
   Body,
+  Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
@@ -65,6 +67,21 @@ export class PublicController {
   })
   async createUser(@Body() newUser: User): Promise<User> {
     return this.userService.createUser(newUser);
+  }
+
+  //update is part of getOTP before login
+  @Put('updateuser/:id')
+  @ApiRoute({
+    summary: 'Update a User',
+    description: 'Modifies a User',
+    notFound: { description: "The requested User wasn't found" },
+    badRequest: {},
+  })
+  async updateUser(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() user: User,
+  ): Promise<User> {
+    return this.userService.updateUser(id, user);
   }
 
   //Used to retrive picture in main screen before login

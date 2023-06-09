@@ -1,4 +1,9 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
@@ -11,7 +16,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   async validateUser(userName: string, password: string): Promise<User | null> {
     const user = await this.usersService.findOneUser(userName);
@@ -31,7 +36,10 @@ export class AuthService {
       if (user.elapsedOTPTime > new Date()) {
         return user;
       }
-      throw new HttpException('Your OTP has expired', HttpStatus.BAD_REQUEST); 
+      throw new HttpException(
+        'Your OTP has expired',
+        HttpStatus.GATEWAY_TIMEOUT,
+      );
     }
 
     return user;

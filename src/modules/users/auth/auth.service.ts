@@ -11,7 +11,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async validateUser(userName: string, password: string): Promise<User | null> {
     const user = await this.usersService.findOneUser(userName);
@@ -31,7 +31,10 @@ export class AuthService {
       if (user.elapsedOTPTime > new Date()) {
         return user;
       }
-      return null;
+      throw new BadRequestException('OTP Expired', {
+        cause: new Error(),
+        description: 'Your OTP has expired',
+      });
     }
 
     return user;

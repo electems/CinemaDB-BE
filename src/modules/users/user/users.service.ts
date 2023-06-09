@@ -186,7 +186,7 @@ export class UsersService {
         firstName: emailorphone,
         email: emailorphone,
         phoneNumber: emailorphone,
-        password: ''
+        password: '',
       };
       userData = await this.db.user.create({
         data: {
@@ -198,7 +198,7 @@ export class UsersService {
       const otp = Math.random().toString().substring(2, 8);
       const hashed = await this.util.generatePwd(otp);
       const date = new Date();
-      date.setSeconds(date.getSeconds() + 120);
+      date.setSeconds(date.getSeconds() + 600);
       const user = {
         userName: emailorphone,
         password: hashed,
@@ -257,7 +257,6 @@ export class UsersService {
       },
     });
   }
-
 
   async updateUserSubCategory(
     id: number,

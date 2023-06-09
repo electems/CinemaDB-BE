@@ -30,4 +30,6 @@ export class LoggedUserDto {
   userName: string
 
   planId: number
+  
+  status: string
 }

@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
@@ -26,20 +21,14 @@ export class AuthService {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new BadRequestException('Password Wrong', {
-        cause: new Error(),
-        description: 'Enter Correct Otp',
-      });
+      user.status = 'Invalid_Password';
     }
 
     if (user.role !== 'ADMIN' && user.role !== 'PENMAN') {
       if (user.elapsedOTPTime > new Date()) {
         return user;
       }
-      throw new HttpException(
-        'Your OTP has expired',
-        HttpStatus.GATEWAY_TIMEOUT,
-      );
+      user.status = 'Expired_OTP';
     }
 
     return user;
@@ -58,6 +47,7 @@ export class AuthService {
       userSubCategory: [],
       userName: '',
       planId: user.planId,
+      status: user.status
     };
     const payload = {
       sub: user.id,
@@ -69,6 +59,7 @@ export class AuthService {
       step: user.step,
       industrySelection: user.industrySelection,
       userSubCategory: user.userSubCategory,
+      status: user.status
     };
 
     const userAndUserSubCategory = await this.usersService.getUserById(user.id);
@@ -86,6 +77,7 @@ export class AuthService {
         industrySelection: user.industrySelection,
         userSubCategory: [],
         planId: user.planId,
+        status: user.status
       };
     } else {
       returnObject = {
@@ -100,6 +92,7 @@ export class AuthService {
         industrySelection: user.industrySelection,
         userSubCategory: userAndUserSubCategory[0].usersubcategory,
         planId: user.planId,
+        status: user.status
       };
     }
     return returnObject;

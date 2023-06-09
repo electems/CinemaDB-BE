@@ -198,7 +198,7 @@ export class UsersService {
       const otp = Math.random().toString().substring(2, 8);
       const hashed = await this.util.generatePwd(otp);
       const date = new Date();
-      date.setSeconds(date.getSeconds() + 600);
+      date.setSeconds(date.getSeconds() + 60);
       const user = {
         userName: emailorphone,
         password: hashed,

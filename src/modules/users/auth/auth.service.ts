@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
@@ -31,10 +31,7 @@ export class AuthService {
       if (user.elapsedOTPTime > new Date()) {
         return user;
       }
-      throw new BadRequestException('OTP Expired', {
-        cause: new Error(),
-        description: 'Your OTP has expired',
-      });
+      throw new HttpException('Your OTP has expired', HttpStatus.BAD_REQUEST); 
     }
 
     return user;

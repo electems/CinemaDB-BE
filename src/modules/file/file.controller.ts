@@ -5,20 +5,29 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
+  Param,
+  ParseIntPipe,
   Post,
   UploadedFile,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
+import { File } from '@prisma/client';
 
+import { ApiRoute } from '@decorators/api-route';
 import { multerOptions } from '@modules/common/fileupload';
 import { videoUploadOptions } from '@modules/common/videoupload';
+
+import { FileService } from './file.service';
 @Controller('fileupload')
+@ApiTags('File-Upload')
 export class FileController {
-  constructor() {}
+  constructor(private readonly fileService: FileService) {}
 
   @Post('file')
   @UseInterceptors(FileInterceptor('image', multerOptions))
@@ -64,4 +73,35 @@ export class FileController {
   logFiles(@UploadedFiles() images: any, @Body() fileDto: any) {
     return images;
   }
+
+  @Post('createfile')
+  @ApiRoute({
+    summary: 'Create a AuditionCall',
+    description: 'Creates a new AuditionCall',
+    badRequest: {},
+  })
+  async createAuditionCall(@Body() auditionCall: File): Promise<File> {
+    return this.fileService.createAuditionCall(auditionCall);
+  }
+
+  @Get('audition/:movieFk')
+  @ApiRoute({
+    summary: 'Get AuditionCall By MovieFk',
+    description: 'Retrieves  AuditionCall By MovieFk',
+  })
+  async getAuditionCallByFk(
+    @Param('movieFk', new ParseIntPipe()) movieFk: number,
+  ): Promise<File[] | null> {
+    return this.fileService.findAuditionByMovieId(movieFk);
+  }
+
+  @Get('allfiles')
+  @ApiRoute({
+    summary: 'Get All Auditions',
+    description: 'Retrieves All Auditions',
+  })
+  async getAllMovies(): Promise<any> {
+    return this.fileService.getAllAuditions();
+  }
+
 }

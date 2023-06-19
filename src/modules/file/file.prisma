@@ -4,5 +4,5 @@ model File {​​​​​​​​​​​​​​​​​​​​​​�
     destination          String?    @map("destination")
     originalName         String?    @map("originalName")
     tableName            String?    @map("tableName")
-    movieFk              Int?       @map("movie_fk")
+    tableId              Int?       @map("table_fk")
 }

@@ -80,19 +80,19 @@ export class FileController {
     description: 'Creates a new AuditionCall',
     badRequest: {},
   })
-  async createAuditionCall(@Body() auditionCall: File): Promise<File> {
-    return this.fileService.createAuditionCall(auditionCall);
+  async createFile(@Body() file: File): Promise<File> {
+    return this.fileService.createFile(file);
   }
 
-  @Get('audition/:movieFk')
+  @Get('file/:tableId')
   @ApiRoute({
-    summary: 'Get AuditionCall By MovieFk',
-    description: 'Retrieves  AuditionCall By MovieFk',
+    summary: 'Get AuditionCall By tableId',
+    description: 'Retrieves  AuditionCall By tableId',
   })
-  async getAuditionCallByFk(
-    @Param('movieFk', new ParseIntPipe()) movieFk: number,
+  async getFileByFk(
+    @Param('tableId', new ParseIntPipe()) tableId: number,
   ): Promise<File[] | null> {
-    return this.fileService.findAuditionByMovieId(movieFk);
+    return this.fileService.findFileByMovieId(tableId);
   }
 
   @Get('allfiles')
@@ -100,8 +100,7 @@ export class FileController {
     summary: 'Get All Auditions',
     description: 'Retrieves All Auditions',
   })
-  async getAllMovies(): Promise<any> {
-    return this.fileService.getAllAuditions();
+  async getAllFiles(): Promise<any> {
+    return this.fileService.getAllFiles();
   }
-
 }

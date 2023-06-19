@@ -7,30 +7,31 @@ import { DatabaseService } from '@database/database.service';
 export class FileService {
   constructor(private db: DatabaseService) {}
 
-  async createAuditionCall(file: File): Promise<File> {
+  async createFile(file: File): Promise<File> {
     const createFile = await this.db.file.create({
       data: file,
     });
     return createFile;
   }
 
-  async findAuditionByMovieId(movieFk: number): Promise<File[] | null> {
+  async findFileByMovieId(tableId: number): Promise<File[] | null> {
     return this.db.file.findMany({
       where: {
-        movieFk,
+        tableId: tableId,
       },
     });
   }
 
-  async getAllAuditions(): Promise<Array<File>> {
+  async findFileByMovieName(name: string): Promise<File | null> {
+    return this.db.file.findFirst({
+      where: {
+        fileName: name,
+      },
+    });
+  }
+
+  async getAllFiles(): Promise<Array<File>> {
     return this.db.file.findMany();
   }
 
-  async getUserSubCategoryById(originalName: string): Promise<File | null> {
-    return this.db.file.findFirst({
-      where: {
-        originalName,
-      },
-    });
-  }
 }

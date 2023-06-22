@@ -11,6 +11,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Res,
   UploadedFile,
   UploadedFiles,
   UseInterceptors,
@@ -19,15 +20,20 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import { File } from '@prisma/client';
 
+import { DatabaseService } from '@database/database.service';
 import { ApiRoute } from '@decorators/api-route';
 import { multerOptions } from '@modules/common/fileupload';
 import { videoUploadOptions } from '@modules/common/videoupload';
 
 import { FileService } from './file.service';
+// import pathconfig from '../../config/pathconfig.json';
 @Controller('fileupload')
 @ApiTags('File-Upload')
 export class FileController {
-  constructor(private readonly fileService: FileService) {}
+  constructor(
+    private readonly fileService: FileService,
+    private db: DatabaseService,
+  ) {}
 
   @Post('file')
   @UseInterceptors(FileInterceptor('image', multerOptions))
@@ -102,5 +108,32 @@ export class FileController {
   })
   async getAllFiles(): Promise<any> {
     return this.fileService.getAllFiles();
+  }
+
+  @Get('/files/profile/:filename')
+  @UseInterceptors()
+  async downloadProfileImages(
+    @Res() res: any,
+    @Param('filename') name: string,
+  ) {
+    const file = await this.db.file.findFirst({
+      where: {
+        fileName: name,
+      },
+    });
+    const directoryPath = file?.destination;
+    const filePath = directoryPath + '/' + name;
+    return res.download(filePath);
+  }
+
+  @Get('/filename/:filename')
+  @UseInterceptors()
+  async getFileByName(@Param('filename') name: string) {
+    const file = await this.db.file.findFirst({
+      where: {
+        fileName: name,
+      },
+    });
+    return file;
   }
 }

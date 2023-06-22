@@ -1,0 +1,10 @@
+model AuditionCallByUser {​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+    id                          Int         @id @default(autoincrement())
+    role                        String?     @map("role")
+    auditionFk                  String?     @map("audition_fk")
+    userFK                      String?     @map("user_fk")
+    video                       Json[]     @map("video")
+    photo                       Json[]     @map("photo")
+    firstName                   String?     @map("first_name")
+    lastName                    String?     @map("last_name")
+}

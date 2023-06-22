@@ -7,7 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuditionCall } from '@prisma/client';
+import { AuditionCall, AuditionCallNotification } from '@prisma/client';
 
 import { ApiRoute } from '@decorators/api-route';
 
@@ -48,4 +48,56 @@ export class AuditionCallController {
   ): Promise<AuditionCall[] | null> {
     return this.auditionCall.findAuditionByMovieId(movieFk);
   }
+
+  @Get('search/:searchWord')
+  async getAuthors(
+    @Param('searchWord') searchWord: string,
+  ): Promise<AuditionCall[]> {
+    return this.auditionCall.searchAudition(searchWord);
+  }
+
+  @Get('week')
+  async getQuery(): Promise<any> {
+    return this.auditionCall.getAuditionsByThisWeek();
+  }
+
+  @Get('month')
+  async getAuditionsByMonth(): Promise<any> {
+    return this.auditionCall.getAuditionsByThisMonth();
+  }
+
+  @Get('audition/notification/:userFk')
+  @ApiRoute({
+    summary: 'Get AuditionCallNotification By UserFk',
+    description: 'Retrieves  AuditionCallNotification By UserFk',
+  })
+  async getAuditionNotificationByUserFk(
+    @Param('userFk', new ParseIntPipe()) userFk: number,
+  ): Promise<AuditionCallNotification[] | null> {
+    return this.auditionCall.findNotificationByUserFk(userFk);
+  }
+
+  @Post('createAuditionCallNotification')
+  @ApiRoute({
+    summary: 'Create a AuditionCallNotification',
+    description: 'Creates a new AuditionCallNotification',
+    badRequest: {},
+  })
+  async createAuditionCallNotification(
+    @Body() auditionCallNotification: AuditionCallNotification,
+  ): Promise<AuditionCallNotification> {
+    return this.auditionCall.createAuditionNofication(auditionCallNotification);
+  }
+
+  @Get('audition/person/notification/:userId')
+  @ApiRoute({
+    summary: 'Get AuditionCallNotification By UserFk',
+    description: 'Retrieves  AuditionCallNotification By UserFk',
+  })
+  async getAuditionNotificationByUserId(
+    @Param('userId', new ParseIntPipe()) userId: number,
+  ): Promise<AuditionCallNotification[] | null> {
+    return this.auditionCall.getAuditionsNotificationByUserId(userId);
+  }
+ 
 }

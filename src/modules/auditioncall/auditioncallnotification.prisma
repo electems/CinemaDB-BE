@@ -1,0 +1,9 @@
+model AuditionCallNotification {​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+    id                   Int        @id @default(autoincrement())
+    firstName            String?    @map("firstName")
+    lastName             String?    @map("lastName")
+    role                 String?    @map("role")
+    movie                String?    @map("movie")
+    userFk               Int?       @map("user_fk")
+    auditionCallFk       Int?    @map("auditioncall_fk")
+}

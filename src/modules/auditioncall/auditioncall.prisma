@@ -13,7 +13,8 @@ model AuditionCall {​​​​​​​​​​​​​​​​​​​​
     auditionAgencyEmailId       String?    @map("auditionAgencyEmailId")
     contactNumber               String?    @map("contactNumber")
     auditionReason              String?    @map("auditionReason")
-    venueOrInterviewLocation     String?    @map("venue_InterviewLocation")
+    venueOrInterviewLocation    String?    @map("venue_InterviewLocation")
     duration                    String?    @map("duration")
     movieFk                     Int?       @map("movie_fk")
+    userFK                      Int?    @map("user_fk")
 }

@@ -6,11 +6,12 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuditionCall, AuditionCallNotification } from '@prisma/client';
 
 import { ApiRoute } from '@decorators/api-route';
 
+import { AuditionCallDto, CreateAuditionCallDto } from './auditioncall.dto';
 import { AuditionCallService } from './auditioncall.service';
 @Controller('auditioncall')
 @ApiTags('Audition-Call')
@@ -22,7 +23,8 @@ export class AuditionCallController {
     summary: 'Get All Auditions',
     description: 'Retrieves All Auditions',
   })
-  async getAllMovies(): Promise<any> {
+  @ApiOkResponse({ status: 200, type: [AuditionCallDto] })
+  async getAllAuditions(): Promise<any> {
     return this.auditionCall.getAllAuditions();
   }
 
@@ -32,6 +34,7 @@ export class AuditionCallController {
     description: 'Creates a new AuditionCall',
     badRequest: {},
   })
+  @ApiOkResponse({ status: 201, type: AuditionCallDto })
   async createAuditionCall(
     @Body() auditionCall: AuditionCall,
   ): Promise<AuditionCall> {
@@ -99,5 +102,4 @@ export class AuditionCallController {
   ): Promise<AuditionCallNotification[] | null> {
     return this.auditionCall.getAuditionsNotificationByUserId(userId);
   }
- 
 }

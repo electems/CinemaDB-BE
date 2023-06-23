@@ -1,8 +1,7 @@
 import fs from 'fs';
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import jsonList from 'src/forms/EN/registration.json';
-
 
 import pathconfig from '../../config/pathconfig.json';
 
@@ -11,6 +10,12 @@ export class FormManagerService {
   jsonList = jsonList;
 
   async getFormLayout(language: string, formlayout: string): Promise<string> {
+    Logger.log(
+      'Start : FormManagerService  : getFormLayout  : language: ',
+      language,
+      'formlayout :',
+      formlayout,
+    );
     if (
       fs.existsSync(`${pathconfig.FilePath}/${language}/${formlayout}.json`)
     ) {
@@ -22,6 +27,10 @@ export class FormManagerService {
       return jsonData;
     }
     const obj = { error: 'FILE_NOT_FOUND' };
+    Logger.log(
+      'End : FormManagerService  : getFormLayout  : response: ',
+      JSON.stringify(obj),
+    );
     return JSON.stringify(obj);
   }
 
@@ -30,6 +39,14 @@ export class FormManagerService {
     formlayout: string,
     body: object,
   ): Promise<string> {
+    Logger.log(
+      'Start : FormManagerService  : createFormLayout  : path: ',
+      path,
+      'formlayout :',
+      formlayout,
+      'body :',
+      body,
+    );
     const jsondata = JSON.stringify(body);
     if (!fs.existsSync(`${pathconfig.FilePath}/${path}`)) {
       fs.mkdirSync(`${pathconfig.FilePath}/${path}`);
@@ -38,7 +55,11 @@ export class FormManagerService {
       `${pathconfig.FilePath}/${path}/${formlayout}.json`,
       jsondata,
     );
+
+    Logger.log(
+      'End : FormManagerService  : createFormLayout  : response: ',
+      jsondata
+    );
     return jsondata;
   }
-
 }

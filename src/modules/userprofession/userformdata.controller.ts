@@ -41,12 +41,23 @@ export class UserFormController {
     await this.userFormService.updateAndCreateForm(userProfessionFormData);
   }
 
-  @Get('movies')
+  @Get('movies/:userid')
+  @ApiRoute({
+    summary: 'Get user',
+    description: 'Retrieves  user',
+  })
+  async getAllMoviesByUserId(
+    @Param('userid', new ParseIntPipe()) userid: number,
+  ): Promise<any> {
+    return this.userFormService.getMoviesByUserId(userid);
+  }
+
+  @Get('movies/auditionmovies/lovers')
   @ApiRoute({
     summary: 'Get user',
     description: 'Retrieves  user',
   })
   async getAllMovies(): Promise<any> {
-    return this.userFormService.getMovies();
+    return this.userFormService.getMoviesForLover();
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { AuditionCall, AuditionCallNotification } from '@prisma/client';
 
 import { DatabaseService } from '@database/database.service';
@@ -8,14 +8,28 @@ export class AuditionCallService {
   constructor(private db: DatabaseService) {}
 
   async createAuditionCall(auditionCall: AuditionCall): Promise<AuditionCall> {
+    Logger.log(
+      'Start : AuditionCallService  : createAuditionCall  : payload :',
+      auditionCall,
+    );
     const createAuditionCall = await this.db.auditionCall.create({
       data: auditionCall,
     });
+    Logger.log(
+      'End : AuditionCallService  : createAuditionCall  : response :',
+      createAuditionCall,
+    );
     return createAuditionCall;
   }
 
   async getAllAuditions(): Promise<Array<AuditionCall>> {
-    return this.db.auditionCall.findMany();
+    Logger.log('Start : AuditionCallService  : getAllAuditions  : getAll :');
+    const findAllAuditions = this.db.auditionCall.findMany();
+    Logger.log(
+      'End : AuditionCallService  : getAllAuditions  : response :',
+      findAllAuditions,
+    );
+    return findAllAuditions;
   }
 
   async findAuditionByMovieId(movieFk: number): Promise<AuditionCall[] | null> {

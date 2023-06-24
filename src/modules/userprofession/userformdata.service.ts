@@ -2,16 +2,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-console */
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Prisma, UserProfessionFormData } from '@prisma/client';
-// import { v4 as uuidv4 } from 'uuid';
 
 import { DatabaseService } from '@database/database.service';
 interface moviesList {
-  value: number;
+  value: string;
   text: string;
-  id: number
+  id: number;
 }
+
 @Injectable()
 export class UserFormService {
   constructor(private db: DatabaseService) {}
@@ -21,18 +21,42 @@ export class UserFormService {
     subCategory: string,
     subCategoryType: string,
   ): Promise<any> {
-    return this.db.$queryRaw`SELECT * FROM "UserProfessionFormData"  
+    Logger.log(
+      'Start : UserFormService  : getUserSummaryFormData : userId = ',
+      userId,
+      'subCategory = ',
+      subCategory,
+      'subCategoryType = ',
+      subCategoryType,
+    );
+    const query = this.db.$queryRaw`SELECT * FROM "UserProfessionFormData"  
        WHERE user_id=${userId} AND "subCategory"=${subCategory} AND "subCategoryType"=${subCategoryType}`;
+    Logger.log(
+      'End : UserFormService  : getUserSummaryFormData : response = ',
+      query,
+    );
+    return query;
   }
 
   async getUserFormById(id: number): Promise<any> {
-    return this.db.$queryRaw`SELECT * FROM "UserProfessionFormData"  
+    Logger.log('Start : UserFormService  : getUserFormById : id =', id);
+    const getUserByFormId = this.db
+      .$queryRaw`SELECT * FROM "UserProfessionFormData"  
        WHERE id=${id}`;
+    Logger.log(
+      'End : UserFormService  : getUserFormById : responce ',
+      getUserByFormId,
+    );
+    return getUserByFormId;
   }
 
   async updateAndCreateForm(
     userProfessionFormData: UserProfessionFormData,
   ): Promise<UserProfessionFormData> {
+    Logger.log(
+      'Start : UserFormService  : updateAndCreateForm : payload =',
+      userProfessionFormData,
+    );
     if (userProfessionFormData.id === undefined) {
       const createUserProfessionForm =
         await this.db.userProfessionFormData.create({
@@ -51,33 +75,79 @@ export class UserFormService {
           value: userProfessionFormData.value as Prisma.JsonObject,
         },
       });
+    Logger.log(
+      'End : UserFormService  : updateAndCreateForm : response =',
+      updateUserProfessionForm,
+    );
     return updateUserProfessionForm;
   }
 
-  async getMovies(): Promise<any> {
-    const query = await this.db.$queryRaw<any[]>`SELECT value
+  async getMoviesByUserId(userId: any): Promise<any> {
+    Logger.log(
+      'Start : UserFormService  : getMoviesByUserId : userId =',
+      userId,
+    );
+    const query = await this.db.$queryRaw<any[]>`SELECT id, value
     FROM "UserProfessionFormData"
     WHERE EXISTS (SELECT *
-    FROM jsonb_array_elements("UserProfessionFormData".value) c
-    WHERE c->>'name' LIKE 'movie%')`;
+    FROM jsonb_array_elements("UserProfessionFormData".value) C
+    WHERE "UserProfessionFormData".user_id = ${userId} AND c->>'name' LIKE 'movie%')`;
+
     const movieInputObject: any = [];
     for (let i = 0; i < query.length; i++) {
       query[i].value.map((item: any) => {
+        Object.assign(item, { id: query[i].id });
         movieInputObject.push(item);
       });
     }
     const inputBasedOnOnlyMovieName = movieInputObject.filter(
       (item: any) => item.name.indexOf('movie_name') !== -1,
     );
-    let id = 1;
     const getAllMovies: moviesList[] = [];
     inputBasedOnOnlyMovieName.map((item: any) => {
       getAllMovies.push({
         value: item.value,
         text: item.value,
-        id: id++
+        id: item.id,
       });
     });
+    Logger.log(
+      'End : UserFormService  : getMoviesByUserId : response =',
+      getAllMovies,
+    );
+    return getAllMovies;
+  }
+
+  async getMoviesForLover(): Promise<any> {
+    Logger.log('Start : UserFormService  : getMoviesForLover  : get');
+    const query = await this.db.$queryRaw<any[]>`SELECT id, value
+     FROM "UserProfessionFormData"
+     WHERE EXISTS (SELECT *
+     FROM jsonb_array_elements("UserProfessionFormData".value) c
+     WHERE c->>'name' LIKE 'movie%')`;
+
+    const movieInputObject: any = [];
+    for (let i = 0; i < query.length; i++) {
+      query[i].value.map((item: any) => {
+        Object.assign(item, { id: query[i].id });
+        movieInputObject.push(item);
+      });
+    }
+    const inputBasedOnOnlyMovieName = movieInputObject.filter(
+      (item: any) => item.name.indexOf('movie_name') !== -1,
+    );
+    const getAllMovies: moviesList[] = [];
+    inputBasedOnOnlyMovieName.map((item: any) => {
+      getAllMovies.push({
+        value: item.value,
+        text: item.value,
+        id: item.id,
+      });
+    });
+    Logger.log(
+      'End : UserFormService  : getMoviesForLover  : response :',
+      getAllMovies,
+    );
     return getAllMovies;
   }
 }

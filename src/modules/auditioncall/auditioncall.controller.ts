@@ -11,7 +11,7 @@ import { AuditionCall, AuditionCallNotification } from '@prisma/client';
 
 import { ApiRoute } from '@decorators/api-route';
 
-import { AuditionCallDto, CreateAuditionCallDto } from './auditioncall.dto';
+import { AuditionCallDto } from './auditioncall.dto';
 import { AuditionCallService } from './auditioncall.service';
 @Controller('auditioncall')
 @ApiTags('Audition-Call')

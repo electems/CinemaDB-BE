@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { FilmTrainingInstitute } from '@prisma/client';
 
@@ -33,5 +33,16 @@ export class FilmTrainingInstituteController {
     return this.filmTrainingInstitute.createFilmTrainingInstitute(
       filmTrainingInstitute,
     );
+  }
+
+  @Get('filmInstituteDetails/:fileName')
+  @ApiRoute({
+    summary: 'Get filmInstituteDetails',
+    description: 'Retrieves filmInstituteDetails',
+  })
+  async getFilmInstituteDetail(
+    @Param('fileName') fileName: string,
+  ): Promise<FilmTrainingInstitute | null> {
+    return this.filmTrainingInstitute.getFilmInstituteDetail(fileName);
   }
 }

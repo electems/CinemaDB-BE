@@ -19,6 +19,7 @@ import {
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import { File } from '@prisma/client';
+import { Response } from 'express';
 
 import { DatabaseService } from '@database/database.service';
 import { ApiRoute } from '@decorators/api-route';
@@ -135,5 +136,29 @@ export class FileController {
       },
     });
     return file;
+  }
+
+  @Get('userprofile/:tableId')
+  @ApiRoute({
+    summary: 'Get All Auditions',
+    description: 'Retrieves All Auditions',
+  })
+  async findUserProfileImage(
+    @Param('tableId', new ParseIntPipe()) tableId: number,
+    @Res() res: Response,
+  ): Promise<any> {
+    const filePath = await this.fileService.findUserProfileImage(tableId);
+    return res.download(filePath);
+  }
+
+  @Get('filmInstitutePosters/:tableId')
+  @ApiRoute({
+    summary: 'Get filmInstitutePosters',
+    description: 'Retrieves filmInstitutePosters',
+  })
+  async getFilmInstitutePoster(
+    @Param('tableId', new ParseIntPipe()) tableId: number,
+  ): Promise<any> {
+    return this.fileService.getAllPostersOfFilmInstitute(tableId);
   }
 }

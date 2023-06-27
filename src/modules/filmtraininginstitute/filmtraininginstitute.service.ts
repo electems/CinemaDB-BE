@@ -36,4 +36,24 @@ export class FilmTrainingInstituteService {
     );
     return filmTrainingInstitute;
   }
+
+  async getFilmInstituteDetail(
+    fileName: string,
+  ): Promise<FilmTrainingInstitute | null> {
+    Logger.log(
+      'Start : FilmTrainingInstituteService  : getFilmInstituteDetail  : getFilmInstituteDetail :',
+    );
+    const filmTrainingInstitute = await this.db.filmTrainingInstitute.findFirst(
+      {
+        where: {
+          fileName: fileName,
+        },
+      },
+    );
+    Logger.log(
+      'End : FilmTrainingInstituteService  : getFilmInstituteDetail  : response :',
+      filmTrainingInstitute,
+    );
+    return filmTrainingInstitute;
+  }
 }

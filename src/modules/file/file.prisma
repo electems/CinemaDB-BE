@@ -5,4 +5,6 @@ model File {​​​​​​​​​​​​​​​​​​​​​​�
     originalName         String?    @map("originalName")
     tableName            String?    @map("tableName")
     tableId              Int?       @map("table_fk")
+    filmInstituteFK      Int?        @map("filminstitute_fk")
+    filmTrainingInstitute  FilmTrainingInstitute?       @relation(fields: [filmInstituteFK], references: [id])
 }

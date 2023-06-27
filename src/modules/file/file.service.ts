@@ -22,6 +22,17 @@ export class FileService {
     });
   }
 
+  async findUserProfileImage(tableId: number): Promise<any> {
+    const fileName = await this.db.file.findFirst({
+      where: {
+        tableId: tableId,
+      },
+    });
+    const directoryPath = fileName?.destination;
+    const filePath = directoryPath + '/' + fileName?.fileName;
+    return filePath;
+  }
+
   async findFileByMovieName(name: string): Promise<File | null> {
     return this.db.file.findFirst({
       where: {
@@ -34,4 +45,19 @@ export class FileService {
     return this.db.file.findMany();
   }
 
+  async getAllPostersOfFilmInstitute(tableId: number): Promise<Array<File>> {
+    const filmInstitutePoster = await this.db.file.findMany({
+      where: {
+        AND: [
+          {
+            tableId: tableId,
+          },
+          {
+            tableName: 'FilmTrainingInstitute',
+          },
+        ],
+      },
+    });
+    return filmInstitutePoster;
+  }
 }

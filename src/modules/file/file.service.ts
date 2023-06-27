@@ -34,4 +34,16 @@ export class FileService {
     return this.db.file.findMany();
   }
 
+  async findFileByMovieType(): Promise<File[] | null> {
+    return this.db.file.findMany({
+      where: {
+        AND: [
+          {
+            tableName: 'Movie',
+          },
+        ],
+      },
+    });
+  }
+
 }

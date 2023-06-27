@@ -5,6 +5,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Prisma, UserProfessionFormData } from '@prisma/client';
 
+
 import { DatabaseService } from '@database/database.service';
 interface moviesList {
   value: string;
@@ -149,5 +150,57 @@ export class UserFormService {
       getAllMovies,
     );
     return getAllMovies;
+  }
+
+  async getMoviesForMainPage(weekAndMonth: any): Promise<any> {
+    Logger.log('Start : UserFormService  : getMoviesForLover  : get');
+    let result: any = '';
+    switch (weekAndMonth) {
+      case 'Today': {
+        const date = new Date();
+        const lastDayToLocaleString = date.toISOString().split('T');
+        const todayDate = lastDayToLocaleString[0];
+        const query = await this.db
+          .$queryRaw`SELECT * FROM "UserProfessionFormData" a WHERE DATE(a.created_at) = ${todayDate}:: DATE AND a."subCategoryType" = 'Movie'`;
+        result = query;
+        break;
+      }
+      case 'Last_30_Days': {
+        const date = new Date(),
+          y = date.getFullYear(),
+          m = date.getMonth();
+        const firstDay = new Date(y, m, date.getDate() - 30);
+        const firstDayToLocaleString = firstDay.toISOString().split('T');
+        const lastDay = new Date(
+          firstDay.setDate(firstDay.getDate() - firstDay.getDay() + 30),
+        );
+        const lastDayToLocaleString = lastDay.toISOString().split('T');
+        const query = await this.db.$queryRaw`SELECT *
+        FROM "UserProfessionFormData" a
+        WHERE  Date(a.created_at)
+        BETWEEN ${firstDayToLocaleString[0]}:: DATE AND ${lastDayToLocaleString[0]} :: DATE`;
+        result = query;
+
+        break;
+      }
+      case 'This_Week': {
+        const date = new Date(),
+          y = date.getFullYear(),
+          m = date.getMonth();
+        const firstDay = new Date(y, m, date.getDate());
+        const firstDayToLocaleString = firstDay.toISOString().split('T');
+        const lastDay = new Date(
+          firstDay.setDate(firstDay.getDate() - firstDay.getDay() + 7),
+        );
+        const lastDayToLocaleString = lastDay.toISOString().split('T');
+        const query = await this.db.$queryRaw`SELECT *
+        FROM "UserProfessionFormData" a
+        WHERE  Date(a.created_at)
+        BETWEEN ${firstDayToLocaleString[0]}:: DATE AND ${lastDayToLocaleString[0]} :: DATE`;
+        result = query;
+        break;
+      }
+    }
+    return result;
   }
 }

@@ -55,28 +55,52 @@ export class AuditionCallService {
     return auditions;
   }
 
-  async getAuditionsByThisWeek(): Promise<any> {
-    const todayDate = new Date().toLocaleDateString('en-CA');
-    const query = await this.db.$queryRaw`SELECT *
-    FROM "AuditionCall" a
-    WHERE ${todayDate}
-    BETWEEN a.start_date AND a.end_date`;
-    return query;
-  }
-
-  async getAuditionsByThisMonth(): Promise<any> {
-    const date = new Date(),
-      y = date.getFullYear(),
-      m = date.getMonth();
-    const firstDay = new Date(y, m, 1);
-    const lastDay = new Date(y, m + 1, 0);
-    const firstDayToLocaleString = firstDay.toLocaleDateString('en-CA');
-    const lastDayToLocaleString = lastDay.toLocaleDateString('en-CA');
-    const query = await this.db.$queryRaw`SELECT *
-    FROM "AuditionCall" a
-    WHERE  a.start_date
-    BETWEEN ${firstDayToLocaleString} AND ${lastDayToLocaleString}`;
-    return query;
+  async getAuditionsByWeekAndMonth(weekAndMonth: any): Promise<any> {
+    let result: any = '';
+    switch (weekAndMonth) {
+      case 'Last_Week_Auditions': {
+        const date = new Date(),
+          y = date.getFullYear(),
+          m = date.getMonth();
+        const firstDay = new Date(y, m, date.getDate() - 7);
+        const firstDayToLocaleString = firstDay.toISOString().split('T');
+        const lastDay = new Date(
+          firstDay.setDate(firstDay.getDate() - firstDay.getDay() + 7),
+        );
+        const lastDayToLocaleString = lastDay.toISOString().split('T')
+        const query = await this.db.$queryRaw`SELECT *
+        FROM "AuditionCall" a
+        WHERE  a.start_date
+        BETWEEN ${firstDayToLocaleString[0]} AND ${lastDayToLocaleString[0]}`;
+        result = query;
+        break;
+      }
+      case 'This_week_Auditions': {
+        const todayDate = new Date().toLocaleDateString('en-CA');
+        const query = await this.db.$queryRaw`SELECT *
+        FROM "AuditionCall" a
+        WHERE ${todayDate}
+        BETWEEN a.start_date AND a.end_date`;
+        result = query;
+        break;
+      }
+      case 'This_Month_Auditions': {
+        const date = new Date(),
+          y = date.getFullYear(),
+          m = date.getMonth();
+        const firstDay = new Date(y, m, 1);
+        const lastDay = new Date(y, m + 1, 0);
+        const firstDayToLocaleString = firstDay.toLocaleDateString('en-CA');
+        const lastDayToLocaleString = lastDay.toLocaleDateString('en-CA');
+        const query = await this.db.$queryRaw`SELECT *
+        FROM "AuditionCall" a
+        WHERE  a.start_date
+        BETWEEN ${firstDayToLocaleString} AND ${lastDayToLocaleString}`;
+        result = query;
+        break;
+      }
+    }
+    return result;
   }
 
   async findNotificationByUserFk(

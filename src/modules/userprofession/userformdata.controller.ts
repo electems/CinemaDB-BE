@@ -60,4 +60,13 @@ export class UserFormController {
   async getAllMovies(): Promise<any> {
     return this.userFormService.getMoviesForLover();
   }
+
+  @Get('getmoviesbyweekmonthand30days/:type')
+  @ApiRoute({
+    summary: 'Get user',
+    description: 'Retrieves  user',
+  })
+  async getAllMoviesForMainPage(@Param('type') type: any): Promise<any> {
+    return this.userFormService.getMoviesForMainPage(type);
+  }
 }

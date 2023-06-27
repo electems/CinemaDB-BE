@@ -59,16 +59,6 @@ export class AuditionCallController {
     return this.auditionCall.searchAudition(searchWord);
   }
 
-  @Get('week')
-  async getQuery(): Promise<any> {
-    return this.auditionCall.getAuditionsByThisWeek();
-  }
-
-  @Get('month')
-  async getAuditionsByMonth(): Promise<any> {
-    return this.auditionCall.getAuditionsByThisMonth();
-  }
-
   @Get('audition/notification/:userFk')
   @ApiRoute({
     summary: 'Get AuditionCallNotification By UserFk',
@@ -101,5 +91,10 @@ export class AuditionCallController {
     @Param('userId', new ParseIntPipe()) userId: number,
   ): Promise<AuditionCallNotification[] | null> {
     return this.auditionCall.getAuditionsNotificationByUserId(userId);
+  }
+
+  @Get('getauditionbyweekandmonth/:weekandmonth')
+  async getAllDatas(@Param('weekandmonth') weekAndMonth: any): Promise<any> {
+    return this.auditionCall.getAuditionsByWeekAndMonth(weekAndMonth);
   }
 }

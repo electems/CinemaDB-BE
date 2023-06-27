@@ -136,4 +136,10 @@ export class FileController {
     });
     return file;
   }
+
+  @Get('/getallfilesbymovietype')
+  @UseInterceptors()
+  async findFileByMovieType() {
+    return this.fileService.findFileByMovieType();
+  }
 }

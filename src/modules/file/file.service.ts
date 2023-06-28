@@ -44,7 +44,8 @@ export class FileService {
   async getAllFiles(): Promise<Array<File>> {
     return this.db.file.findMany();
   }
-async getAllPostersOfFilmInstitute(tableId: number): Promise<Array<File>> {
+
+  async getAllPostersOfFilmInstitute(tableId: number): Promise<Array<File>> {
     const filmInstitutePoster = await this.db.file.findMany({
       where: {
         AND: [
@@ -58,8 +59,9 @@ async getAllPostersOfFilmInstitute(tableId: number): Promise<Array<File>> {
       },
     });
     return filmInstitutePoster;
-}
-async findFileByMovieType(): Promise<File[] | null> {
+  }
+
+  async findFileByMovieType(): Promise<File[] | null> {
     return this.db.file.findMany({
       where: {
         AND: [
@@ -70,3 +72,4 @@ async findFileByMovieType(): Promise<File[] | null> {
       },
     });
   }
+}

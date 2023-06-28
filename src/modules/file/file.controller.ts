@@ -137,7 +137,8 @@ export class FileController {
     });
     return file;
   }
-@Get('userprofile/:tableId')
+
+  @Get('userprofile/:tableId')
   @ApiRoute({
     summary: 'Get All Auditions',
     description: 'Retrieves All Auditions',
@@ -159,14 +160,11 @@ export class FileController {
     @Param('tableId', new ParseIntPipe()) tableId: number,
   ): Promise<any> {
     return this.fileService.getAllPostersOfFilmInstitute(tableId);
-  } @Get('/getallfilesbymovietype')
-  @UseInterceptors()
-  async findFileByMovieType() {
-    return this.fileService.findFileByMovieType();
-  }}
+  }
 
-@Get('/getallfilesbymovietype')
+  @Get('/getallfilesbymovietype')
   @UseInterceptors()
-  async findFileByMovieType() {
+  async findFileByMovieType(): Promise<File[] | null> {
     return this.fileService.findFileByMovieType();
   }
+}

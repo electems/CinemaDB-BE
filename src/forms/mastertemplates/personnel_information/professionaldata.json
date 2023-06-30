@@ -1,9 +1,12 @@
 [
     {
-        "id": "C3A6B1FC-41B7-4783-9535-382F95954147",
+        "id": "65ED81D4-FB82-420E-8393-7A5329067F43",
         "element": "TextInput",
-        "text": "Text Input",
+        "text": "TextInput",
+        "static": true,
         "required": false,
+        "bold": false,
+        "italic": false,
         "canHaveAnswer": true,
         "canHavePageBreakBefore": true,
         "canHaveAlternateForm": true,
@@ -11,142 +14,42 @@
         "canHaveOptionCorrect": true,
         "canHaveOptionValue": true,
         "canPopulateFromApi": true,
-        "field_name": "text_input_72DEFCA6-3735-487C-9A76-86AF3D021B88",
-        "label": "Company Name ",
+        "field_name": "text_input_55C2AE2F-16A2-4C99-9EFC-CC7E30A3B781",
+        "label": "Name ",
         "dirty": false
     },
     {
-        "id": "B06C5FEE-834C-45D3-AF2A-9EBFDEA4A030",
-        "element": "TextInput",
-        "text": "Text Input",
+        "id": "B997578E-8DBC-4368-B683-2A31D2AFFBE6",
+        "element": "DatePicker",
+        "text": "Date",
+        "static": true,
         "required": false,
-        "canHaveAnswer": true,
+        "bold": false,
+        "italic": false,
+        "readOnly": false,
+        "defaultToday": false,
         "canHavePageBreakBefore": true,
         "canHaveAlternateForm": true,
         "canHaveDisplayHorizontal": true,
         "canHaveOptionCorrect": true,
         "canHaveOptionValue": true,
         "canPopulateFromApi": true,
-        "field_name": "text_input_54095680-698C-475B-B90D-06FA6C066895",
-        "label": "Company Contact ",
-        "dirty": false
+        "dateFormat": "yyyy/MM/dd",
+        "timeFormat": "hh:mm aa",
+        "showTimeSelect": false,
+        "showTimeSelectOnly": false,
+        "showTimeInput": false,
+        "field_name": "date_picker_DBB89438-CF50-4AE5-96C0-F306DF3E392E",
+        "label": "Date"
     },
     {
-        "id": "2A549CAD-9720-4F9B-9929-D2DBB6125C86",
-        "element": "Dropdown",
-        "text": "Dropdown",
-        "required": false,
-        "canHaveAnswer": true,
-        "canHavePageBreakBefore": true,
-        "canHaveAlternateForm": true,
-        "canHaveDisplayHorizontal": true,
-        "canHaveOptionCorrect": true,
-        "canHaveOptionValue": true,
-        "canPopulateFromApi": true,
-        "field_name": "dropdown_4C2C4D37-119E-4DDD-A07C-56F1E1EDC29B",
-        "label": "Placeholder label",
-        "options": [
-            {
-                "value": "place_holder_option_1",
-                "text": "Place holder option 1",
-                "key": "dropdown_option_C25C405C-5DE4-464B-B408-65C60234D892"
-            },
-            {
-                "value": "place_holder_option_2",
-                "text": "Place holder option 2",
-                "key": "dropdown_option_1E368017-B19E-417C-80F5-8393BF02D984"
-            },
-            {
-                "value": "place_holder_option_3",
-                "text": "Place holder option 3",
-                "key": "dropdown_option_D78C794D-1524-4DE5-92DD-04C2E834B46A"
-            }
-        ]
-    },
-    {
-        "id": "E094D017-87ED-4DC9-93D7-607948EA74D4",
-        "element": "Checkboxes",
-        "text": "Checkboxes",
-        "required": false,
-        "canHaveAnswer": true,
-        "canHavePageBreakBefore": true,
-        "canHaveAlternateForm": true,
-        "canHaveDisplayHorizontal": true,
-        "canHaveOptionCorrect": true,
-        "canHaveOptionValue": true,
-        "canPopulateFromApi": true,
-        "field_name": "checkboxes_ECCA2BF3-9EA8-42E4-9056-FB4239CD9848",
-        "label": "Placeholder label",
-        "options": [
-            {
-                "value": "place_holder_option_1",
-                "text": "Place holder option 1",
-                "key": "checkboxes_option_4B513C45-2D61-40B4-B4CD-CABD2E76655C"
-            },
-            {
-                "value": "place_holder_option_2",
-                "text": "Place holder option 2",
-                "key": "checkboxes_option_4F79292E-383C-4C39-96A3-88EF5188F6EE"
-            },
-            {
-                "value": "place_holder_option_3",
-                "text": "Place holder option 3",
-                "key": "checkboxes_option_67A1949E-2B3E-4CAF-93C3-604465F73EDC"
-            }
-        ]
-    },
-    {
-        "id": "1C06705B-53A2-479F-BF77-C3C263B38312",
-        "element": "RadioButtons",
-        "text": "Multiple Choice",
-        "required": false,
-        "canHaveAnswer": true,
-        "canHavePageBreakBefore": true,
-        "canHaveAlternateForm": true,
-        "canHaveDisplayHorizontal": true,
-        "canHaveOptionCorrect": true,
-        "canHaveOptionValue": true,
-        "canPopulateFromApi": true,
-        "field_name": "radiobuttons_51A54E86-C1D8-40A0-84C8-9F9429B0AA7A",
-        "label": "Placeholder label",
-        "options": [
-            {
-                "value": "place_holder_option_1",
-                "text": "Place holder option 1",
-                "key": "radiobuttons_option_0EE1A822-2DB2-478E-BA21-D0A95AAB07DA"
-            },
-            {
-                "value": "place_holder_option_2",
-                "text": "Place holder option 2",
-                "key": "radiobuttons_option_AE7C69BC-2308-4798-8C2E-AD69AF4CB4E9"
-            },
-            {
-                "value": "place_holder_option_3",
-                "text": "Place holder option 3",
-                "key": "radiobuttons_option_50986850-98F5-4AC7-B961-4BDA6047348E"
-            }
-        ]
-    },
-    {
-        "id": "BD87251D-0C4B-4554-8DB6-07D4177E30C5",
-        "element": "PhoneNumber",
-        "text": "Phone Number",
-        "required": false,
-        "canHaveAnswer": true,
-        "canHavePageBreakBefore": true,
-        "canHaveAlternateForm": true,
-        "canHaveDisplayHorizontal": true,
-        "canHaveOptionCorrect": true,
-        "canHaveOptionValue": true,
-        "canPopulateFromApi": true,
-        "field_name": "phone_input_103F93E8-AE5E-41D3-9AE0-4EBE8999E53F",
-        "label": "Phone Number"
-    },
-    {
-        "id": "2CEED65C-FD9A-4C6C-BDA0-F62A4C957BE6",
+        "id": "F062A8B0-3B7E-46E3-A1F8-AC81F4CC4B39",
         "element": "EmailInput",
-        "text": "Email",
+        "text": "E-mail",
+        "static": true,
         "required": false,
+        "bold": false,
+        "italic": false,
         "canHaveAnswer": true,
         "canHavePageBreakBefore": true,
         "canHaveAlternateForm": true,
@@ -154,7 +57,49 @@
         "canHaveOptionCorrect": true,
         "canHaveOptionValue": true,
         "canPopulateFromApi": true,
-        "field_name": "email_input_C586C5D3-E85A-47E3-8E19-7C92C7DC89BC",
-        "label": "E-Mail"
+        "field_name": "email_input_3B7BCE02-0C91-48D6-80BA-7ACEBC514AF3",
+        "label": "E-mail"
+    },
+    {
+        "id": "C9AEFC22-E5FE-4203-AA0E-80453691037A",
+        "element": "PhoneNumber",
+        "text": "PhoneNumber",
+        "static": true,
+        "required": false,
+        "bold": false,
+        "italic": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true,
+        "field_name": "phone_input_476D76CB-7AB6-4C91-B27B-D85B2B712E79",
+        "label": "PhoneNumber"
+    },
+    {
+        "key": "FileUpload",
+        "element": "CustomElement",
+        "type": "custom",
+        "field_name": "image_componentCB748242-2441-433F-92E5-A734627CD13C",
+        "name": "Image",
+        "icon": "fa fa-file",
+        "label": "Image Upload",
+        "static": true,
+        "content": "",
+        "id": "41627CCA-BC42-458F-B0B2-741858EB709E",
+        "text": "Image",
+        "required": false,
+        "custom": true,
+        "custom_options": [],
+        "bold": false,
+        "italic": false,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "canPopulateFromApi": true
     }
 ]

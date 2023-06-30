@@ -167,9 +167,7 @@ export class FileController {
     summary: 'Get filmInstitutePosters',
     description: 'Retrieves filmInstitutePosters',
   })
-  async fetchAllPostersOfFilmInstituteForLover(
-
-  ): Promise<any> {
+  async fetchAllPostersOfFilmInstituteForLover(): Promise<any> {
     return this.fileService.fetchAllPostersOfFilmInstituteForLover();
   }
 
@@ -177,5 +175,11 @@ export class FileController {
   @UseInterceptors()
   async findFileByMovieType(): Promise<File[] | null> {
     return this.fileService.findFileByMovieType();
+  }
+
+  @Get('/getallfilesbyprofessionalinformation')
+  @UseInterceptors()
+  async findFileByProfessionalInformation(): Promise<File[] | null> {
+    return this.fileService.findFileByProfessionalDetails();
   }
 }

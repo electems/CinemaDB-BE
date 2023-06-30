@@ -67,6 +67,6 @@ export class UserFormController {
     description: 'Retrieves  user',
   })
   async getAllMoviesForMainPage(@Param('type') type: any): Promise<any> {
-    return this.userFormService.getMoviesForMainPage(type);
+    return this.userFormService.getRecordsBasedOnCases(type);
   }
 }

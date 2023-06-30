@@ -7,10 +7,16 @@ import { Prisma, UserProfessionFormData } from '@prisma/client';
 
 
 import { DatabaseService } from '@database/database.service';
+
 interface moviesList {
   value: string;
   text: string;
   id: number;
+}
+
+interface emialAndDate {
+  date?: string;
+  name?: string;
 }
 
 @Injectable()
@@ -104,6 +110,7 @@ export class UserFormService {
     const inputBasedOnOnlyMovieName = movieInputObject.filter(
       (item: any) => item.name.indexOf('movie_name') !== -1,
     );
+
     const getAllMovies: moviesList[] = [];
     inputBasedOnOnlyMovieName.map((item: any) => {
       getAllMovies.push({
@@ -152,10 +159,9 @@ export class UserFormService {
     return getAllMovies;
   }
 
-  async getMoviesForMainPage(weekAndMonth: any): Promise<any> {
-    Logger.log('Start : UserFormService  : getMoviesForLover  : get');
+  async getRecordsBasedOnCases(days: any): Promise<any> {
     let result: any = '';
-    switch (weekAndMonth) {
+    switch (days) {
       case 'Today': {
         const date = new Date();
         const lastDayToLocaleString = date.toISOString().split('T');
@@ -198,6 +204,207 @@ export class UserFormService {
         WHERE  Date(a.created_at)
         BETWEEN ${firstDayToLocaleString[0]}:: DATE AND ${lastDayToLocaleString[0]} :: DATE`;
         result = query;
+        break;
+      }
+      case 'BirthDay_Today': {
+        const query = await this.db.$queryRaw<any[]>`SELECT id , a.value
+        FROM "UserProfessionFormData" a
+        WHERE  a."subCategoryType" = 'Personnel Information'`;
+        const birthdayObject: any = [];
+        for (let i = 0; i < query.length; i++) {
+          query[i].value.map((item: any) => {
+            Object.assign(item, { id: query[i].id });
+            birthdayObject.push(item);
+          });
+        }
+        const inputBasedOnDate = birthdayObject.filter(
+          (item: any) => item.name.indexOf('date_picker') !== -1,
+        );
+
+        const inputBasedOnEmail = birthdayObject.filter(
+          (item: any) => item.name.indexOf('email_input') !== -1,
+        );
+        const getAllEmailAndDate: emialAndDate[] = [];
+        inputBasedOnDate.map((item: any) => {
+          getAllEmailAndDate.push({
+            date: item.value,
+            name: item.value,
+          });
+        });
+        // converting into single object of two diferent fields
+        const arrayResut = inputBasedOnDate.map((primaryElement: any) => {
+          primaryElement.userEmail = inputBasedOnEmail.filter(
+            (secondaryElement: any) => secondaryElement.id == primaryElement.id,
+          );
+          return primaryElement;
+        });
+        const date = new Date(),
+          y = date.getFullYear(),
+          m = date.getMonth();
+        const firstDay = new Date(y, m, date.getDate());
+        const firstDayToLocaleString = firstDay.toLocaleDateString('en-CA');
+        const getTodayDate = firstDayToLocaleString.replaceAll('-', '/');
+        const arrays: any = [];
+        arrayResut.map((item: any) => {
+          if (item.value === getTodayDate) {
+            arrays.push(item);
+          }
+        });
+        result = arrays;
+        break;
+      }
+      case 'BirthDay_Yesterday': {
+        const query = await this.db.$queryRaw<any[]>`SELECT id , a.value
+        FROM "UserProfessionFormData" a
+        WHERE  a."subCategoryType" = 'Personnel Information'`;
+        const birthdayObject: any = [];
+        for (let i = 0; i < query.length; i++) {
+          query[i].value.map((item: any) => {
+            Object.assign(item, { id: query[i].id });
+            birthdayObject.push(item);
+          });
+        }
+        const inputBasedOnDate = birthdayObject.filter(
+          (item: any) => item.name.indexOf('date_picker') !== -1,
+        );
+
+        const inputBasedOnName = birthdayObject.filter(
+          (item: any) => item.name.indexOf('email_input') !== -1,
+        );
+        const getAllNameAndDate: emialAndDate[] = [];
+        inputBasedOnDate.map((item: any) => {
+          getAllNameAndDate.push({
+            date: item.value,
+            name: item.value,
+          });
+        });
+        // converting into single object of two diferent fields
+        const arrayResut = inputBasedOnDate.map((primaryElement: any) => {
+          primaryElement.userEmail = inputBasedOnName.filter(
+            (secondaryElement: any) => secondaryElement.id == primaryElement.id,
+          );
+          return primaryElement;
+        });
+        const date = new Date(),
+          y = date.getFullYear(),
+          m = date.getMonth();
+        const firstDay = new Date(y, m, date.getDate() - 1);
+        const firstDayToLocaleString = firstDay.toLocaleDateString('en-CA');
+        const getYesterDayDate = firstDayToLocaleString.replaceAll('-', '/');
+        const arrays: any = [];
+        arrayResut.map((item: any) => {
+          if (item.value === getYesterDayDate) {
+            arrays.push(item);
+          }
+        });
+        result = arrays;
+        break;
+      }
+      case 'BirthDay_ThisWeek': {
+        const query = await this.db.$queryRaw<any[]>`SELECT id , a.value
+        FROM "UserProfessionFormData" a
+        WHERE  a."subCategoryType" = 'Personnel Information'`;
+        const birthdayObject: any = [];
+        for (let i = 0; i < query.length; i++) {
+          query[i].value.map((item: any) => {
+            Object.assign(item, { id: query[i].id });
+            birthdayObject.push(item);
+          });
+        }
+        const inputBasedOnDate = birthdayObject.filter(
+          (item: any) => item.name.indexOf('date_picker') !== -1,
+        );
+
+        const inputBasedOnName = birthdayObject.filter(
+          (item: any) => item.name.indexOf('email_input') !== -1,
+        );
+        const getAllNameAndDate: emialAndDate[] = [];
+        inputBasedOnDate.map((item: any) => {
+          getAllNameAndDate.push({
+            date: item.value,
+            name: item.value,
+          });
+        });
+        // converting into single object of two diferent fields
+        const arrayResut = inputBasedOnDate.map((primaryElement: any) => {
+          primaryElement.userEmail = inputBasedOnName.filter(
+            (secondaryElement: any) => secondaryElement.id == primaryElement.id,
+          );
+          return primaryElement;
+        });
+        const date = new Date();
+        const first = date.getDate() - date.getDay();
+        const firstday = new Date(date.setDate(first)).toISOString().split('T');
+        const last = first + 6;
+        const lastday = new Date(date.setDate(last)).toISOString().split('T');
+        const getFirstDayOfThisWeek = firstday[0].replaceAll('-', '/');
+        const getLastDayOfThisWeek = lastday[0].replaceAll('-', '/');
+        const arrays: any = [];
+        arrayResut.map((item: any) => {
+          if (
+            item.value >= getFirstDayOfThisWeek &&
+            item.value <= getLastDayOfThisWeek
+          ) {
+            arrays.push(item);
+          }
+        });
+        result = arrays;
+        break;
+      }
+      case 'BirthDay_ThisMonth': {
+        const query = await this.db.$queryRaw<any[]>`SELECT id , a.value
+        FROM "UserProfessionFormData" a
+        WHERE  a."subCategoryType" = 'Personnel Information'`;
+        const birthdayObject: any = [];
+        for (let i = 0; i < query.length; i++) {
+          query[i].value.map((item: any) => {
+            Object.assign(item, { id: query[i].id });
+            birthdayObject.push(item);
+          });
+        }
+        const inputBasedOnDate = birthdayObject.filter(
+          (item: any) => item.name.indexOf('date_picker') !== -1,
+        );
+
+        const inputBasedOnName = birthdayObject.filter(
+          (item: any) => item.name.indexOf('email_input') !== -1,
+        );
+        const getAllNameAndDate: emialAndDate[] = [];
+        inputBasedOnDate.map((item: any) => {
+          getAllNameAndDate.push({
+            date: item.value,
+            name: item.value,
+          });
+        });
+        // converting into single object of two diferent fields
+        const arrayResut = inputBasedOnDate.map((primaryElement: any) => {
+          primaryElement.userEmail = inputBasedOnName.filter(
+            (secondaryElement: any) => secondaryElement.id == primaryElement.id,
+          );
+          return primaryElement;
+        });
+        const date = new Date(),
+          y = date.getFullYear(),
+          m = date.getMonth();
+        const firstDay = new Date(y, m, 1);
+        const lastDay = new Date(y, m + 1, 0);
+        const firstDayToLocaleString = firstDay.toLocaleDateString('en-CA');
+        const lastDayToLocaleString = lastDay.toLocaleDateString('en-CA');
+        const getFirstDayOfThisWeek = firstDayToLocaleString.replaceAll(
+          '-',
+          '/',
+        );
+        const getLastDayOfThisWeek = lastDayToLocaleString.replaceAll('-', '/');
+        const arrays: any = [];
+        arrayResut.map((item: any) => {
+          if (
+            item.value >= getFirstDayOfThisWeek &&
+            item.value <= getLastDayOfThisWeek
+          ) {
+            arrays.push(item);
+          }
+        });
+        result = arrays;
         break;
       }
     }

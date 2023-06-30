@@ -1,0 +1,11 @@
+model Notification {​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+    id                   Int        @id @default(autoincrement())
+    notificationType     String?    @map("notification_type")
+    email           String?    @map("email")
+    status          String?    @map("status")
+    content         Json       @map("content")
+    tableId         Int?       @map("table_id")
+    userType        String?    @map("user_type")
+    createdAt       DateTime   @default(now()) @map("created_at")
+    updatedAt       DateTime   @default(now()) @map("updated_at")
+}

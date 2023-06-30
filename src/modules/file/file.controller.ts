@@ -162,6 +162,17 @@ export class FileController {
     return this.fileService.getAllPostersOfFilmInstitute(tableId);
   }
 
+  @Get('filmInstitutePostersForLover/')
+  @ApiRoute({
+    summary: 'Get filmInstitutePosters',
+    description: 'Retrieves filmInstitutePosters',
+  })
+  async fetchAllPostersOfFilmInstituteForLover(
+
+  ): Promise<any> {
+    return this.fileService.fetchAllPostersOfFilmInstituteForLover();
+  }
+
   @Get('/getallfilesbymovietype')
   @UseInterceptors()
   async findFileByMovieType(): Promise<File[] | null> {

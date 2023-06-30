@@ -61,6 +61,40 @@ export class FileService {
     return filmInstitutePoster;
   }
 
+  async fetchAllPostersOfFilmInstituteForLover(): Promise<Array<File>> {
+    const filmInstitutePoster = await this.db.file.findMany({
+      where: {
+            tableName: 'FilmTrainingInstitute',
+      },
+    });
+    return filmInstitutePoster;
+  }
+
+  async getAllimagesOfFilmInstituteEvent(tableId: number): Promise<Array<File>> {
+    const filmInstitutePoster = await this.db.file.findMany({
+      where: {
+        AND: [
+          {
+            tableId: tableId,
+          },
+          {
+            tableName: 'FilmTrainingInstitute',
+          },
+        ],
+      },
+    });
+    return filmInstitutePoster;
+  }
+
+  async fetchAllOfFilmInstituteForLover(): Promise<Array<File>> {
+    const filmInstitutePoster = await this.db.file.findMany({
+      where: {
+            tableName: 'FilmTrainingInstitute',
+      },
+    });
+    return filmInstitutePoster;
+  }
+
   async findFileByMovieType(): Promise<File[] | null> {
     return this.db.file.findMany({
       where: {

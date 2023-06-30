@@ -1,24 +1,26 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { FilmTrainingInstitute } from '@prisma/client';
+import { FilmTrainingInstitute, FilmTrainingInstituteEvent, Notification } from '@prisma/client';
 
 import { ApiRoute } from '@decorators/api-route';
 
 import { FilmTrainingInstituteService } from './filmtraininginstitute.service';
+import { NotificationService } from '@modules/notification/notification.service';
 @Controller('filminsitutetraining')
 @ApiTags('Film-Training-Institute')
 export class FilmTrainingInstituteController {
   constructor(
     private readonly filmTrainingInstitute: FilmTrainingInstituteService,
+    private readonly notificationService: NotificationService
   ) {}
 
-  @Get('getallfilminsitutetraining')
+  @Get('getallfilminsitutetraining/:userId')
   @ApiRoute({
     summary: 'Get All Film Training Institute',
     description: 'Retrieves All Film Training Institute',
   })
-  async getAllAuditions(): Promise<any> {
-    return this.filmTrainingInstitute.getAllFilmTrainingInstitutes();
+  async getAllFilmTrainingInstitutes( @Param('userId')  userId:number): Promise<any> {
+    return this.filmTrainingInstitute.getAllFilmTrainingInstitutes(userId);
   }
 
   @Post('createfilminsitutetraining')
@@ -27,7 +29,7 @@ export class FilmTrainingInstituteController {
     description: 'Creates a new Film Training Institute',
     badRequest: {},
   })
-  async createAuditionCall(
+  async createFilmTrainingInstitute(
     @Body() filmTrainingInstitute: FilmTrainingInstitute,
   ): Promise<FilmTrainingInstitute> {
     return this.filmTrainingInstitute.createFilmTrainingInstitute(
@@ -35,14 +37,54 @@ export class FilmTrainingInstituteController {
     );
   }
 
-  @Get('filmInstituteDetails/:fileName')
+  @Get('filmInstituteDetailsByFileName/:fileName')
   @ApiRoute({
     summary: 'Get filmInstituteDetails',
     description: 'Retrieves filmInstituteDetails',
   })
-  async getFilmInstituteDetail(
+  async fetchFilmInstituteDetailByFileName(
     @Param('fileName') fileName: string,
   ): Promise<FilmTrainingInstitute | null> {
-    return this.filmTrainingInstitute.getFilmInstituteDetail(fileName);
+    return this.filmTrainingInstitute.fetchFilmInstituteDetailByFileName(fileName);
   }
+
+  @Get('filmInstituteDetails/:id')
+  @ApiRoute({
+    summary: 'Get filmInstituteDetails',
+    description: 'Retrieves filmInstituteDetails',
+  })
+  async getFilmInstituteDetailById(
+    @Param('id') id: number,
+  ): Promise<FilmTrainingInstitute | null> {
+    return this.filmTrainingInstitute.getFilmInstituteDetailById(id);
+  }
+
+  @Post('createfilminsitutetrainingevent')
+  @ApiRoute({
+    summary: 'Create a Film Training Institute Event',
+    description: 'Creates a new Film Training Institute Event',
+    badRequest: {},
+  })
+  async createFilmTrainingInstituteEvent(
+    @Body() filmTrainingInstituteEvent: FilmTrainingInstituteEvent,
+  ): Promise<FilmTrainingInstituteEvent> {
+    return this.filmTrainingInstitute.createFilmTrainingInstituteEvent(
+      filmTrainingInstituteEvent
+    );
+  }
+
+  @Post('/filmInstituteTraining/notification')
+  @ApiRoute({
+    summary: 'Create a Film Training Institute Event',
+    description: 'Creates a new Film Training Institute Event',
+    badRequest: {},
+  })
+  async filmInstituteNotification(
+    @Body() notificationData: Notification,
+  ): Promise<Notification> {
+    return this.notificationService.createNotification(
+      notificationData
+    );
+  }
+
 }

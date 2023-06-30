@@ -6,5 +6,7 @@
   "emailHost": "mail.electems.com",
   "emailPort": "465",
   "loginEmailSubject": "cinemaDBS",
-  "loginEmailTemplate": "login"
+  "loginEmailTemplate": "login",
+  "registredFilmInstituteSubject":"Trainig Film Intitute Registration",
+  "filmInstituteTemplate":"training_institute"
 }

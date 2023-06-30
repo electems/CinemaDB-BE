@@ -23,4 +23,29 @@ model FilmTrainingInstitute {​​​​​​​​​​​​​​​​​
     experience                         String?       @map("experience")
     userFK                  Int?       @map("user_fk")
     user                    User?      @relation(fields: [userFK], references: [id])
+    filmTrainingInstituteEvents  FilmTrainingInstituteEvent[]
+}
+
+model FilmTrainingInstituteEvent {
+    id                                 Int           @id @default(autoincrement())
+    nameOfTheFilmInstitute             String?       @map("name_of_the_film_institute")
+    eventName                          String?       @map("event_name")
+    eventDescription                   String?       @map("event_description")
+    additionalDescription              String?       @map("additional_description")
+    addressVenueDetails                String?       @map("address_venue_details")
+    eventStartDate                     String?       @map("event_start_date")
+    areaName                           String?       @map("area_name")
+    cityTown                           String?       @map("city_town")
+    eventendDate                       String?       @map("event_end_date")
+    pincode                            String?       @map("pincode")
+    emailId                            String?       @map("email_id")
+    mobileNumber                       String?       @map("mobile_number")
+    instagramUrl                       String?       @map("instagram_url")
+    landlineNumber                     String?       @map("landline_number")
+    facebookUrl                        String?       @map("facebook_url")
+    preferredLanguageToSpeak           String?       @map("preferred_language_to_speak")
+    linkedinUrl                        String?       @map("linkedin_url")
+    fileName                           String?       @map("file_name")
+    filmInstituteFK                    Int?       @map("film_institute_fk")
+    filmTrainingInstitute             FilmTrainingInstitute?      @relation(fields: [filmInstituteFK], references: [id])
 }

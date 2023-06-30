@@ -13,6 +13,8 @@ import { filmFestivalModule } from './filmfestival/filmfestivalmodule';
 import { FormManagerModule } from './formmanager/formmanager.module';
 import { userFormModule } from './userprofession/userformdata.module';
 import { UsersModule } from './users/user/users.module';
+import { FilmTrainingInstituteModule } from './filmtraininginstitute/filmtraininginstitute.module';
+import { NotificationModule } from './notification/notification.module';
 @Module({
   imports: [
     UsersModule,
@@ -24,6 +26,8 @@ import { UsersModule } from './users/user/users.module';
     MailerModule,
     PassportModule,
     FormManagerModule,
+    FilmTrainingInstituteModule,
+    NotificationModule
   ],
   controllers: [],
   providers: [EventListnerService, EmailService],

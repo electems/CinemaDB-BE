@@ -5,13 +5,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Prisma, UserProfessionFormData } from '@prisma/client';
 
-
 import { DatabaseService } from '@database/database.service';
 
+import emailConfig from '../../config/emailconfig.json';
+import transport from '../../config/emialConfiguration';
 interface moviesList {
-  value: string;
-  text: string;
-  id: number;
+  value?: string;
+  text?: string;
+  id?: number;
 }
 
 interface emialAndDate {
@@ -50,6 +51,33 @@ export class UserFormService {
     const getUserByFormId = this.db
       .$queryRaw`SELECT * FROM "UserProfessionFormData"  
        WHERE id=${id}`;
+    Logger.log(
+      'End : UserFormService  : getUserFormById : responce ',
+      getUserByFormId,
+    );
+    return getUserByFormId;
+  }
+
+  async getUserFormByUserId(id: number, subcategory: string): Promise<any> {
+    Logger.log('Start : UserFormService  : getUserFormById : id =', id);
+    const getUserByFormId = this.db
+      .$queryRaw`SELECT * FROM "UserProfessionFormData" a 
+       WHERE a.user_id=${id} AND a."subCategoryType" = 'Movie' AND a."subCategory"= ${subcategory}`;
+    Logger.log(
+      'End : UserFormService  : getUserFormById : responce ',
+      getUserByFormId,
+    );
+    return getUserByFormId;
+  }
+
+  async getUserFormByUserIdAndType(
+    id: number,
+    subcategory: string,
+  ): Promise<any> {
+    Logger.log('Start : UserFormService  : getUserFormById : id =', id);
+    const getUserByFormId = this.db
+      .$queryRaw`SELECT * FROM "UserProfessionFormData" a 
+       WHERE a.user_id=${id} AND a."subCategoryType" = 'Personnel Information' AND a."subCategory"= ${subcategory}`;
     Logger.log(
       'End : UserFormService  : getUserFormById : responce ',
       getUserByFormId,
@@ -407,7 +435,119 @@ export class UserFormService {
         result = arrays;
         break;
       }
+      case 'This_Week_Release': {
+        const date = new Date();
+        const first = date.getDate() - date.getDay();
+        const firstDay = new Date(date.setDate(first)).toISOString().split('T');
+        const last = first + 6;
+        const lastDay = new Date(date.setDate(last)).toISOString().split('T');
+        const query = await this.db.$queryRaw<any[]>`SELECT id , a.value
+        FROM "UserProfessionFormData" a
+        WHERE  Date(a.created_at)
+        BETWEEN ${firstDay[0]}:: DATE AND ${lastDay[0]} :: DATE AND a."subCategoryType"='Movie'`;
+        const movieObject: any = [];
+        for (let i = 0; i < query.length; i++) {
+          query[i].value.map((item: any) => {
+            Object.assign(item, { id: query[i].id });
+            movieObject.push(item);
+          });
+        }
+        const inputBasedOnMovieName = movieObject.filter(
+          (item: any) => item.name.indexOf('movie_name') !== -1,
+        );
+        const getAllNameAndDate: moviesList[] = [];
+        inputBasedOnMovieName.map((item: any) => {
+          getAllNameAndDate.push({
+            value: item.value,
+            id: item.id,
+          });
+        });
+        result = getAllNameAndDate;
+        break;
+      }
+      case 'Last_Week_Release': {
+        const date = new Date();
+        const first = date.getDate() - date.getDay();
+        const firstDayOfLastWeek = first - 6;
+        const firstDay = new Date(date.setDate(firstDayOfLastWeek))
+          .toISOString()
+          .split('T');
+        const lastDayOfLastWeek = firstDayOfLastWeek + 6;
+        const lastDay = new Date(date.setDate(lastDayOfLastWeek))
+          .toISOString()
+          .split('T');
+        const query = await this.db.$queryRaw<any[]>`SELECT id , a.value
+        FROM "UserProfessionFormData" a
+        WHERE  Date(a.created_at)
+        BETWEEN ${firstDay[0]}:: DATE AND ${lastDay[0]} :: DATE AND a."subCategoryType"='Movie'`;
+        const movieObject: any = [];
+        for (let i = 0; i < query.length; i++) {
+          query[i].value.map((item: any) => {
+            Object.assign(item, { id: query[i].id });
+            movieObject.push(item);
+          });
+        }
+        const inputBasedOnMovieName = movieObject.filter(
+          (item: any) => item.name.indexOf('movie_name') !== -1,
+        );
+        const getAllNameAndDate: moviesList[] = [];
+        inputBasedOnMovieName.map((item: any) => {
+          getAllNameAndDate.push({
+            value: item.value,
+            id: item.id,
+          });
+        });
+        result = getAllNameAndDate;
+        break;
+      }
+      case 'This_Month_Release': {
+        const date = new Date(),
+          y = date.getFullYear(),
+          m = date.getMonth();
+        const firstDay = new Date(y, m, 1);
+        const lastDay = new Date(y, m + 1, 0);
+        const firstDayToLocaleString = firstDay.toLocaleDateString('en-CA');
+        const lastDayToLocaleString = lastDay.toLocaleDateString('en-CA');
+        const query = await this.db.$queryRaw<any[]>`SELECT id , a.value
+        FROM "UserProfessionFormData" a
+        WHERE  Date(a.created_at)
+        BETWEEN ${firstDayToLocaleString}:: DATE AND ${lastDayToLocaleString} :: DATE AND a."subCategoryType"='Movie'`;
+        const movieObject: any = [];
+        for (let i = 0; i < query.length; i++) {
+          query[i].value.map((item: any) => {
+            Object.assign(item, { id: query[i].id });
+            movieObject.push(item);
+          });
+        }
+        const inputBasedOnMovieName = movieObject.filter(
+          (item: any) => item.name.indexOf('movie_name') !== -1,
+        );
+        const getAllNameAndDate: moviesList[] = [];
+        inputBasedOnMovieName.map((item: any) => {
+          getAllNameAndDate.push({
+            value: item.value,
+            id: item.id,
+          });
+        });
+        result = getAllNameAndDate;
+        break;
+      }
     }
     return result;
+  }
+
+  public async sendMail(payload: any): Promise<void> {
+    const emailBody = {
+      from: emailConfig.fromEmailAddress,
+      to: payload.to,
+      subject: payload.subject,
+      template: emailConfig.birthdayTemplate,
+      context: {
+        message: payload.context,
+      },
+    };
+    transport.sendMail(emailBody, (error: any) => {
+      error;
+    });
   }
 }

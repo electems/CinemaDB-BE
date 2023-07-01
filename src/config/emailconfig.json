@@ -7,6 +7,7 @@
   "emailPort": "465",
   "loginEmailSubject": "cinemaDBS",
   "loginEmailTemplate": "login",
-  "registredFilmInstituteSubject":"Trainig Film Intitute Registration",
-  "filmInstituteTemplate":"training_institute"
+  "birthdayTemplate": "birthday",
+  "registredFilmInstituteSubject": "Trainig Film Intitute Registration",
+  "filmInstituteTemplate": "training_institute"
 }

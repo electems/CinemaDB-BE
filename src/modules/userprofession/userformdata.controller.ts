@@ -52,6 +52,30 @@ export class UserFormController {
     return this.userFormService.getMoviesByUserId(userid);
   }
 
+  @Get('getbasedonmovietype/:userid/:subcategory')
+  @ApiRoute({
+    summary: 'Get user',
+    description: 'Retrieves  user',
+  })
+  async getUserProfessionFormDataByUserId(
+    @Param('userid', new ParseIntPipe()) userid: number,
+    @Param('subcategory') subcategory: string,
+  ): Promise<any> {
+    return this.userFormService.getUserFormByUserId(userid, subcategory);
+  }
+
+  @Get('getbasedonmovietype/type/:userid/:subcategory')
+  @ApiRoute({
+    summary: 'Get user',
+    description: 'Retrieves  user',
+  })
+  async getUserProfessionFormDataByUserIdAndType(
+    @Param('userid', new ParseIntPipe()) userid: number,
+    @Param('subcategory') subcategory: string,
+  ): Promise<any> {
+    return this.userFormService.getUserFormByUserIdAndType(userid, subcategory);
+  }
+
   @Get('movies/auditionmovies/lovers')
   @ApiRoute({
     summary: 'Get user',
@@ -68,5 +92,14 @@ export class UserFormController {
   })
   async getAllMoviesForMainPage(@Param('type') type: any): Promise<any> {
     return this.userFormService.getRecordsBasedOnCases(type);
+  }
+
+  @Post('sendmailtocelebrity')
+  @ApiRoute({
+    summary: 'Get user',
+    description: 'Retrieves  user',
+  })
+  async sendMailToCelebrity(@Body() payload: any): Promise<any> {
+    return this.userFormService.sendMail(payload);
   }
 }

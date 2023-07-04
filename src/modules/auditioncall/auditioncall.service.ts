@@ -32,10 +32,10 @@ export class AuditionCallService {
     return findAllAuditions;
   }
 
-  async findAuditionByMovieId(movieFk: number): Promise<AuditionCall[] | null> {
+  async findAuditionByTableFk(id: number): Promise<AuditionCall[] | null> {
     return this.db.auditionCall.findMany({
       where: {
-        movieFk,
+        id: id,
       },
     });
   }
@@ -124,8 +124,8 @@ export class AuditionCallService {
 
   async getAuditionsNotificationByUserId(id: any): Promise<any> {
     const query = await this.db.$queryRaw`SELECT t1.*
-    FROM "AuditionCallNotification" t1 
-    INNER JOIN "AuditionCall" t2 on t1.auditioncall_fk = t2.id
+    FROM "Notification" t1 
+    INNER JOIN "AuditionCall" t2 on t1.table_id = t2.id
     INNER JOIN "User" t3 on t2.user_fk = t3.id WHERE t3.id = ${id}`;
     return query;
   }

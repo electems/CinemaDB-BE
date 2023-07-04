@@ -1,16 +1,12 @@
-import {  Controller, Post } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { ApiRoute } from '@decorators/api-route';
-
 import { NotificationService } from '@modules/notification/notification.service';
 @Controller('notifications')
 @ApiTags('Film-Training-Institute')
 export class NotificationController {
-  constructor(
-    private readonly notificationService: NotificationService
-  ) {}
-
+  constructor(private readonly notificationService: NotificationService) {}
 
   @Post('sendmail')
   @ApiRoute({
@@ -22,4 +18,17 @@ export class NotificationController {
     await this.notificationService.fetchAllNotifications();
   }
 
+  @Get('getnotifcationforaudition/:tableId')
+  @ApiRoute({
+    summary: 'Send mails',
+    description: 'sends mail for users',
+    badRequest: {},
+  })
+  async getNotificationByUserId(
+    @Param('tableId', new ParseIntPipe()) tableId: number,
+  ): Promise<void> {
+    await this.notificationService.fetchAllNotificationsBasedOnAudition(
+      tableId,
+    );
+  }
 }

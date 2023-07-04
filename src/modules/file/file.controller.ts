@@ -182,4 +182,35 @@ export class FileController {
   async findFileByProfessionalInformation(): Promise<File[] | null> {
     return this.fileService.findFileByProfessionalDetails();
   }
+
+  @Get('auditionsposters/:userId')
+  @ApiRoute({
+    summary: 'Get filmInstitutePosters',
+    description: 'Retrieves filmInstitutePosters',
+  })
+  async getAuditionPoster(
+    @Param('userId', new ParseIntPipe()) userId: number,
+  ): Promise<any> {
+    return this.fileService.getAllPostersOfAuditions(userId);
+  }
+
+  @Get('auditionspostersforlovers')
+  @ApiRoute({
+    summary: 'Get filmInstitutePosters',
+    description: 'Retrieves filmInstitutePosters',
+  })
+  async getAuditionPosterForLovers(): Promise<any> {
+    return this.fileService.fetchAllOfAuditionsForLover();
+  }
+
+  @Get('auditionspostersbyauditionid/:auditionId')
+  @ApiRoute({
+    summary: 'Get filmInstitutePosters',
+    description: 'Retrieves filmInstitutePosters',
+  })
+  async getAuditionImagesByAuditionID(
+    @Param('auditionId', new ParseIntPipe()) auditionId: number,
+  ): Promise<any> {
+    return this.fileService.fetchAuditionImagesByTableId(auditionId);
+  }
 }

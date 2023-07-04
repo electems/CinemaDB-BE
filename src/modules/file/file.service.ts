@@ -120,4 +120,23 @@ export class FileService {
       },
     });
   }
+
+  async getAllPostersOfAuditions(userId: number): Promise<any> {
+    const query = await this.db.$queryRaw`SELECT t1.*
+    FROM "File" t1 INNER JOIN "AuditionCall" t2 on t1.table_fk = t2.id
+    INNER JOIN "User" t3 on t2.user_fk = t3.id WHERE t3.id = ${userId} AND t1."tableName" = 'AuditionCall'`;
+    return query;
+  }
+
+  async fetchAllOfAuditionsForLover(): Promise<any> {
+    const query = await this.db.$queryRaw`SELECT t1.*
+    FROM "File" t1 WHERE t1."tableName" = 'AuditionCall'`;
+    return query;
+  }
+
+  async fetchAuditionImagesByTableId(auditionId: number): Promise<any> {
+    const query = await this.db.$queryRaw`SELECT t1.*
+    FROM "File" t1 WHERE t1.table_fk = ${auditionId}  AND t1."tableName" = 'AuditionCall'`;
+    return query;
+  }
 }

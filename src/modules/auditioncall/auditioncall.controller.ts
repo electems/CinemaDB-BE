@@ -41,15 +41,15 @@ export class AuditionCallController {
     return this.auditionCall.createAuditionCall(auditionCall);
   }
 
-  @Get('audition/:movieFk')
+  @Get('audition/:id')
   @ApiRoute({
     summary: 'Get AuditionCall By MovieFk',
     description: 'Retrieves  AuditionCall By MovieFk',
   })
   async getAuditionCallByFk(
-    @Param('movieFk', new ParseIntPipe()) movieFk: number,
+    @Param('id', new ParseIntPipe()) id: number,
   ): Promise<AuditionCall[] | null> {
-    return this.auditionCall.findAuditionByMovieId(movieFk);
+    return this.auditionCall.findAuditionByTableFk(id);
   }
 
   @Get('search/:searchWord')

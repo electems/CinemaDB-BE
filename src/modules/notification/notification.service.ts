@@ -82,4 +82,20 @@ export class NotificationService {
       console.log('email is not sent for ' + notificationData[0].email);
     }
   }
+
+  public async fetchAllNotificationsBasedOnAudition(
+    tableId: number,
+  ): Promise<any> {
+    const notifications = await this.db.notification.findMany({
+      where: {
+        AND: [
+          {
+            tableId: tableId,
+            notificationType: 'Apply For Audition Call'
+          },
+        ],
+      },
+    });
+    return notifications;
+  }
 }

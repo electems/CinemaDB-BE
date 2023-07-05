@@ -98,4 +98,49 @@ export class NotificationService {
     });
     return notifications;
   }
+
+  public async fetchAllNotificationsOfFilmInstitute(
+    tableId: number,
+    userType:string
+  ): Promise<any> {
+    if(userType === 'PERSON'){
+      return  this.db.notification.findMany({
+      where: {
+        AND: [
+          {
+            tableId:{
+              equals:tableId
+            },
+            notificationType:{
+              contains:'FILM INSTITUTE TRAINING'
+            },
+            userType:{
+              equals:userType
+            },
+
+          },
+        ],
+      },
+    });
+  }
+  else{
+    return this.db.notification.findMany({
+      where: {
+        AND: [
+          {
+              tableId:{
+                equals:tableId
+              },
+              notificationType:{
+                contains:'FILM INSTITUTE TRAINING'
+              },
+              userType:{
+                equals:userType
+              },
+          },
+        ],
+      },
+    });
+  }
+  }
 }

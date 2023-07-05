@@ -31,4 +31,19 @@ export class NotificationController {
       tableId,
     );
   }
+
+  @Get('getnotifcationforfilminstitute/:tableId/:userType')
+  @ApiRoute({
+    summary: 'Fetch Film Institute Notifications based on user ID',
+    description: 'Fetch Film Institute Notifications based on user ID',
+    badRequest: {},
+  })
+  async fetchAllNotificationsOfFilmInstitute(
+    @Param('tableId', new ParseIntPipe()) tableId: number,
+    @Param('userType') userType: string,
+  ): Promise<void> {
+    return this.notificationService.fetchAllNotificationsOfFilmInstitute(
+      tableId,userType
+    );
+  }
 }

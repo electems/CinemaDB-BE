@@ -27,6 +27,7 @@ import { multerOptions } from '@modules/common/fileupload';
 import { videoUploadOptions } from '@modules/common/videoupload';
 
 import { FileService } from './file.service';
+import { pdfFilesUpload } from '@modules/common/pdfupload';
 // import pathconfig from '../../config/pathconfig.json';
 @Controller('fileupload')
 @ApiTags('File-Upload')
@@ -212,5 +213,18 @@ export class FileController {
     @Param('auditionId', new ParseIntPipe()) auditionId: number,
   ): Promise<any> {
     return this.fileService.fetchAuditionImagesByTableId(auditionId);
+  }
+
+  @Post('file/resume')
+  @UseInterceptors(FileInterceptor('file', pdfFilesUpload))
+  public async uploadResumeForFilmInstitute(@UploadedFile() file: Express.Multer.File) {
+    try {
+      return file;
+    } catch (e) {
+      throw new HttpException(
+        'Error in <FileControllers.upload>',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
 import { Injectable, Logger } from '@nestjs/common';
-import { FilmTrainingInstitute,FilmTrainingInstituteEvent } from '@prisma/client';
+import {
+  FilmTrainingInstitute,
+  FilmTrainingInstituteEvent,
+} from '@prisma/client';
 
 import { DatabaseService } from '@database/database.service';
 @Injectable()
@@ -25,7 +28,9 @@ export class FilmTrainingInstituteService {
     return createFilmTrainingInstitute;
   }
 
-  async getAllFilmTrainingInstitutes(userId:number): Promise<Array<FilmTrainingInstitute>> {
+  async getAllFilmTrainingInstitutes(
+    userId: number,
+  ): Promise<Array<FilmTrainingInstitute>> {
     Logger.log(
       'Start : FilmTrainingInstituteService  : getAllFilmTrainingInstitutes  : getAll :',
     );
@@ -33,7 +38,7 @@ export class FilmTrainingInstituteService {
       where: {
         userFK: userId,
       },
-    },);
+    });
     Logger.log(
       'End : FilmTrainingInstituteService  : getAllFilmTrainingInstitutes  : response :',
       filmTrainingInstitute,
@@ -74,7 +79,7 @@ export class FilmTrainingInstituteService {
         },
         include: {
           filmTrainingInstituteEvents: true,
-        }
+        },
       },
     );
     Logger.log(
@@ -85,7 +90,7 @@ export class FilmTrainingInstituteService {
   }
 
   async createFilmTrainingInstituteEvent(
-    filmTrainingInstitutEvent: FilmTrainingInstituteEvent
+    filmTrainingInstitutEvent: FilmTrainingInstituteEvent,
   ): Promise<FilmTrainingInstituteEvent> {
     Logger.log(
       'Start : FilmTrainingInstituteService  : createFilmTrainingInstituteEvent  : payload :',

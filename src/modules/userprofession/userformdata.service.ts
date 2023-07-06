@@ -22,7 +22,7 @@ interface emialAndDate {
 
 @Injectable()
 export class UserFormService {
-  constructor(private db: DatabaseService) {}
+  constructor(private db: DatabaseService) { }
 
   async getUserSummaryFormData(
     userId: number,
@@ -92,15 +92,15 @@ export class UserFormService {
       'Start : UserFormService  : updateAndCreateForm : payload =',
       userProfessionFormData,
     );
+
     if (userProfessionFormData.id === undefined) {
-      const createUserProfessionForm =
-        await this.db.userProfessionFormData.create({
-          data: {
-            ...userProfessionFormData,
-            value: userProfessionFormData.value as Prisma.JsonObject,
-          },
-        });
-      return createUserProfessionForm;
+      const createFormData = await this.db.userProfessionFormData.create({
+        data: {
+          ...userProfessionFormData,
+          value: userProfessionFormData.value as Prisma.JsonObject,
+        },
+      });
+      return createFormData;
     }
     const updateUserProfessionForm =
       await this.db.userProfessionFormData.update({

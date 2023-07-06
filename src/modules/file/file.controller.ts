@@ -24,10 +24,10 @@ import { Response } from 'express';
 import { DatabaseService } from '@database/database.service';
 import { ApiRoute } from '@decorators/api-route';
 import { multerOptions } from '@modules/common/fileupload';
+import { pdfFilesUpload } from '@modules/common/pdfupload';
 import { videoUploadOptions } from '@modules/common/videoupload';
 
 import { FileService } from './file.service';
-import { pdfFilesUpload } from '@modules/common/pdfupload';
 // import pathconfig from '../../config/pathconfig.json';
 @Controller('fileupload')
 @ApiTags('File-Upload')
@@ -217,7 +217,9 @@ export class FileController {
 
   @Post('file/resume')
   @UseInterceptors(FileInterceptor('file', pdfFilesUpload))
-  public async uploadResumeForFilmInstitute(@UploadedFile() file: Express.Multer.File) {
+  public async uploadResumeForFilmInstitute(
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     try {
       return file;
     } catch (e) {
@@ -226,5 +228,16 @@ export class FileController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  @Get('getProfileByid/:userId')
+  @ApiRoute({
+    summary: 'Get filmInstitutePosters',
+    description: 'Retrieves filmInstitutePosters',
+  })
+  async getProfileImage(
+    @Param('userId', new ParseIntPipe()) userId: number,
+  ): Promise<any> {
+    return this.fileService.getProfilePicture(userId);
   }
 }

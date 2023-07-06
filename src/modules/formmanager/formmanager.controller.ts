@@ -1,4 +1,5 @@
-import fs from 'fs';
+import fs, { createReadStream } from 'fs';
+import { join } from 'path';
 
 import {
   Body,
@@ -6,18 +7,19 @@ import {
   Get,
   Param,
   Post,
-  UseGuards,
   Delete,
+  Header,
+  StreamableFile,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { ApiRoute } from '@decorators/api-route';
-import { JwtAuthGuard } from '@modules/users/auth/guards/jwt.auth-guard';
+// import { JwtAuthGuard } from '@modules/users/auth/guards/jwt.auth-guard';
 
 import { FormManagerService } from './formmanager.service';
 import pathconfig from '../../config/pathconfig.json';
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @Controller('form')
 @ApiTags('forms-json')
 @ApiBearerAuth()
@@ -162,7 +164,7 @@ export class FormsController {
     return writeFile;
   }
 
-  @Get('mastertemplatereadfile/:folderpath/:path/:location/:filename')
+  @Get('mastertemplatereadfile/:folderpath/:path/:filename')
   @ApiRoute({
     summary: 'Get all fields',
     description: 'Retrieves all fields',
@@ -171,21 +173,38 @@ export class FormsController {
   async getMasterTemplateFile(
     @Param('folderpath') folderpath: string,
     @Param('path') path: string,
-    @Param('location') location: string,
     @Param('filename') filename: string,
   ): Promise<JSON> {
     let readFile = "{ error: 'FILE_NOT_FOUND' }";
     if (
       fs.existsSync(
-        `${pathconfig.FilePath}/${folderpath}/${path}/${location}/${filename}.json`,
+        `${pathconfig.FilePath}/${folderpath}/${path}/${filename}.json`,
       )
     ) {
       readFile = fs.readFileSync(
-        `${pathconfig.FilePath}/${folderpath}/${path}/${location}/${filename}.json`,
+        `${pathconfig.FilePath}/${folderpath}/${path}/${filename}.json`,
         'utf8',
       );
     }
 
     return JSON.parse(readFile);
+  }
+
+
+  @Get('readimage/:path/:location/:filename')
+  @Header('Content-Type', 'application/json')
+  @Header('Content-Disposition', 'attachment;')
+  getStaticFile(
+    @Param('path') path: string,
+    @Param('location') location: string,
+    @Param('filename') filename: string,
+  ): StreamableFile {
+    const file = createReadStream(
+      join(
+        process.cwd(),
+        `${pathconfig.FilePath}/${path}/${location}/${filename}.jpg`,
+      ),
+    );
+    return new StreamableFile(file);
   }
 }

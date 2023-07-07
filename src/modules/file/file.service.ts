@@ -143,7 +143,7 @@ export class FileService {
   async getProfilePicture(userId: number): Promise<any> {
     const query = await this.db.$queryRaw`SELECT t1.*
     FROM "File" t1 INNER JOIN "UserProfessionFormData" t2 on t1.table_fk = t2.id
-    INNER JOIN "User" t3 on t2.user_id = t3.id WHERE t3.id = ${userId} `;
+    INNER JOIN "User" t3 on t2.user_id = t3.id WHERE t3.id = ${userId} AND t1."tableName" = 'Personnel Information' `;
     return query;
   }
 }

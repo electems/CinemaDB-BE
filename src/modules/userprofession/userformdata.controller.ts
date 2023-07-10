@@ -37,8 +37,8 @@ export class UserFormController {
   @Post('createform/formdata')
   async userAndUserSubCategory(
     @Body() userProfessionFormData: UserProfessionFormData,
-  ): Promise<void> {
-    await this.userFormService.updateAndCreateForm(userProfessionFormData);
+  ): Promise<UserProfessionFormData> {
+    return this.userFormService.updateAndCreateForm(userProfessionFormData);
   }
 
   @Get('movies/:userid')

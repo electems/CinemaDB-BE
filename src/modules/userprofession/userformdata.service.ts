@@ -92,17 +92,17 @@ export class UserFormService {
       'Start : UserFormService  : updateAndCreateForm : payload =',
       userProfessionFormData,
     );
-
     if (userProfessionFormData.id === undefined) {
-      const createFormData = await this.db.userProfessionFormData.create({
-        data: {
-          ...userProfessionFormData,
-          value: userProfessionFormData.value as Prisma.JsonObject,
-        },
-      });
-      return createFormData;
+      const createUserProfessionFormData =
+        await this.db.userProfessionFormData.create({
+          data: {
+            ...userProfessionFormData,
+            value: userProfessionFormData.value as Prisma.JsonObject,
+          },
+        });
+      return createUserProfessionFormData;
     }
-    const updateUserProfessionForm =
+    const updateUserProfessionFormData =
       await this.db.userProfessionFormData.update({
         where: { id: userProfessionFormData.id },
         data: {
@@ -112,9 +112,9 @@ export class UserFormService {
       });
     Logger.log(
       'End : UserFormService  : updateAndCreateForm : response =',
-      updateUserProfessionForm,
+      updateUserProfessionFormData,
     );
-    return updateUserProfessionForm;
+    return updateUserProfessionFormData;
   }
 
   async getMoviesByUserId(userId: any): Promise<any> {

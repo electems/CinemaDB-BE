@@ -23,7 +23,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.auth-guard';
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 @Controller('users')
-@ApiTags('auth-users')
+@ApiTags('Users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
@@ -49,7 +49,7 @@ export class UsersController {
     return this.userService.getAllUsers();
   }
 
-  @Get(':id')
+  @Get('/:id')
   @ApiRoute({
     summary: 'Get user',
     description: 'Retrieves  user',
@@ -71,6 +71,16 @@ export class UsersController {
     return this.userService.getUser(id);
   }
 
+  @Get('user/userdetails/:id')
+  @ApiRoute({
+    summary: 'Get UserSubCategory',
+    description: 'Retrieves  UserSubCategory',
+  })
+  async getUserDetailsByid(
+    @Param('id', new ParseIntPipe()) id: number,
+  ): Promise<User | null> {
+    return this.userService.getUserById(id);
+  }
 
   @Delete('delete/:id')
   @ApiRoute({

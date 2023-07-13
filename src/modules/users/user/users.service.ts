@@ -290,11 +290,6 @@ export class UsersService {
   async userAndUserSubCategory(
     userAndUserSubCategory: any,
   ): Promise<UserSubCategory> {
-    const userSubCategoryIDs = await this.db.userSubCategory.findMany({
-      select: {
-        id: true,
-      },
-    });
     const updateStep: UserStep = {
       step: userAndUserSubCategory.step,
     };
@@ -315,18 +310,7 @@ export class UsersService {
             where: { id: userSubCategory.id },
             data: userSubCategory,
           });
-          const indexOfId = userSubCategoryIDs.indexOf(userSubCategory.id);
-          userSubCategoryIDs.splice(indexOfId, 1);
         }
-      }
-      for (const removeIDs of userSubCategoryIDs) {
-        await this.db.userSubCategory.deleteMany({
-          where: {
-            id: {
-              equals: removeIDs.id,
-            },
-          },
-        });
       }
     }
 

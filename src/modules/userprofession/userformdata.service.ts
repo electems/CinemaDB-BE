@@ -195,7 +195,7 @@ export class UserFormService {
         const lastDayToLocaleString = date.toISOString().split('T');
         const todayDate = lastDayToLocaleString[0];
         const query = await this.db
-          .$queryRaw`SELECT * FROM "UserProfessionFormData" a WHERE DATE(a.created_at) = ${todayDate}:: DATE AND a."subCategoryType" = 'Movie'`;
+          .$queryRaw`SELECT * FROM "UserProfessionFormData" a WHERE DATE(a.created_at) = ${todayDate}:: DATE AND a."subCategoryType" LIKE '%Movie'`;
         result = query;
         break;
       }
@@ -444,7 +444,7 @@ export class UserFormService {
         const query = await this.db.$queryRaw<any[]>`SELECT id , a.value
         FROM "UserProfessionFormData" a
         WHERE  Date(a.created_at)
-        BETWEEN ${firstDay[0]}:: DATE AND ${lastDay[0]} :: DATE AND a."subCategoryType"='Movie'`;
+        BETWEEN ${firstDay[0]}:: DATE AND ${lastDay[0]} :: DATE AND a."subCategoryType" LIKE '%Movie'`;
         const movieObject: any = [];
         for (let i = 0; i < query.length; i++) {
           query[i].value.map((item: any) => {
@@ -479,7 +479,7 @@ export class UserFormService {
         const query = await this.db.$queryRaw<any[]>`SELECT id , a.value
         FROM "UserProfessionFormData" a
         WHERE  Date(a.created_at)
-        BETWEEN ${firstDay[0]}:: DATE AND ${lastDay[0]} :: DATE AND a."subCategoryType"='Movie'`;
+        BETWEEN ${firstDay[0]}:: DATE AND ${lastDay[0]} :: DATE AND a."subCategoryType" LIKE '%Movie'`;
         const movieObject: any = [];
         for (let i = 0; i < query.length; i++) {
           query[i].value.map((item: any) => {
@@ -511,7 +511,7 @@ export class UserFormService {
         const query = await this.db.$queryRaw<any[]>`SELECT id , a.value
         FROM "UserProfessionFormData" a
         WHERE  Date(a.created_at)
-        BETWEEN ${firstDayToLocaleString}:: DATE AND ${lastDayToLocaleString} :: DATE AND a."subCategoryType"='Movie'`;
+        BETWEEN ${firstDayToLocaleString}:: DATE AND ${lastDayToLocaleString} :: DATE AND a."subCategoryType" LIKE '%Movie'`;
         const movieObject: any = [];
         for (let i = 0; i < query.length; i++) {
           query[i].value.map((item: any) => {

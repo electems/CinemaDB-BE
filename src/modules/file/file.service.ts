@@ -102,7 +102,9 @@ export class FileService {
       where: {
         AND: [
           {
-            tableName: 'Movie',
+            tableName: {
+              contains: 'Movie',
+            },
           },
         ],
       },

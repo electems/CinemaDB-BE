@@ -161,4 +161,24 @@ export class UsersController {
   ): Promise<void> {
     await this.userService.userAndUserSubCategory(userAndUserSubCategory);
   }
+
+  @Get('/profilename/:tableId')
+  @ApiRoute({
+    summary: 'Get all fields',
+    description: 'Retrieves all fields',
+    ok: { type: 'json', description: 'The form fields' },
+  })
+  async getProfileName(@Param('tableId') tableId: number): Promise<any> {
+    return this.userService.getUserName(tableId);
+  }
+
+  @Get('/profession/:userId')
+  @ApiRoute({
+    summary: 'Get all fields',
+    description: 'Retrieves all fields',
+    ok: { type: 'json', description: 'The form fields' },
+  })
+  async getUserProfession(@Param('userId') userId: number): Promise<any> {
+    return this.userService.getUserProfession(userId);
+  }
 }

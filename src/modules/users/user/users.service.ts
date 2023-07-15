@@ -316,4 +316,20 @@ export class UsersService {
 
     return userAndUserSubCategory;
   }
+
+  async getUserName(tableId: any): Promise<any> {
+    const query = await this.db.$queryRaw<any[]>`SELECT value
+    FROM "UserProfessionFormData" u
+    INNER JOIN "File" f ON u.id = f.table_fk WHERE f.table_fk = ${tableId}`;
+    const value = query[0].value
+    return value;
+  }
+
+  async getUserProfession(userId: any): Promise<any> {
+    const query = await this.db.$queryRaw<any[]>`SELECT value
+    FROM "UserSubCategory" u WHERE 
+    u.user_id = ${userId}`;
+    const value = query[0].value
+    return value;
+  }
 }

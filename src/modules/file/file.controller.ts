@@ -112,22 +112,6 @@ export class FileController {
     return this.fileService.getAllFiles();
   }
 
-  @Get('/files/profile/:filename')
-  @UseInterceptors()
-  async downloadProfileImages(
-    @Res() res: any,
-    @Param('filename') name: string,
-  ) {
-    const file = await this.db.file.findFirst({
-      where: {
-        fileName: name,
-      },
-    });
-    const directoryPath = file?.destination;
-    const filePath = directoryPath + '/' + name;
-    return res.download(filePath);
-  }
-
   @Get('/filename/:filename')
   @UseInterceptors()
   async getFileByName(@Param('filename') name: string) {
@@ -238,6 +222,23 @@ export class FileController {
   async getProfileImage(
     @Param('userId', new ParseIntPipe()) userId: number,
   ): Promise<any> {
-    return this.fileService.getProfilePicture(userId);
+    return this.fileService.getProfile(userId);
+  }
+
+  @Get('files/profile/:tableId/:fileName')
+  @ApiRoute({
+    summary: 'Get Profile Images',
+    description: 'Retrieves Profile Images',
+  })
+  async getProfilePictureByName(
+    @Param('tableId', new ParseIntPipe()) tableId: number,
+    @Param('fileName') fileName: string,
+    @Res() res: any,
+  ): Promise<any> {
+    const query = await this.db.$queryRaw<any[]>`SELECT *
+    FROM "File" WHERE "tableName" = 'Personnel Information' AND "table_fk" = ${tableId} AND "fileName" = ${fileName} `;
+    const directoryPath = query[0].destination;
+    const filePath = directoryPath + '/' + fileName;
+    return res.download(filePath)
   }
 }

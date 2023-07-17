@@ -22,7 +22,7 @@ interface emialAndDate {
 
 @Injectable()
 export class UserFormService {
-  constructor(private db: DatabaseService) { }
+  constructor(private db: DatabaseService) {}
 
   async getUserSummaryFormData(
     userId: number,
@@ -200,19 +200,10 @@ export class UserFormService {
         break;
       }
       case 'Last_30_Days': {
-        const date = new Date(),
-          y = date.getFullYear(),
-          m = date.getMonth();
-        const firstDay = new Date(y, m, date.getDate() - 30);
-        const firstDayToLocaleString = firstDay.toISOString().split('T');
-        const lastDay = new Date(
-          firstDay.setDate(firstDay.getDate() - firstDay.getDay() + 30),
-        );
-        const lastDayToLocaleString = lastDay.toISOString().split('T');
         const query = await this.db.$queryRaw`SELECT *
         FROM "UserProfessionFormData" a
-        WHERE  Date(a.created_at)
-        BETWEEN ${firstDayToLocaleString[0]}:: DATE AND ${lastDayToLocaleString[0]} :: DATE`;
+        WHERE  Date(a.created_at) > current_date - INTERVAL '30' DAY
+        AND a."subCategoryType" LIKE '%Movie'`;
         result = query;
 
         break;

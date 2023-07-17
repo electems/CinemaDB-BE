@@ -64,7 +64,7 @@ export class FileController {
   }
 
   @Post('file/multiple')
-  @UseInterceptors(FilesInterceptor('image', 5, multerOptions))
+  @UseInterceptors(FilesInterceptor('images', 10, multerOptions))
   public async uploadMultipleFiles(@UploadedFile() file: Express.Multer.File) {
     try {
       return file;

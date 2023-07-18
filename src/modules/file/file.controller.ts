@@ -225,7 +225,7 @@ export class FileController {
     return this.fileService.getProfile(userId);
   }
 
-  @Get('files/profile/:tableId/:fileName')
+  @Get('files/profile/:subcategorytype/:tableId/:fileName')
   @ApiRoute({
     summary: 'Get Profile Images',
     description: 'Retrieves Profile Images',
@@ -233,12 +233,20 @@ export class FileController {
   async getProfilePictureByName(
     @Param('tableId', new ParseIntPipe()) tableId: number,
     @Param('fileName') fileName: string,
+    @Param('subcategorytype') subcategorytype: string,
     @Res() res: any,
   ): Promise<any> {
-    const query = await this.db.$queryRaw<any[]>`SELECT *
-    FROM "File" WHERE "tableName" = 'Personnel Information' AND "table_fk" = ${tableId} AND "fileName" = ${fileName} `;
-    const directoryPath = query[0].destination;
-    const filePath = directoryPath + '/' + fileName;
-    return res.download(filePath)
+    let result: any = '';
+    switch (subcategorytype) {
+      case 'Personnel Information': {
+        const query = await this.db.$queryRaw<any[]>`SELECT *
+        FROM "File" WHERE "tableName" = ${subcategorytype} AND "table_fk" = ${tableId} AND "fileName" = ${fileName} `;
+        const directoryPath = query[0].destination;
+        const filePath = directoryPath + '/' + fileName;
+        result = res.download(filePath)
+      }
+    }
+    return result
   }
+
 }

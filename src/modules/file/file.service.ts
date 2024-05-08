@@ -155,4 +155,8 @@ export class FileService {
     INNER JOIN "User" t3 on t2.user_id = t3.id WHERE t3.id = ${userId} AND t1."tableName" = 'Personnel Information' `;
     return query;
   }
+
+  async testingMethod (): Promise<void>{
+    console.log('testing')
+  }
 }

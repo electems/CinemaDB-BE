@@ -332,4 +332,8 @@ export class UsersService {
     const value = query[0].value
     return value;
   }
+
+  // testing of commit
+ // changes done by develper A
+// changes done by developer B
 }

@@ -35,3 +35,6 @@ void (async (): Promise<void> => {
   await outputFile('./prisma/schema.prisma', data.join(EOL));
   console.info('Prisma schemas merged');
 })();
+{
+  console.log(700);
+}

@@ -24,6 +24,5 @@ export class EventListnerService {
   emitEvent(payload: OTPPayload): void {
     this.eventEmitter.emit('email.registration', payload);
   }
-console.log('asds');
   
 }

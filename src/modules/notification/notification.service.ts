@@ -143,6 +143,10 @@ export class NotificationService {
     });
   }
   }
+  method()
+  {
+    console.log("commit");
+  }
   public async ravi()
   {
     return "hello";

@@ -108,7 +108,7 @@ export class NotificationService {
       where: {
         AND: [
           {
-            tableId:{
+            tableId:{ 
               equals:tableId
             },
             notificationType:{
@@ -146,5 +146,10 @@ export class NotificationService {
   method()
   {
     console.log("commit");
+  }
+  public async ravi()
+  {
+    return "hello";
+    //hello
   }
 }

@@ -165,4 +165,7 @@ public async sanjay()
   arun(){
     return "hi";
   }
+  arun2(){
+    return "hi";
+  }
 }

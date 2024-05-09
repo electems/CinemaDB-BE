@@ -152,8 +152,12 @@ export class NotificationService {
     return "hello";
     //hello
   }
-
-  public async sanjay()
+ public async ravi2()
+  {
+    return "hello";
+    //hello
+  }
+public async sanjay()
   {
     return "how are you";
     

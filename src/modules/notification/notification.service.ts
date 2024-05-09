@@ -143,4 +143,8 @@ export class NotificationService {
     });
   }
   }
+  method()
+  {
+    console.log("commit");
+  }
 }

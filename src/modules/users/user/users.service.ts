@@ -334,5 +334,6 @@ export class UsersService {
   }
 
   // testing of commit
-  // changes done by developer B
+ // changes done by develper A
+// changes done by developer B
 }

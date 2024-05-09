@@ -148,4 +148,10 @@ export class NotificationService {
     return "hello";
     //hello
   }
+
+  public async sanjay()
+  {
+    return "how are you";
+    
+  }
 }

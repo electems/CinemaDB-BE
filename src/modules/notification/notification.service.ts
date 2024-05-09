@@ -152,4 +152,10 @@ export class NotificationService {
     return "hello";
     //hello
   }
+
+  public async ravi2()
+  {
+    return "hello";
+    //hello
+  }
 }

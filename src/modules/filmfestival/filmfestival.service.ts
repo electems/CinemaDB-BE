@@ -34,7 +34,7 @@ export class FilmFestivalService {
   async getAllFilmFestivalUsers(): Promise<Array<FilmFestival>> {
     return this.db.filmFestival.findMany();
   }
-  // tarun commitSS 
+  // tarun commitSS
   // changes made simulatneously
-  //add
+//add
 }
